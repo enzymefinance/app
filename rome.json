@@ -1,0 +1,20 @@
+{
+  "files": {
+    "ignore": [".next", "generated", "coverage", "pnpm-lock.yaml", "tsconfig.json", "tsconfig.*.json"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 120
+  },
+  "linter": {
+    "rules": {
+      "all": true,
+      "nursery": {
+        "useCamelCase": "off"
+      }
+    }
+  },
+  "organizeImports": {
+    "enabled": true
+  }
+}
