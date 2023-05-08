@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@enzymefinance/abis':
+    specifier: ^0.0.8
+    version: 0.0.8
   '@enzymefinance/sdk':
     specifier: ^0.0.12
     version: 0.0.12(typescript@5.0.4)
@@ -16,6 +19,15 @@ dependencies:
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.23)
+  class-variance-authority:
+    specifier: ^0.6.0
+    version: 0.6.0(typescript@5.0.4)
+  clsx:
+    specifier: ^1.2.1
+    version: 1.2.1
+  lucide-react:
+    specifier: ^0.214.0
+    version: 0.214.0(react@18.2.0)
   next:
     specifier: 13.4.1
     version: 13.4.1(react-dom@18.2.0)(react@18.2.0)
@@ -31,9 +43,15 @@ dependencies:
   rome:
     specifier: ^12.0.0
     version: 12.0.0
+  tailwind-merge:
+    specifier: ^1.12.0
+    version: 1.12.0
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
+  tailwindcss-animate:
+    specifier: ^1.0.5
+    version: 1.0.5(tailwindcss@3.3.2)
   typescript:
     specifier: 5.0.4
     version: 5.0.4
@@ -1800,6 +1818,18 @@ packages:
       fsevents: 2.3.2
     dev: false
 
+  /class-variance-authority@0.6.0(typescript@5.0.4):
+    resolution: {integrity: sha512-qdRDgfjx3GRb9fpwpSvn+YaidnT7IUJNe4wt5/SWwM+PmUwJUhQRk/8zAyNro0PmVfmen2635UboTjIBXXxy5A==}
+    peerDependencies:
+      typescript: '>= 4.5.5 < 6'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      clsx: 1.2.1
+      typescript: 5.0.4
+    dev: false
+
   /client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
     dev: false
@@ -2477,6 +2507,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+    dev: false
+
+  /lucide-react@0.214.0(react@18.2.0):
+    resolution: {integrity: sha512-/vRi1wnFV2lqyIIkghQ3dDLu0eA9zykRQN9GZBwydzv+kB/2Q3S4X6OYB+aRqLXwl438vfVBqyYov2z0LJeoqA==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /merge2@1.4.1:
@@ -3165,6 +3203,18 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: false
+
+  /tailwind-merge@1.12.0:
+    resolution: {integrity: sha512-Y17eDp7FtN1+JJ4OY0Bqv9OA41O+MS8c1Iyr3T6JFLnOgLg3EvcyMKZAnQ8AGyvB5Nxm3t9Xb5Mhe139m8QT/g==}
+    dev: false
+
+  /tailwindcss-animate@1.0.5(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-UU3qrOJ4lFQABY+MVADmBm+0KW3xZyhMdRvejwtXqYOL7YjHYxmuREFAZdmVG5LPe5E9CAst846SLC4j5I3dcw==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+    dependencies:
+      tailwindcss: 3.3.2
     dev: false
 
   /tailwindcss@3.3.2:
