@@ -28,6 +28,7 @@ generates:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-graphql-request
   src/queries/core.introspection.ts:
     schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
     plugins:

@@ -36,6 +36,9 @@ dependencies:
   graphql:
     specifier: ^16.6.0
     version: 16.6.0
+  graphql-request:
+    specifier: ^6.0.0
+    version: 6.0.0(graphql@16.6.0)
   lucide-react:
     specifier: ^0.214.0
     version: 0.214.0(react@18.2.0)
@@ -89,6 +92,9 @@ devDependencies:
   '@graphql-codegen/typescript':
     specifier: ^3.0.3
     version: 3.0.4(graphql@16.6.0)
+  '@graphql-codegen/typescript-graphql-request':
+    specifier: ^4.5.9
+    version: 4.5.9(graphql-request@6.0.0)(graphql@16.6.0)
   '@graphql-codegen/typescript-operations':
     specifier: ^3.0.3
     version: 3.0.4(graphql@16.6.0)
@@ -1247,6 +1253,24 @@ packages:
       tslib: 2.5.0
     dev: true
 
+  /@graphql-codegen/typescript-graphql-request@4.5.9(graphql-request@6.0.0)(graphql@16.6.0):
+    resolution: {integrity: sha512-Vtv5qymUXcR4UFdHOlJHzK5TN+CZUwMwFDGb3n4Gjcr4yln1BWbUb7DXgD0GHzpXwDIj5G2XmJnFtr0jihBfrg==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      graphql-request: ^3.4.0 || ^4.0.0 || ~5.0.0 || ~5.1.0
+      graphql-tag: ^2.0.0
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 3.1.2(graphql@16.6.0)
+      '@graphql-codegen/visitor-plugin-common': 2.13.1(graphql@16.6.0)
+      auto-bind: 4.0.0
+      graphql: 16.6.0
+      graphql-request: 6.0.0(graphql@16.6.0)
+      tslib: 2.4.1
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
   /@graphql-codegen/typescript-operations@3.0.4(graphql@16.6.0):
     resolution: {integrity: sha512-6yE2OL2+WJ1vd5MwFEGXpaxsFGzjAGUytPVHDML3Bi3TwP1F3lnQlIko4untwvHW0JhZEGQ7Ck30H9HjcxpdKA==}
     peerDependencies:
@@ -1703,7 +1727,6 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       graphql: 16.6.0
-    dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
@@ -4049,7 +4072,6 @@ packages:
       graphql: 16.6.0
     transitivePeerDependencies:
       - encoding
-    dev: true
 
   /graphql-tag@2.12.6(graphql@16.6.0):
     resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
