@@ -14,7 +14,7 @@ export function handleContractError({
   revertedError = defaultNotFoundHandler,
   zeroDataError = defaultNotFoundHandler,
 }: CreateHandleRpcError = {}) {
-  return function handleRpcError(error: unknown) {
+  return function handleContractError(error: unknown) {
     if (error instanceof ContractFunctionRevertedError) {
       return revertedError(error);
     }
