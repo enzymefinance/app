@@ -12,8 +12,8 @@
     "test": "playwright test"
   },
   "dependencies": {
-    "@enzymefinance/abis": "^0.0.8",
-    "@enzymefinance/sdk": "^0.0.13",
+    "@enzymefinance/abis": "^0.0.9",
+    "@enzymefinance/sdk": "^0.0.15",
     "@playwright/test": "^1.33.0",
     "@types/node": "20.1.1",
     "@types/react": "18.2.6",

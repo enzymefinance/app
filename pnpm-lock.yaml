@@ -7,11 +7,11 @@ patchedDependencies:
 
 dependencies:
   '@enzymefinance/abis':
-    specifier: ^0.0.8
-    version: 0.0.8
+    specifier: ^0.0.9
+    version: 0.0.9
   '@enzymefinance/sdk':
-    specifier: ^0.0.13
-    version: 0.0.13(typescript@5.0.4)(zod@3.21.4)
+    specifier: ^0.0.15
+    version: 0.0.15(typescript@5.0.4)(zod@3.21.4)
   '@playwright/test':
     specifier: ^1.33.0
     version: 1.33.0
@@ -122,14 +122,14 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@enzymefinance/abis@0.0.8:
-    resolution: {integrity: sha512-GtnyEyvQc3iB8/3hXtguM+eHiQxN06tabZV6wPWQEARsQhxTOZsjHioK1kUrRvtD56eoezjyiyLFWTn2l35/yg==}
+  /@enzymefinance/abis@0.0.9:
+    resolution: {integrity: sha512-zr0IF5dpPNVVkaviwygsowQ90u+sD4NVTntpdKvb1oHwfqrZJJ1o0j/Z2WeYqlyhwqNjfV8YIn6FHMB87WkASg==}
     dev: false
 
-  /@enzymefinance/sdk@0.0.13(typescript@5.0.4)(zod@3.21.4):
-    resolution: {integrity: sha512-q5qRImGQeKSQJG0okN0Uu1c5LpAHa+gbtr+8x4hdqScJHkwVQvK3gfwRuuq39ujmv6SeiD6FKRGXF3iH7u+kRw==}
+  /@enzymefinance/sdk@0.0.15(typescript@5.0.4)(zod@3.21.4):
+    resolution: {integrity: sha512-3FYB5XCpAIcbeb4PFzmKOECFB9Y2rCrceruwEkues3kTd171T5zl8GpA8yG7MENARonFy13ZR1BL/VmB59b3WA==}
     dependencies:
-      '@enzymefinance/abis': 0.0.8
+      '@enzymefinance/abis': 0.0.9
       abitype: 0.8.2(typescript@5.0.4)(zod@3.21.4)
       decimal.js: 10.4.3
       viem: 0.3.19(typescript@5.0.4)(zod@3.21.4)
