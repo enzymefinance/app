@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAccountBalance } from "@/lib/rpc/getAccountBalance";
@@ -62,8 +63,13 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   }).catch(handleContractError());
 
   return (
-    <>
-      <div>name: {name}</div>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          {name}
+      </CardTitle>
+      </CardHeader>
+      <CardContent>
       <div>owner: {owner}</div>
       <div>
         {trackedAssetsInfo.map((trackedAssetInfo) => (
@@ -72,7 +78,8 @@ export default async function VaultPage({ params }: { params: { deployment: stri
           </div>
         ))}
       </div>
-    </>
+      </CardContent>
+    </Card>
   );
 }
 
