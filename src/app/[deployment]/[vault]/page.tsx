@@ -1,8 +1,7 @@
 import { parseParams } from "@/lib/parseParams";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
-import { notFound } from "next/navigation";
-import { Address, isAddress } from "viem";
+import { isAddress } from "viem";
 import { z } from "zod";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
@@ -21,8 +20,6 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     }),
     params,
   });
-
-  pawel stinks
 
   const network = networks[deployment];
 
