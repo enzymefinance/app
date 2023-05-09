@@ -1,7 +1,7 @@
-import { Network } from "../types";
+import type { Network } from "../types";
 import { getPublicClient } from "@/lib/rpc";
 import { IPolicyManager } from "@enzymefinance/abis/IPolicyManager";
-import { Address } from "viem";
+import type { Address } from "viem";
 import { readContract } from "viem/contract";
 
 export async function getEnabledPoliciesForFund({
