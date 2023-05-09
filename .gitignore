@@ -19,6 +19,7 @@
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -27,4 +28,7 @@
 *.tsbuildinfo
 next-env.d.ts
 
-.env
+# queries
+
+/src/queries/core.ts
+/src/queries/core.introspection.ts
