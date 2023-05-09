@@ -24607,21 +24607,250 @@ export enum SubgraphErrorPolicy {
   DENY = 'deny'
 }
 
-export type VaultsQueryVariables = Exact<{ [key: string]: never; }>;
+export type VaultFragment = { __typename: 'Vault', id: string, name: string, symbol: string, owner: { __typename: 'Account', id: string }, comptroller: { __typename: 'Comptroller', id: string, denomination: { __typename: 'Asset', id: string, name: string, symbol: string }, fees: Array<{ __typename: 'EntranceRateBurnFee', id: string, feeType: FeeType, rate: string } | { __typename: 'EntranceRateDirectFee', id: string, feeType: FeeType, rate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'ExitRateBurnFee', feeType: FeeType, id: string, inKindRate: string, specificAssetsRate: string } | { __typename: 'ExitRateDirectFee', id: string, feeType: FeeType, inKindRate: string, specificAssetsRate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'ManagementFee', feeType: FeeType, scaledPerSecondRate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'MinSharesSupplyFee', feeType: FeeType, id: string } | { __typename: 'PerformanceFee', feeType: FeeType, highWaterMark: string, rate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'UnknownFee', id: string, feeType: FeeType }>, policies: Array<{ __typename: 'AdapterBlacklistPolicy', id: string, policyType: PolicyType } | { __typename: 'AdapterWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'AllowedAdapterIncomingAssetsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedAdaptersPerManagerPolicy', id: string, policyType: PolicyType, userAddressLists: Array<{ __typename: 'UserAddressList', id: string, userAddress: string, addressLists: Array<{ __typename: 'AddressList', items: Array<string>, id: string }> }> } | { __typename: 'AllowedAdaptersPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', items: Array<string>, id: string }> } | { __typename: 'AllowedAssetsForRedemptionPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedDepositRecipientsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedExternalPositionTypesPerManagerPolicy', id: string, policyType: PolicyType, userUintLists: Array<{ __typename: 'UserUintList', id: string, userAddress: string, uintLists: Array<{ __typename: 'UintList', id: string, items: Array<string> }> }> } | { __typename: 'AllowedExternalPositionTypesPolicy', id: string, policyType: PolicyType, externalPositionTypes: Array<string> } | { __typename: 'AllowedSharesTransferRecipientsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AssetBlacklistPolicy', id: string, policyType: PolicyType } | { __typename: 'AssetWhitelistPolicy', policyType: PolicyType, id: string } | { __typename: 'BuySharesCallerWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'CumulativeSlippageTolerancePolicy', id: string, cumulativeSlippage: string, lastSlippageTimestamp: number, policyType: PolicyType, tolerance: string } | { __typename: 'DepositorWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'GuaranteedRedemptionPolicy', policyType: PolicyType, id: string } | { __typename: 'MaxConcentrationPolicy', id: string, policyType: PolicyType } | { __typename: 'MinAssetBalancesPostRedemptionPolicy', id: string, policyType: PolicyType, assetBalances: Array<{ __typename: 'AssetBalance', id: string, amount: string, asset: { __typename: 'Asset', name: string, id: string, symbol: string } }> } | { __typename: 'MinMaxDepositPolicy', id: string, minDepositAmount: string, maxDepositAmount: string, policyType: PolicyType } | { __typename: 'OnlyRemoveDustExternalPositionPolicy', id: string, policyType: PolicyType } | { __typename: 'OnlyUntrackDustOrPricelessAssetsPolicy', id: string, policyType: PolicyType } | { __typename: 'UnknownPolicy', id: string, policyType: PolicyType }> } };
+
+export type VaultListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type VaultsQuery = { __typename: 'Query', vaults: Array<{ __typename: 'Vault', id: string, name: string, symbol: string }> };
+export type VaultListQuery = { __typename: 'Query', vaults: Array<{ __typename: 'Vault', id: string, name: string, symbol: string, owner: { __typename: 'Account', id: string }, comptroller: { __typename: 'Comptroller', id: string, denomination: { __typename: 'Asset', id: string, name: string, symbol: string }, fees: Array<{ __typename: 'EntranceRateBurnFee', id: string, feeType: FeeType, rate: string } | { __typename: 'EntranceRateDirectFee', id: string, feeType: FeeType, rate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'ExitRateBurnFee', feeType: FeeType, id: string, inKindRate: string, specificAssetsRate: string } | { __typename: 'ExitRateDirectFee', id: string, feeType: FeeType, inKindRate: string, specificAssetsRate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'ManagementFee', feeType: FeeType, scaledPerSecondRate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'MinSharesSupplyFee', feeType: FeeType, id: string } | { __typename: 'PerformanceFee', feeType: FeeType, highWaterMark: string, rate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'UnknownFee', id: string, feeType: FeeType }>, policies: Array<{ __typename: 'AdapterBlacklistPolicy', id: string, policyType: PolicyType } | { __typename: 'AdapterWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'AllowedAdapterIncomingAssetsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedAdaptersPerManagerPolicy', id: string, policyType: PolicyType, userAddressLists: Array<{ __typename: 'UserAddressList', id: string, userAddress: string, addressLists: Array<{ __typename: 'AddressList', items: Array<string>, id: string }> }> } | { __typename: 'AllowedAdaptersPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', items: Array<string>, id: string }> } | { __typename: 'AllowedAssetsForRedemptionPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedDepositRecipientsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedExternalPositionTypesPerManagerPolicy', id: string, policyType: PolicyType, userUintLists: Array<{ __typename: 'UserUintList', id: string, userAddress: string, uintLists: Array<{ __typename: 'UintList', id: string, items: Array<string> }> }> } | { __typename: 'AllowedExternalPositionTypesPolicy', id: string, policyType: PolicyType, externalPositionTypes: Array<string> } | { __typename: 'AllowedSharesTransferRecipientsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AssetBlacklistPolicy', id: string, policyType: PolicyType } | { __typename: 'AssetWhitelistPolicy', policyType: PolicyType, id: string } | { __typename: 'BuySharesCallerWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'CumulativeSlippageTolerancePolicy', id: string, cumulativeSlippage: string, lastSlippageTimestamp: number, policyType: PolicyType, tolerance: string } | { __typename: 'DepositorWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'GuaranteedRedemptionPolicy', policyType: PolicyType, id: string } | { __typename: 'MaxConcentrationPolicy', id: string, policyType: PolicyType } | { __typename: 'MinAssetBalancesPostRedemptionPolicy', id: string, policyType: PolicyType, assetBalances: Array<{ __typename: 'AssetBalance', id: string, amount: string, asset: { __typename: 'Asset', name: string, id: string, symbol: string } }> } | { __typename: 'MinMaxDepositPolicy', id: string, minDepositAmount: string, maxDepositAmount: string, policyType: PolicyType } | { __typename: 'OnlyRemoveDustExternalPositionPolicy', id: string, policyType: PolicyType } | { __typename: 'OnlyUntrackDustOrPricelessAssetsPolicy', id: string, policyType: PolicyType } | { __typename: 'UnknownPolicy', id: string, policyType: PolicyType }> } }> };
+
+export type VaultDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
 
 
-export const VaultsDocument = gql`
-    query Vaults {
-  vaults {
+export type VaultDetailsQuery = { __typename: 'Query', vault?: { __typename: 'Vault', id: string, name: string, symbol: string, owner: { __typename: 'Account', id: string }, comptroller: { __typename: 'Comptroller', id: string, denomination: { __typename: 'Asset', id: string, name: string, symbol: string }, fees: Array<{ __typename: 'EntranceRateBurnFee', id: string, feeType: FeeType, rate: string } | { __typename: 'EntranceRateDirectFee', id: string, feeType: FeeType, rate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'ExitRateBurnFee', feeType: FeeType, id: string, inKindRate: string, specificAssetsRate: string } | { __typename: 'ExitRateDirectFee', id: string, feeType: FeeType, inKindRate: string, specificAssetsRate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'ManagementFee', feeType: FeeType, scaledPerSecondRate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'MinSharesSupplyFee', feeType: FeeType, id: string } | { __typename: 'PerformanceFee', feeType: FeeType, highWaterMark: string, rate: string, recipient?: { __typename: 'Account', id: string } | null } | { __typename: 'UnknownFee', id: string, feeType: FeeType }>, policies: Array<{ __typename: 'AdapterBlacklistPolicy', id: string, policyType: PolicyType } | { __typename: 'AdapterWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'AllowedAdapterIncomingAssetsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedAdaptersPerManagerPolicy', id: string, policyType: PolicyType, userAddressLists: Array<{ __typename: 'UserAddressList', id: string, userAddress: string, addressLists: Array<{ __typename: 'AddressList', items: Array<string>, id: string }> }> } | { __typename: 'AllowedAdaptersPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', items: Array<string>, id: string }> } | { __typename: 'AllowedAssetsForRedemptionPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedDepositRecipientsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AllowedExternalPositionTypesPerManagerPolicy', id: string, policyType: PolicyType, userUintLists: Array<{ __typename: 'UserUintList', id: string, userAddress: string, uintLists: Array<{ __typename: 'UintList', id: string, items: Array<string> }> }> } | { __typename: 'AllowedExternalPositionTypesPolicy', id: string, policyType: PolicyType, externalPositionTypes: Array<string> } | { __typename: 'AllowedSharesTransferRecipientsPolicy', id: string, policyType: PolicyType, addressLists: Array<{ __typename: 'AddressList', id: string, items: Array<string> }> } | { __typename: 'AssetBlacklistPolicy', id: string, policyType: PolicyType } | { __typename: 'AssetWhitelistPolicy', policyType: PolicyType, id: string } | { __typename: 'BuySharesCallerWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'CumulativeSlippageTolerancePolicy', id: string, cumulativeSlippage: string, lastSlippageTimestamp: number, policyType: PolicyType, tolerance: string } | { __typename: 'DepositorWhitelistPolicy', id: string, policyType: PolicyType } | { __typename: 'GuaranteedRedemptionPolicy', policyType: PolicyType, id: string } | { __typename: 'MaxConcentrationPolicy', id: string, policyType: PolicyType } | { __typename: 'MinAssetBalancesPostRedemptionPolicy', id: string, policyType: PolicyType, assetBalances: Array<{ __typename: 'AssetBalance', id: string, amount: string, asset: { __typename: 'Asset', name: string, id: string, symbol: string } }> } | { __typename: 'MinMaxDepositPolicy', id: string, minDepositAmount: string, maxDepositAmount: string, policyType: PolicyType } | { __typename: 'OnlyRemoveDustExternalPositionPolicy', id: string, policyType: PolicyType } | { __typename: 'OnlyUntrackDustOrPricelessAssetsPolicy', id: string, policyType: PolicyType } | { __typename: 'UnknownPolicy', id: string, policyType: PolicyType }> } } | null };
+
+export const VaultFragmentDoc = gql`
+    fragment Vault on Vault {
+  id
+  name
+  symbol
+  owner {
     id
-    name
-    symbol
+  }
+  comptroller {
+    id
+    denomination {
+      id
+      name
+      symbol
+    }
+    fees {
+      ... on EntranceRateBurnFee {
+        id
+        feeType
+        rate
+      }
+      ... on EntranceRateDirectFee {
+        id
+        feeType
+        rate
+        recipient {
+          id
+        }
+      }
+      ... on ExitRateBurnFee {
+        feeType
+        id
+        inKindRate
+        specificAssetsRate
+      }
+      ... on ExitRateDirectFee {
+        id
+        feeType
+        recipient {
+          id
+        }
+        inKindRate
+        specificAssetsRate
+      }
+      ... on ManagementFee {
+        feeType
+        recipient {
+          id
+        }
+        scaledPerSecondRate
+      }
+      ... on MinSharesSupplyFee {
+        feeType
+        id
+      }
+      ... on PerformanceFee {
+        feeType
+        highWaterMark
+        rate
+        recipient {
+          id
+        }
+      }
+      ... on UnknownFee {
+        id
+        feeType
+      }
+    }
+    policies {
+      ... on AllowedAdapterIncomingAssetsPolicy {
+        id
+        policyType
+        addressLists {
+          id
+          items
+        }
+      }
+      ... on AllowedAdaptersPerManagerPolicy {
+        id
+        policyType
+        userAddressLists {
+          id
+          addressLists {
+            items
+            id
+          }
+          userAddress
+        }
+      }
+      ... on AllowedAdaptersPolicy {
+        id
+        policyType
+        addressLists {
+          items
+          id
+        }
+      }
+      ... on AllowedAssetsForRedemptionPolicy {
+        addressLists {
+          id
+          items
+        }
+        id
+        policyType
+      }
+      ... on AllowedDepositRecipientsPolicy {
+        id
+        policyType
+        addressLists {
+          id
+          items
+        }
+      }
+      ... on AllowedExternalPositionTypesPerManagerPolicy {
+        id
+        userUintLists {
+          id
+          userAddress
+          uintLists {
+            id
+            items
+          }
+        }
+        policyType
+      }
+      ... on AllowedExternalPositionTypesPolicy {
+        id
+        policyType
+        externalPositionTypes
+      }
+      ... on AllowedSharesTransferRecipientsPolicy {
+        addressLists {
+          id
+          items
+        }
+        id
+        policyType
+      }
+      ... on CumulativeSlippageTolerancePolicy {
+        id
+        cumulativeSlippage
+        lastSlippageTimestamp
+        policyType
+        tolerance
+      }
+      ... on MinAssetBalancesPostRedemptionPolicy {
+        id
+        assetBalances {
+          asset {
+            name
+            id
+            symbol
+          }
+          id
+          amount
+        }
+        policyType
+      }
+      ... on MinMaxDepositPolicy {
+        id
+        minDepositAmount
+        maxDepositAmount
+        policyType
+      }
+      ... on OnlyRemoveDustExternalPositionPolicy {
+        id
+        policyType
+      }
+      ... on OnlyUntrackDustOrPricelessAssetsPolicy {
+        id
+        policyType
+      }
+      ... on UnknownPolicy {
+        id
+        policyType
+      }
+      ... on AdapterBlacklistPolicy {
+        id
+        policyType
+      }
+      ... on AdapterWhitelistPolicy {
+        id
+        policyType
+      }
+      ... on AssetBlacklistPolicy {
+        id
+        policyType
+      }
+      ... on AssetWhitelistPolicy {
+        policyType
+      }
+      ... on AssetWhitelistPolicy {
+        id
+      }
+      ... on BuySharesCallerWhitelistPolicy {
+        id
+        policyType
+      }
+      ... on DepositorWhitelistPolicy {
+        id
+        policyType
+      }
+      ... on GuaranteedRedemptionPolicy {
+        policyType
+      }
+      ... on GuaranteedRedemptionPolicy {
+        id
+      }
+      ... on MaxConcentrationPolicy {
+        id
+        policyType
+      }
+    }
   }
 }
     `;
+export const VaultListDocument = gql`
+    query VaultList {
+  vaults {
+    ...Vault
+  }
+}
+    ${VaultFragmentDoc}`;
+export const VaultDetailsDocument = gql`
+    query VaultDetails($id: ID!) {
+  vault(id: $id) {
+    ...Vault
+  }
+}
+    ${VaultFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -24630,8 +24859,11 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    Vaults(variables?: VaultsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VaultsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<VaultsQuery>(VaultsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Vaults', 'query');
+    VaultList(variables?: VaultListQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VaultListQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<VaultListQuery>(VaultListDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'VaultList', 'query');
+    },
+    VaultDetails(variables: VaultDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VaultDetailsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<VaultDetailsQuery>(VaultDetailsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'VaultDetails', 'query');
     }
   };
 }

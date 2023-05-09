@@ -1,5 +1,5 @@
 import { SUBGRAPH_URL } from "@/consts";
-import { VaultsDocument, VaultsQuery } from "@/queries/core";
+import {VaultListDocument, VaultListQuery} from "@/queries/core";
 import { GraphQLClient } from "graphql-request";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ export const runtime = "edge";
 
 async function getData() {
   const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
-  return await client.request<VaultsQuery>(VaultsDocument);
+  return await client.request<VaultListQuery>(VaultListDocument);
 }
 
 export default async function VaultListPage({ params }: { params: { deployment: string } }) {
