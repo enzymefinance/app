@@ -1,8 +1,9 @@
 import { SUBGRAPH_URL, deployments } from "@/consts";
 import { VaultListDocument, VaultListQuery } from "@/queries/core";
 import { GraphQLClient } from "graphql-request";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import Link from "next/link";
 
 export const runtime = "edge";
 
@@ -22,14 +23,17 @@ export default async function VaultListPage({ params }: { params: { deployment: 
     <div>
       {vaults.vaults.map(({ id, name, symbol }) => {
         return (
-          <div
-            key={`vault-${id}`}
-            style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}
-          >
-            <div>{name}</div>
-            <div>{symbol}</div>
-            <Link href={`${params.deployment}/${id}`}>Link</Link>
-          </div>
+            <Card key={`vault-${id}`}>
+              <CardHeader>
+                <CardTitle>
+                  {name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div>symbol: {symbol}</div>
+                <Link href={`${params.deployment}/${id}`}>Link</Link>
+              </CardContent>
+            </Card>
         );
       })}
     </div>

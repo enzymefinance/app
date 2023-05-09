@@ -1,4 +1,4 @@
-const isSubgraph = false
+const isSubgraph = true
 
 export default function Layout(props: {
   children: React.ReactNode;
