@@ -33,17 +33,25 @@ jobs:
       - name: Check types
         run: pnpm run typecheck
 
-  # test:
-  #   name: Test
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 10
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
 
-  #   steps:
-  #     - name: Clone repository
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
 
-  #     - name: Install dependencies
-  #       uses: ./.github/actions/install-dependencies
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
 
-  #     - name: Run tests
-  #       run: pnpm run test
+      - name: Create build
+        run: pnpm run build
+
+      - name: Start preview
+        run: pnpm run start &
+        env:
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+
+      - name: Run tests
+        run: pnpm run test

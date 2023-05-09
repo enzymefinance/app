@@ -6,8 +6,8 @@ export let mainnetRpcUrl = "/rpc/mainnet";
 export let polygonRpcUrl = "/rpc/polygon";
 
 if (isServer) {
-  mainnetRpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}`;
-  polygonRpcUrl = `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`;
+  mainnetRpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`;
+  polygonRpcUrl = `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
 }
 
 export function getRpcUrl(network: "mainnet" | "polygon") {
