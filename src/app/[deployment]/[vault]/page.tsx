@@ -1,8 +1,8 @@
+import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { z } from "@/lib/zod";
-import { notFound } from "next/navigation";
 
 const networks = {
   mainnet: "mainnet",
@@ -29,7 +29,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
       vault,
       network,
     }),
-  ]).catch(() => notFound());
+  ]).catch(handleContractError());
 
   return (
     <>
