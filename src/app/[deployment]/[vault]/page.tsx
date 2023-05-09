@@ -27,6 +27,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
 
   const network = networks[deployment];
 
+  console.log({ vault });
   const [name, owner, comptroller, trackedAssets] = await Promise.all([
     getVaultName({
       vault,
@@ -46,7 +47,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     }),
   ]).catch(handleContractError());
 
-  const [trackedAssetsInfo, trackedAssetsBalance, denominationAsset] = await Promise.all([
+  const [trackedAssetsInfo, , denominationAsset] = await Promise.all([
     Promise.all(trackedAssets.map((trackedAsset) => getAssetInfo({ network, asset: trackedAsset }))),
     Promise.all(
       trackedAssets.map((trackedAsset) => getAccountBalance({ network, asset: trackedAsset, account: vault })),
@@ -71,6 +72,8 @@ export default async function VaultPage({ params }: { params: { deployment: stri
       </CardHeader>
       <CardContent>
       <div>owner: {owner}</div>
+      <div>denomination asset: {denominationAssetInfo.symbol}</div>
+
       <div>
         {trackedAssetsInfo.map((trackedAssetInfo) => (
           <div key={trackedAssetInfo.symbol}>
