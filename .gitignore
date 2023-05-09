@@ -26,3 +26,8 @@
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# queries
+
+/src/queries/core.ts
+/src/queries/core.introspection.ts
