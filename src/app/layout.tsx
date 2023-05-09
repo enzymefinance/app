@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/lib/styles/globals.css";
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeProvider } from "@/components/ThemeProvider";

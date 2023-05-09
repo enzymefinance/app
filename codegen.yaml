@@ -17,8 +17,8 @@ config:
   strictScalars: true
 
 generates:
-  src/queries/core.ts:
-    documents: src/queries/**/*.graphql
+  src/lib/generated/subgraphs/core.ts:
+    documents: queries/**/*.graphql
     schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
     config:
       dedupeFragments: true
@@ -29,7 +29,7 @@ generates:
       - typescript
       - typescript-operations
       - typescript-graphql-request
-  src/queries/core.introspection.ts:
+  src/lib/generated/subgraphs/core.introspection.ts:
     schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
     plugins:
       - fragment-matcher

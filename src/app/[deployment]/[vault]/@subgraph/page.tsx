@@ -1,6 +1,6 @@
-import {networks, SUBGRAPH_URL} from "@/consts";
+import {networks, SUBGRAPH_URL} from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
-import { VaultDetailsDocument, VaultDetailsQuery } from "@/queries/core";
+import { VaultDetailsDocument, VaultDetailsQuery } from "@/lib/generated/subgraphs/core";
 import { IVault } from "@enzymefinance/abis/IVault";
 import { GraphQLClient } from "graphql-request";
 import { Address, getAddress } from "viem";

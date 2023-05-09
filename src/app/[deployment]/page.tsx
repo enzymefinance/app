@@ -1,5 +1,5 @@
-import { SUBGRAPH_URL, deployments } from "@/consts";
-import { VaultListDocument, VaultListQuery } from "@/queries/core";
+import { SUBGRAPH_URL, deployments } from "@/lib/consts";
+import { VaultListDocument, VaultListQuery } from "@/lib/generated/subgraphs/core";
 import { GraphQLClient } from "graphql-request";
 import { notFound } from "next/navigation";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
