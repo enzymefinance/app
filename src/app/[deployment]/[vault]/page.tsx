@@ -1,40 +1,12 @@
-import { SUBGRAPH_URL } from "@/consts";
+import {networks, SUBGRAPH_URL} from "@/consts";
 import { getPublicClient } from "@/lib/rpc";
 import { VaultDetailsDocument, VaultDetailsQuery } from "@/queries/core";
 import { IVault } from "@enzymefinance/abis/IVault";
 import { GraphQLClient } from "graphql-request";
-import { notFound } from "next/navigation";
-import { isAddress } from "viem";
 import { Address, getAddress } from "viem";
+import Link from "next/link";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
-
-const networks = {
-  mainnet: "mainnet",
-  polygon: "polygon",
-  testnet: "polygon",
-} as const;
-
-// async function getVault(params: VaultPageParams) {
-//   if (!isAddress(params.vault)) {
-//     return notFound();
-//   }
-
-//   const deployment = params.deployment as typeof deployments[number];
-//   if (!deployments.includes(deployment)) {
-//     return notFound();
-//   }
-
-//   const client = getPublicClient(networks[deployment]);
-
-//   const result = await client.readContract({
-//     abi: IVault,
-//     functionName: "name",
-//     address: params.vault,
-//   });
-
-//   return result;
-// }
 
 const getTrackedAssets = async (deployment: typeof deployments[number], vaultId: Address) => {
   const client = getPublicClient(networks[deployment]);
@@ -51,21 +23,12 @@ async function getVaultDetails(id: string) {
   return await client.request<VaultDetailsQuery>(VaultDetailsDocument, { id });
 }
 
-// balanceOf...
-// "getActiveExternalPositions"
-
-// IExternalPositions.ts
-// getDeptAssets
-// getManagedAssets
-// assets, amounts
-
 type VaultPageParams = { deployment: string; vault: string };
 
 export default async function VaultPage({ params }: { params: VaultPageParams }) {
   const deployment = params.deployment as typeof deployments[number];
 
   const { vault } = await getVaultDetails(params.vault);
-  // console.log(vault);
 
   const trackedAssets = await getTrackedAssets(deployment, getAddress(params.vault));
   console.log(trackedAssets);
@@ -105,6 +68,10 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
             </div>
           );
         })}
+      </div>
+      <div style={{display: 'flex'}}>
+        <Link href={`${params.deployment}/${vault?.id}/deposit`} style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>Deposit</Link>
+        <Link href={`${params.deployment}/${vault?.id}/redeem`} style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>Redeem</Link>
       </div>
     </div>
   );
