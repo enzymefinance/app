@@ -11,6 +11,9 @@
       "all": true,
       "nursery": {
         "useCamelCase": "off"
+      },
+      "suspicious": {
+        "noRedundantUseStrict": "off"
       }
     }
   },
