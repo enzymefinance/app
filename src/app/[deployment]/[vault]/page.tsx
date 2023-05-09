@@ -1,79 +1,88 @@
-import {networks, SUBGRAPH_URL} from "@/consts";
-import { getPublicClient } from "@/lib/rpc";
-import { VaultDetailsDocument, VaultDetailsQuery } from "@/queries/core";
-import { IVault } from "@enzymefinance/abis/IVault";
-import { GraphQLClient } from "graphql-request";
-import { Address, getAddress } from "viem";
-import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { handleContractError } from "@/lib/errors";
+import { assertParams } from "@/lib/params";
+import { getAccountBalance } from "@/lib/rpc/getAccountBalance";
+import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
+import { getComptrollerDenominationAsset } from "@/lib/rpc/getComptrollerDenominationAsset";
+import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
+import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
+import { getVaultName } from "@/lib/rpc/getVaultName";
+import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
+import { z } from "@/lib/zod";
 
-const deployments = ["mainnet", "polygon", "testnet"] as const;
+const networks = {
+  mainnet: "mainnet",
+  polygon: "polygon",
+  testnet: "polygon",
+} as const;
 
-const getTrackedAssets = async (deployment: typeof deployments[number], vaultId: Address) => {
-  const client = getPublicClient(networks[deployment]);
-
-  return await client.readContract({
-    abi: IVault,
-    address: vaultId,
-    functionName: "getTrackedAssets",
+export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
+  const { vault, deployment } = assertParams({
+    params,
+    schema: z.object({
+      deployment: z.deployment(),
+      vault: z.address(),
+    }),
   });
-};
 
-async function getVaultDetails(id: string) {
-  const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
-  return await client.request<VaultDetailsQuery>(VaultDetailsDocument, { id });
-}
+  const network = networks[deployment];
 
-type VaultPageParams = { deployment: string; vault: string };
+  console.log({ vault });
+  const [name, owner, comptroller, trackedAssets] = await Promise.all([
+    getVaultName({
+      vault,
+      network,
+    }),
+    getVaultOwner({
+      vault,
+      network,
+    }),
+    getVaultComptroller({
+      vault,
+      network,
+    }),
+    getTrackedAssets({
+      vault,
+      network,
+    }),
+  ]).catch(handleContractError());
 
-export default async function VaultPage({ params }: { params: VaultPageParams }) {
-  const deployment = params.deployment as typeof deployments[number];
+  const [trackedAssetsInfo, , denominationAsset] = await Promise.all([
+    Promise.all(trackedAssets.map((trackedAsset) => getAssetInfo({ network, asset: trackedAsset }))),
+    Promise.all(
+      trackedAssets.map((trackedAsset) => getAccountBalance({ network, asset: trackedAsset, account: vault })),
+    ),
+    getComptrollerDenominationAsset({
+      network,
+      comptroller,
+    }),
+  ]).catch(handleContractError());
 
-  const { vault } = await getVaultDetails(params.vault);
-
-  const trackedAssets = await getTrackedAssets(deployment, getAddress(params.vault));
-  console.log(trackedAssets);
+  const denominationAssetInfo = await getAssetInfo({
+    network,
+    asset: denominationAsset,
+  }).catch(handleContractError());
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <h2>Overview</h2>
-      <section style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>
-        <div>Name: {vault?.name}</div>
-        <div>Symbol: {vault?.symbol}</div>
-        <div>Address: {vault?.id}</div>
-        <div>Owner: {vault?.owner?.id}</div>
-      </section>
-      <h2>Portfolio</h2>
-      <div style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>
-        {/*  */}
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          {name}
+      </CardTitle>
+      </CardHeader>
+      <CardContent>
+      <div>owner: {owner}</div>
+      <div>denomination asset: {denominationAssetInfo.symbol}</div>
+
+      <div>
+        {trackedAssetsInfo.map((trackedAssetInfo) => (
+          <div key={trackedAssetInfo.symbol}>
+            {trackedAssetInfo.symbol} {trackedAssetInfo.name}
+          </div>
+        ))}
       </div>
-      <h2>Configuration</h2>
-      <div style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>
-        <h3>
-          <strong>Fees</strong>
-        </h3>
-        {vault?.comptroller?.fees.map((fee, i) => {
-          return (
-            <div key={`fee-key-${i}`}>
-              <div>Fee Type: {fee.feeType}</div>
-            </div>
-          );
-        })}
-        <h3>
-          <strong>Policies</strong>
-        </h3>
-        {vault?.comptroller?.policies.map((policy, i) => {
-          return (
-            <div key={`policy-key-${i}`}>
-              <div>Policy Type: {policy.policyType}</div>
-            </div>
-          );
-        })}
-      </div>
-      <div style={{display: 'flex'}}>
-        <Link href={`${params.deployment}/${vault?.id}/deposit`} style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>Deposit</Link>
-        <Link href={`${params.deployment}/${vault?.id}/redeem`} style={{ border: "1px solid #333", padding: "1rem", backgroundColor: "#e8e8e8", margin: "1rem" }}>Redeem</Link>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 

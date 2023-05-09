@@ -23,5 +23,8 @@ export const getPublicClient = cache(function getPublicClient(network: "mainnet"
   return createPublicClient({
     transport: http(getRpcUrl(network)),
     name: network,
+    batch: {
+      multicall: true,
+    },
   });
 });
