@@ -1,0 +1,35 @@
+config:
+  nonOptionalTypename: true
+  namingConvention:
+    transformUnderscore: true
+    typeNames: change-case-all#pascalCase
+    enumValues: change-case-all#upperCase
+  scalars:
+    Address: Address
+    BigDecimal: string
+    BigInt: string
+    BigNumber: string
+    Bytes: string
+    BytesLike: BytesLike
+    Date: Date
+    DateTime: Date
+    Upload: File
+  strictScalars: true
+
+generates:
+  src/queries/core.ts:
+    documents: src/queries/**/*.graphql
+    schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
+    config:
+      dedupeFragments: true
+      useTypeImports: true
+      withComponent: false
+      withHooks: true
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  src/queries/core.introspection.ts:
+    schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
+    plugins:
+      - fragment-matcher

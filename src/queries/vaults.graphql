@@ -1,0 +1,7 @@
+query Vaults {
+    vaults {
+        id
+        name
+        symbol
+    }
+}
