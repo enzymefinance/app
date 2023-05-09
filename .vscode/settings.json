@@ -4,6 +4,9 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports.rome": true
   },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "rome.rome"
   },
