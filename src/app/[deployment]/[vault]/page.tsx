@@ -22,6 +22,8 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     params,
   });
 
+  pawel stinks
+
   const network = networks[deployment];
 
   const [name, owner] = await Promise.all([getVaultName({ vault, network }), getVaultOwner({ vault, network })]);
