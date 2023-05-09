@@ -11,7 +11,7 @@ dependencies:
     version: 0.0.8
   '@enzymefinance/sdk':
     specifier: ^0.0.13
-    version: 0.0.13(typescript@5.0.4)
+    version: 0.0.13(typescript@5.0.4)(zod@3.21.4)
   '@playwright/test':
     specifier: ^1.33.0
     version: 1.33.0
@@ -65,10 +65,13 @@ dependencies:
     version: 5.0.4
   viem:
     specifier: ^0.3.19
-    version: 0.3.19(typescript@5.0.4)
+    version: 0.3.19(typescript@5.0.4)(zod@3.21.4)
   wagmi:
     specifier: 1.0.0-next.9
-    version: 1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)
+    version: 1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)(zod@3.21.4)
+  zod:
+    specifier: ^3.21.4
+    version: 3.21.4
 
 packages:
 
@@ -120,13 +123,13 @@ packages:
     resolution: {integrity: sha512-GtnyEyvQc3iB8/3hXtguM+eHiQxN06tabZV6wPWQEARsQhxTOZsjHioK1kUrRvtD56eoezjyiyLFWTn2l35/yg==}
     dev: false
 
-  /@enzymefinance/sdk@0.0.13(typescript@5.0.4):
+  /@enzymefinance/sdk@0.0.13(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-q5qRImGQeKSQJG0okN0Uu1c5LpAHa+gbtr+8x4hdqScJHkwVQvK3gfwRuuq39ujmv6SeiD6FKRGXF3iH7u+kRw==}
     dependencies:
       '@enzymefinance/abis': 0.0.8
-      abitype: 0.8.2(typescript@5.0.4)
+      abitype: 0.8.2(typescript@5.0.4)(zod@3.21.4)
       decimal.js: 10.4.3
-      viem: 0.3.19(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)(zod@3.21.4)
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -1127,7 +1130,7 @@ packages:
       typescript: 5.0.4
     dev: false
 
-  /@wagmi/connectors@1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19):
+  /@wagmi/connectors@1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)(zod@3.21.4):
     resolution: {integrity: sha512-9y4gdo+WllVqAlqa35+Yb59QyGRSeVR75xt1gMNVKIbvHiLGjseWSq0RoRdIQcLf6NAWUxQPMRYD/qdNPAcmkQ==}
     peerDependencies:
       '@wagmi/chains': '>=0.2.0'
@@ -1147,10 +1150,10 @@ packages:
       '@walletconnect/ethereum-provider': 2.7.1(@web3modal/standalone@2.3.7)
       '@walletconnect/legacy-provider': 2.0.0
       '@web3modal/standalone': 2.3.7(react@18.2.0)
-      abitype: 0.7.1(typescript@5.0.4)
+      abitype: 0.7.1(typescript@5.0.4)(zod@3.21.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
-      viem: 0.3.19(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)(zod@3.21.4)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - bufferutil
@@ -1163,7 +1166,7 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.19):
+  /@wagmi/core@1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)(zod@3.21.4):
     resolution: {integrity: sha512-UOCcTR6TbxxXRSc64amQSIYAFUgwSncsUiZHZoT2ufwLAu7/p4i1iDG9B+hTuT6eEquuLL+x2zzq+9KFwU15Iw==}
     peerDependencies:
       typescript: '>=4.9.4'
@@ -1173,11 +1176,11 @@ packages:
         optional: true
     dependencies:
       '@wagmi/chains': 0.2.22(typescript@5.0.4)
-      '@wagmi/connectors': 1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)
-      abitype: 0.7.1(typescript@5.0.4)
+      '@wagmi/connectors': 1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)(zod@3.21.4)
+      abitype: 0.7.1(typescript@5.0.4)(zod@3.21.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
-      viem: 0.3.19(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)(zod@3.21.4)
       zustand: 4.3.8(react@18.2.0)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -1577,7 +1580,7 @@ packages:
       through: 2.3.8
     dev: false
 
-  /abitype@0.7.1(typescript@5.0.4):
+  /abitype@0.7.1(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
     peerDependencies:
       typescript: '>=4.9.4'
@@ -1587,9 +1590,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.0.4
+      zod: 3.21.4
     dev: false
 
-  /abitype@0.8.2(typescript@5.0.4):
+  /abitype@0.8.2(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-B1ViNMGpfx/qjVQi0RTc2HEFHuR9uoCoTEkwELT5Y7pBPtBbctYijz9BK6+Kd0hQ3S70FhYTO2dWWk0QNUEXMA==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -1599,6 +1603,7 @@ packages:
         optional: true
     dependencies:
       typescript: 5.0.4
+      zod: 3.21.4
     dev: false
 
   /aes-js@3.0.0:
@@ -3407,7 +3412,7 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.3.19(typescript@5.0.4):
+  /viem@0.3.19(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-7OlSgiB7e+OFz9OqTOZ/Mpx8GAAVKCxsaPDJRuR8QtixlruUHPfHBHOemkX+O/Drn6B7l04iCUZjCvSB8OtVKg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
@@ -3416,7 +3421,7 @@ packages:
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
       '@wagmi/chains': 0.2.16(typescript@5.0.4)
-      abitype: 0.8.2(typescript@5.0.4)
+      abitype: 0.8.2(typescript@5.0.4)(zod@3.21.4)
       isomorphic-ws: 5.0.0(ws@8.12.0)
       ws: 8.12.0
     transitivePeerDependencies:
@@ -3426,7 +3431,7 @@ packages:
       - zod
     dev: false
 
-  /wagmi@1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19):
+  /wagmi@1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)(zod@3.21.4):
     resolution: {integrity: sha512-8fxKXinUVVZNjmO0jrcntbB9E6Sylky893S+glx2rWt5Lwrce2HLDooCh2nmMehYbymx2r7fbsKOmAj3vmbDYw==}
     peerDependencies:
       react: '>=17.0.0'
@@ -3439,12 +3444,12 @@ packages:
       '@tanstack/query-sync-storage-persister': 4.29.5
       '@tanstack/react-query': 4.29.5(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-persist-client': 4.29.5(@tanstack/react-query@4.29.5)
-      '@wagmi/core': 1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)
-      abitype: 0.7.1(typescript@5.0.4)
+      '@wagmi/core': 1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)(zod@3.21.4)
+      abitype: 0.7.1(typescript@5.0.4)(zod@3.21.4)
       react: 18.2.0
       typescript: 5.0.4
       use-sync-external-store: 1.2.0(react@18.2.0)
-      viem: 0.3.19(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)(zod@3.21.4)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - bufferutil

@@ -1,41 +1,37 @@
-import { getPublicClient } from "@/lib/rpc";
-import { IVault } from "@enzymefinance/abis/IVault";
+import { parseParams } from "@/lib/parseParams";
+import { getVaultName } from "@/lib/rpc/getVaultName";
+import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { notFound } from "next/navigation";
-import { isAddress } from "viem";
+import { Address, isAddress } from "viem";
+import { z } from "zod";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
+type Deployment = typeof deployments[number];
 const networks = {
   mainnet: "mainnet",
   polygon: "polygon",
   testnet: "polygon",
 } as const;
 
-async function getVault(params: VaultPageParams) {
-  if (!isAddress(params.vault)) {
-    return notFound();
-  }
-
-  const deployment = params.deployment as typeof deployments[number];
-  if (!deployments.includes(deployment)) {
-    return notFound();
-  }
-
-  const client = getPublicClient(networks[deployment]);
-  const result = await client.readContract({
-    abi: IVault,
-    functionName: "name",
-    address: params.vault,
+export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
+  const { vault, deployment } = parseParams({
+    schema: z.object({
+      deployment: z.string().and(z.union([z.literal("mainnet"), z.literal("polygon"), z.literal("testnet")])),
+      vault: z.string().refine(isAddress, { message: "invalid vault address" }),
+    }),
+    params,
   });
 
-  return result;
-}
+  const network = networks[deployment];
 
-type VaultPageParams = { deployment: string; vault: string };
+  const [name, owner] = await Promise.all([getVaultName({ vault, network }), getVaultOwner({ vault, network })]);
 
-export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
-  const vault = await getVault(params);
-
-  return <div>{vault}</div>;
+  return (
+    <>
+      <div>name: {name}</div>
+      <div>owner: {owner}</div>
+    </>
+  );
 }
 
 export const runtime = "edge";
