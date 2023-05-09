@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
-export function parseParams<TSchema extends z.AnyZodObject>({
+export function assertParams<TSchema extends z.AnyZodObject>({
   schema,
   params,
 }: { schema: TSchema; params: unknown }): z.output<TSchema> {
