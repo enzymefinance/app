@@ -1,15 +1,15 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SUBGRAPH_URL, deployments } from "@/lib/consts";
-import { VaultListDocument, VaultListQuery } from "@/lib/generated/subgraphs/core";
+import { vaultList } from "@/lib/subgraphs/core/vaultList";
 import { GraphQLClient } from "graphql-request";
-import { notFound } from "next/navigation";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
 async function getData() {
   const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
-  return await client.request<VaultListQuery>(VaultListDocument);
+  return await client.request(vaultList);
 }
 
 export default async function VaultListPage({ params }: { params: { deployment: string } }) {
@@ -23,17 +23,15 @@ export default async function VaultListPage({ params }: { params: { deployment: 
     <div>
       {vaults.vaults.map(({ id, name, symbol }) => {
         return (
-            <Card key={`vault-${id}`}>
-              <CardHeader>
-                <CardTitle>
-                  {name}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div>symbol: {symbol}</div>
-                <Link href={`${params.deployment}/${id}`}>Link</Link>
-              </CardContent>
-            </Card>
+          <Card key={`vault-${id}`}>
+            <CardHeader>
+              <CardTitle>{name}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div>symbol: {symbol}</div>
+              <Link href={`${params.deployment}/${id}`}>Link</Link>
+            </CardContent>
+          </Card>
         );
       })}
     </div>

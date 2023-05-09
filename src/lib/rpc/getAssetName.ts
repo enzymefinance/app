@@ -1,6 +1,6 @@
-import { Network } from "../types";
+import type { Network } from "../types";
 import { getPublicClient } from "@/lib/rpc";
-import { Address, parseAbi } from "viem";
+import { type Address, parseAbi } from "viem";
 import { readContract } from "viem/contract";
 
 export async function getAssetName({

@@ -66,21 +66,19 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          {name}
-      </CardTitle>
+        <CardTitle>{name}</CardTitle>
       </CardHeader>
       <CardContent>
-      <div>owner: {owner}</div>
-      <div>denomination asset: {denominationAssetInfo.symbol}</div>
+        <div>owner: {owner}</div>
+        <div>denomination asset: {denominationAssetInfo.symbol}</div>
 
-      <div>
-        {trackedAssetsInfo.map((trackedAssetInfo) => (
-          <div key={trackedAssetInfo.symbol}>
-            {trackedAssetInfo.symbol} {trackedAssetInfo.name}
-          </div>
-        ))}
-      </div>
+        <div>
+          {trackedAssetsInfo.map((trackedAssetInfo) => (
+            <div key={trackedAssetInfo.symbol}>
+              {trackedAssetInfo.symbol} {trackedAssetInfo.name}
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );

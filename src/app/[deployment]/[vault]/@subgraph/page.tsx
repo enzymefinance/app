@@ -1,10 +1,10 @@
-import {networks, SUBGRAPH_URL} from "@/lib/consts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SUBGRAPH_URL, networks } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
-import { VaultDetailsDocument, VaultDetailsQuery } from "@/lib/generated/subgraphs/core";
+import { vaultDetails } from "@/lib/subgraphs/core/vaultDetails";
 import { IVault } from "@enzymefinance/abis/IVault";
 import { GraphQLClient } from "graphql-request";
-import { Address, getAddress } from "viem";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { type Address, getAddress } from "viem";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
 
@@ -20,7 +20,7 @@ const getTrackedAssets = async (deployment: typeof deployments[number], vaultId:
 
 async function getVaultDetails(id: string) {
   const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
-  return await client.request<VaultDetailsQuery>(VaultDetailsDocument, { id });
+  return await client.request(vaultDetails, { id });
 }
 
 type VaultPageParams = { deployment: string; vault: string };
@@ -34,71 +34,63 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
   console.log(trackedAssets);
 
   return (
-      <div style={{ padding: "1rem" }}>
-          <Card>
-              <CardHeader>
-                  <CardTitle>
-                      Overview
-                  </CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <div>Name: {vault?.name}</div>
-                  <div>Symbol: {vault?.symbol}</div>
-                  <div>Address: {vault?.id}</div>
-                  <div>Owner: {vault?.owner?.id}</div>
-              </CardContent>
-          </Card>
-          <Card>
-              <CardHeader>
-                  <CardTitle>
-                      Portfolio
-                  </CardTitle>
-              </CardHeader>
-              <CardContent>
-              {/*    */}
-              </CardContent>
-          </Card>
-          <Card>
-              <CardHeader>
-                  <CardTitle>
-                      Configuration
-                  </CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <h3>
-                      <strong>Fees</strong>
-                  </h3>
-                  {vault?.comptroller?.fees.map((fee, i) => {
-                      return (
-                          <div key={`fee-key-${i}`}>
-                              <div>Fee Type: {fee.feeType}</div>
-                          </div>
-                      );
-                  })}
-                  <h3>
-                      <strong>Policies</strong>
-                  </h3>
-                  {vault?.comptroller?.policies.map((policy, i) => {
-                      return (
-                          <div key={`policy-key-${i}`}>
-                              <div>Policy Type: {policy.policyType}</div>
-                          </div>
-                      );
-                  })}
-              </CardContent>
-          </Card>
-          {/*<Card>*/}
-          {/*    <CardHeader>*/}
-          {/*        <CardTitle>*/}
-          {/*            Overview*/}
-          {/*        </CardTitle>*/}
-          {/*    </CardHeader>*/}
-          {/*    <CardContent>*/}
-          {/*        <Link href={`${params.deployment}/${vault?.id}/deposit`} >Deposit</Link>*/}
-          {/*        <Link href={`${params.deployment}/${vault?.id}/redeem`} >Redeem</Link>*/}
-          {/*    </CardContent>*/}
-          {/*</Card>*/}
-      </div>
+    <div style={{ padding: "1rem" }}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Overview</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div>Name: {vault?.name}</div>
+          <div>Symbol: {vault?.symbol}</div>
+          <div>Address: {vault?.id}</div>
+          <div>Owner: {vault?.owner?.id}</div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Portfolio</CardTitle>
+        </CardHeader>
+        <CardContent>{/*    */}</CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Configuration</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <h3>
+            <strong>Fees</strong>
+          </h3>
+          {vault?.comptroller?.fees.map((fee, i) => {
+            return (
+              <div key={`fee-key-${i}`}>
+                <div>Fee Type: {fee.feeType}</div>
+              </div>
+            );
+          })}
+          <h3>
+            <strong>Policies</strong>
+          </h3>
+          {vault?.comptroller?.policies.map((policy, i) => {
+            return (
+              <div key={`policy-key-${i}`}>
+                <div>Policy Type: {policy.policyType}</div>
+              </div>
+            );
+          })}
+        </CardContent>
+      </Card>
+      {/*<Card>*/}
+      {/*    <CardHeader>*/}
+      {/*        <CardTitle>*/}
+      {/*            Overview*/}
+      {/*        </CardTitle>*/}
+      {/*    </CardHeader>*/}
+      {/*    <CardContent>*/}
+      {/*        <Link href={`${params.deployment}/${vault?.id}/deposit`} >Deposit</Link>*/}
+      {/*        <Link href={`${params.deployment}/${vault?.id}/redeem`} >Redeem</Link>*/}
+      {/*    </CardContent>*/}
+      {/*</Card>*/}
+    </div>
   );
 }
 

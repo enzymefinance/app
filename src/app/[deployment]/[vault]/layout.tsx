@@ -1,14 +1,15 @@
-const isSubgraph = false
+import type { ReactNode } from "react";
+
+const isSubgraph = false;
 
 export default function Layout(props: {
-  children: React.ReactNode;
-  onChain: React.ReactNode;
-  subgraph: React.ReactNode;
+  children: ReactNode;
+  onchain: ReactNode;
+  subgraph: ReactNode;
 }) {
-
   if (isSubgraph) {
-    return props.subgraph
+    return props.subgraph;
   }
 
-  return props.onChain
+  return props.onchain;
 }

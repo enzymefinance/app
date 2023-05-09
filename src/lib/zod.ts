@@ -1,4 +1,4 @@
-import { Address, isAddress } from "viem";
+import { type Address, isAddress } from "viem";
 import { z as zz } from "zod";
 
 function address() {
