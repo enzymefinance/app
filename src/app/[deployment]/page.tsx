@@ -1,5 +1,5 @@
 import { SUBGRAPH_URL } from "@/consts";
-import {VaultListDocument, VaultListQuery} from "@/queries/core";
+import { VaultListDocument, VaultListQuery } from "@/queries/core";
 import { GraphQLClient } from "graphql-request";
 import Link from "next/link";
 
@@ -11,8 +11,6 @@ async function getData() {
 }
 
 export default async function VaultListPage({ params }: { params: { deployment: string } }) {
-  console.log("PARAMS", params.deployment);
-
   const vaults = await getData();
 
   return (
