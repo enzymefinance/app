@@ -1,16 +1,13 @@
+import { getRpcUrl } from "@/lib/rpc";
 import { NextRequest } from "next/server";
 
-export const runtime = "edge";
-
 export async function POST(req: NextRequest, { params }: { params: { network: string } }) {
-  if (!Object.keys(networks).includes(params.network)) {
+  const network = params.network;
+  if (network !== "mainnet" && network !== "polygon") {
     return new Response(undefined, { status: 404 });
   }
 
-  const network = networks[params.network as keyof typeof networks];
-  const url = `https://${network}.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`;
-
-  return fetch(url, {
+  return fetch(getRpcUrl(network), {
     method: "POST",
     body: req.body,
     headers: {
@@ -19,7 +16,4 @@ export async function POST(req: NextRequest, { params }: { params: { network: st
   });
 }
 
-const networks = {
-  mainnet: "eth-mainnet",
-  polygon: "polygon-mainnet",
-} as const;
+export const runtime = "edge";

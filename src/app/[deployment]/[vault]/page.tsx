@@ -1,7 +1,7 @@
-import { origin } from "@/lib/origin";
+import { getPublicClient } from "@/lib/rpc";
 import { IVault } from "@enzymefinance/abis/IVault";
 import { notFound } from "next/navigation";
-import { createPublicClient, http, isAddress } from "viem";
+import { isAddress } from "viem";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
 const networks = {
@@ -20,12 +20,7 @@ async function getVault(params: VaultPageParams) {
     return notFound();
   }
 
-  const network = networks[deployment];
-  const client = createPublicClient({
-    transport: http(`${origin}/rpc/${network}`),
-    name: network,
-  });
-
+  const client = getPublicClient(networks[deployment]);
   const result = await client.readContract({
     abi: IVault,
     functionName: "name",
@@ -42,3 +37,5 @@ export default async function VaultPage({ params }: { params: { deployment: stri
 
   return <div>{vault}</div>;
 }
+
+export const runtime = "edge";
