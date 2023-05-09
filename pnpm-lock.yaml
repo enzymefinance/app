@@ -10,11 +10,14 @@ dependencies:
     specifier: ^0.0.8
     version: 0.0.8
   '@enzymefinance/sdk':
-    specifier: ^0.0.12
-    version: 0.0.12(typescript@5.0.4)
+    specifier: ^0.0.13
+    version: 0.0.13(typescript@5.0.4)
+  '@playwright/test':
+    specifier: ^1.33.0
+    version: 1.33.0
   '@types/node':
-    specifier: 20.1.0
-    version: 20.1.0
+    specifier: 20.1.1
+    version: 20.1.1
   '@types/react':
     specifier: 18.2.6
     version: 18.2.6
@@ -61,11 +64,11 @@ dependencies:
     specifier: 5.0.4
     version: 5.0.4
   viem:
-    specifier: ^0.3.18
-    version: 0.3.18(typescript@5.0.4)
+    specifier: ^0.3.19
+    version: 0.3.19(typescript@5.0.4)
   wagmi:
     specifier: 1.0.0-next.9
-    version: 1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.18)
+    version: 1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)
 
 packages:
 
@@ -117,13 +120,13 @@ packages:
     resolution: {integrity: sha512-GtnyEyvQc3iB8/3hXtguM+eHiQxN06tabZV6wPWQEARsQhxTOZsjHioK1kUrRvtD56eoezjyiyLFWTn2l35/yg==}
     dev: false
 
-  /@enzymefinance/sdk@0.0.12(typescript@5.0.4):
-    resolution: {integrity: sha512-X3dSacm3U7ckjUUcomN2DmrjIYV5khu4ExsrWDMts4j5nbmTiDwiS8vfes6YNc9vuCiQbPSXe6X4Guzi7w52RQ==}
+  /@enzymefinance/sdk@0.0.13(typescript@5.0.4):
+    resolution: {integrity: sha512-q5qRImGQeKSQJG0okN0Uu1c5LpAHa+gbtr+8x4hdqScJHkwVQvK3gfwRuuq39ujmv6SeiD6FKRGXF3iH7u+kRw==}
     dependencies:
       '@enzymefinance/abis': 0.0.8
       abitype: 0.8.2(typescript@5.0.4)
       decimal.js: 10.4.3
-      viem: 0.3.18(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -729,6 +732,17 @@ packages:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
     dev: false
 
+  /@playwright/test@1.33.0:
+    resolution: {integrity: sha512-YunBa2mE7Hq4CfPkGzQRK916a4tuZoVx/EpLjeWlTVOnD4S2+fdaQZE0LJkbfhN5FTSKNLdcl7MoT5XB37bTkg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@types/node': 20.1.1
+      playwright-core: 1.33.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: false
+
   /@rometools/cli-darwin-arm64@12.0.0:
     resolution: {integrity: sha512-kEFCzU6cgy6vfY0mkMzq57ea3srqV5X2wyCAxjVfA2JF7fioq695uWhy7yOCBW+nUUFIz62N9v1nf/aYqX8XkA==}
     cpu: [arm64]
@@ -1038,7 +1052,7 @@ packages:
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 20.1.0
+      '@types/node': 20.1.1
     dev: false
 
   /@types/debug@4.1.7:
@@ -1055,8 +1069,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: false
 
-  /@types/node@20.1.0:
-    resolution: {integrity: sha512-O+z53uwx64xY7D6roOi4+jApDGFg0qn6WHcxe5QeqjMaTezBO/mxdfFXIVAVVyNWKx84OmPB3L8kbVYOTeN34A==}
+  /@types/node@20.1.1:
+    resolution: {integrity: sha512-uKBEevTNb+l6/aCQaKVnUModfEMjAl98lw2Si9P5y4hLu9tm6AlX2ZIoXZX6Wh9lJueYPrGPKk5WMCNHg/u6/A==}
     dev: false
 
   /@types/prop-types@15.7.5:
@@ -1088,7 +1102,7 @@ packages:
   /@types/ws@7.4.7:
     resolution: {integrity: sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==}
     dependencies:
-      '@types/node': 20.1.0
+      '@types/node': 20.1.1
     dev: false
 
   /@wagmi/chains@0.2.16(typescript@5.0.4):
@@ -1113,7 +1127,7 @@ packages:
       typescript: 5.0.4
     dev: false
 
-  /@wagmi/connectors@1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.18):
+  /@wagmi/connectors@1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19):
     resolution: {integrity: sha512-9y4gdo+WllVqAlqa35+Yb59QyGRSeVR75xt1gMNVKIbvHiLGjseWSq0RoRdIQcLf6NAWUxQPMRYD/qdNPAcmkQ==}
     peerDependencies:
       '@wagmi/chains': '>=0.2.0'
@@ -1136,7 +1150,7 @@ packages:
       abitype: 0.7.1(typescript@5.0.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
-      viem: 0.3.18(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - bufferutil
@@ -1149,7 +1163,7 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.18):
+  /@wagmi/core@1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.19):
     resolution: {integrity: sha512-UOCcTR6TbxxXRSc64amQSIYAFUgwSncsUiZHZoT2ufwLAu7/p4i1iDG9B+hTuT6eEquuLL+x2zzq+9KFwU15Iw==}
     peerDependencies:
       typescript: '>=4.9.4'
@@ -1159,11 +1173,11 @@ packages:
         optional: true
     dependencies:
       '@wagmi/chains': 0.2.22(typescript@5.0.4)
-      '@wagmi/connectors': 1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.18)
+      '@wagmi/connectors': 1.0.0-next.5(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)
       abitype: 0.7.1(typescript@5.0.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
-      viem: 0.3.18(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)
       zustand: 4.3.8(react@18.2.0)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -2381,7 +2395,7 @@ packages:
     peerDependencies:
       ws: '*'
     dependencies:
-      ws: 8.12.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 8.12.0
     dev: false
 
   /jayson@3.7.0:
@@ -2793,6 +2807,12 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
+  /playwright-core@1.33.0:
+    resolution: {integrity: sha512-aizyPE1Cj62vAECdph1iaMILpT0WUDCq3E6rW6I+dleSbBoGbktvJtzS6VHkZ4DKNEOG9qJpiom/ZxO+S15LAw==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: false
+
   /pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
@@ -3032,7 +3052,7 @@ packages:
       '@babel/runtime': 7.21.5
       eventemitter3: 4.0.7
       uuid: 8.3.2
-      ws: 8.12.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
     optionalDependencies:
       bufferutil: 4.0.7
       utf-8-validate: 5.0.10
@@ -3387,8 +3407,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.3.18(typescript@5.0.4):
-    resolution: {integrity: sha512-orgUHs4VblpNBAn7uoGk9sWXdrtaGHuwy6CqaA2nmLjjdoWPhgQnzaVbfxt6xmSDV6MiMAfigxu43DV1j05jmw==}
+  /viem@0.3.19(typescript@5.0.4):
+    resolution: {integrity: sha512-7OlSgiB7e+OFz9OqTOZ/Mpx8GAAVKCxsaPDJRuR8QtixlruUHPfHBHOemkX+O/Drn6B7l04iCUZjCvSB8OtVKg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 1.0.0
@@ -3398,7 +3418,7 @@ packages:
       '@wagmi/chains': 0.2.16(typescript@5.0.4)
       abitype: 0.8.2(typescript@5.0.4)
       isomorphic-ws: 5.0.0(ws@8.12.0)
-      ws: 8.12.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      ws: 8.12.0
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -3406,7 +3426,7 @@ packages:
       - zod
     dev: false
 
-  /wagmi@1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.18):
+  /wagmi@1.0.0-next.9(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.19):
     resolution: {integrity: sha512-8fxKXinUVVZNjmO0jrcntbB9E6Sylky893S+glx2rWt5Lwrce2HLDooCh2nmMehYbymx2r7fbsKOmAj3vmbDYw==}
     peerDependencies:
       react: '>=17.0.0'
@@ -3419,12 +3439,12 @@ packages:
       '@tanstack/query-sync-storage-persister': 4.29.5
       '@tanstack/react-query': 4.29.5(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-persist-client': 4.29.5(@tanstack/react-query@4.29.5)
-      '@wagmi/core': 1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.18)
+      '@wagmi/core': 1.0.0-next.7(react@18.2.0)(typescript@5.0.4)(viem@0.3.19)
       abitype: 0.7.1(typescript@5.0.4)
       react: 18.2.0
       typescript: 5.0.4
       use-sync-external-store: 1.2.0(react@18.2.0)
-      viem: 0.3.18(typescript@5.0.4)
+      viem: 0.3.19(typescript@5.0.4)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - bufferutil
@@ -3505,8 +3525,21 @@ packages:
         optional: true
     dev: false
 
-  /ws@8.12.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+  /ws@8.12.0:
     resolution: {integrity: sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
+
+  /ws@8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10):
+    resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
