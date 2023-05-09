@@ -1,7 +1,8 @@
-import { SUBGRAPH_URL } from "@/consts";
+import { SUBGRAPH_URL, deployments } from "@/consts";
 import { VaultListDocument, VaultListQuery } from "@/queries/core";
 import { GraphQLClient } from "graphql-request";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
@@ -11,6 +12,10 @@ async function getData() {
 }
 
 export default async function VaultListPage({ params }: { params: { deployment: string } }) {
+  if (!deployments.includes(params.deployment)) {
+    notFound();
+  }
+
   const vaults = await getData();
 
   return (
@@ -29,4 +34,10 @@ export default async function VaultListPage({ params }: { params: { deployment: 
       })}
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  return deployments.map((deployment) => ({
+    slug: deployment,
+  }));
 }
