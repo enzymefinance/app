@@ -1,4 +1,4 @@
-import type { Network } from "../types";
+import type { Network } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
 import { IExternalPositionProxy } from "@enzymefinance/abis/IExternalPositionProxy";
 import type { Address } from "viem";

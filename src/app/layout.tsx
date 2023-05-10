@@ -1,5 +1,6 @@
 import "@/lib/styles/globals.css";
 
+import { QueryClientProvider } from "@/components/QueryProvider";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { WagmiProvider } from "@/components/WagmiProvider";
@@ -31,10 +32,12 @@ export default function RootLayout({
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <WagmiProvider>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-            </div>
+            <QueryClientProvider>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+              </div>
+            </QueryClientProvider>
           </WagmiProvider>
         </ThemeProvider>
       </body>
