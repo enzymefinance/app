@@ -34,15 +34,9 @@ export default async function VaultLayout(props: {
       </Card>
       <Tabs defaultValue="overview" className="w-[400px]">
         <TabsList>
-          <Link href={`${deployment}/${vault}`}>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-          </Link>
-          <Link href={`${deployment}/${vault}/portfolio`}>
-            <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-          </Link>
-          <Link href={`${deployment}/${vault}/configuration`}>
-            <TabsTrigger value="configuration">Configuration</TabsTrigger>
-          </Link>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
+          <TabsTrigger value="configuration">Configuration</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">{props.children}</TabsContent>
         <TabsContent value="portfolio">{props.portfolio}</TabsContent>
