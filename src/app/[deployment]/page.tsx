@@ -33,5 +33,3 @@ export default async function VaultListPage({ params }: { params: { deployment: 
     </div>
   );
 }
-
-export const runtime = "edge";
