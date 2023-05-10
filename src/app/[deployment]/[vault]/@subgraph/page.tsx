@@ -12,7 +12,7 @@ import { getAssetSymbol } from "@/lib/rpc/getAssetSymbol";
 import { getAssetTotalSupply } from "@/lib/rpc/getAssetTotalSupply";
 import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
-import { getVaultGavValue } from "@/lib/rpc/getVaultGavValue";
+import { getVaultGrossAssetValue } from "@/lib/rpc/getVaultGrossAssetValue";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultNetShareValue } from "@/lib/rpc/getVaultNetShareValue";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
@@ -34,7 +34,7 @@ const getTrackedAssets = async (deployment: typeof deployments[number], vaultId:
 };
 
 async function getVaultDetails({ network, vault }: { network: Network; vault: Address }) {
-  const [release, netShareValue, sharesTotalSupply, gavValue, name, symbol, owner, comptroller] = await Promise.all([
+  const [release, netShareValue, sharesTotalSupply, grossAssetValue, name, symbol, owner, comptroller] = await Promise.all([
     getVaultRelease({
       network,
       vault,
@@ -44,12 +44,13 @@ async function getVaultDetails({ network, vault }: { network: Network; vault: Ad
     }),
     getVaultNetShareValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
     getAssetTotalSupply({ network, asset: vault }),
-    getVaultGavValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
+    getVaultGrossAssetValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
     getVaultName({ network, vault }),
     getAssetSymbol({ network, asset: vault }),
     getVaultOwner({ network, vault }),
     getVaultComptroller({ network, vault }),
   ]);
+
 
   const denominationAsset = await getAssetInfo({
     network,
@@ -60,7 +61,7 @@ async function getVaultDetails({ network, vault }: { network: Network; vault: Ad
     release,
     netShareValue,
     sharesTotalSupply,
-    gavValue,
+    grossAssetValue,
     id: vault,
     name,
     symbol,

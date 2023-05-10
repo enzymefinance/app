@@ -22,9 +22,9 @@ export async function getVaultNetShareValue({
       address: fundValueCalculatorRouter,
       args: [vault],
     });
-    const [asset, netShareValue] = result;
+    const [asset, value] = result;
 
-    return { asset, netShareValue };
+    return { asset, value };
   } catch (error) {
     // has tracked asset/position without at a valid price
     if (error instanceof ContractFunctionExecutionError) {

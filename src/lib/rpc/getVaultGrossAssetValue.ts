@@ -4,7 +4,7 @@ import { IFundValueCalculatorRouter } from "@enzymefinance/abis/IFundValueCalcul
 import { type Address, ContractFunctionExecutionError } from "viem";
 import { simulateContract } from "viem/contract";
 
-export async function getVaultGavValue({
+export async function getVaultGrossAssetValue({
   network,
   vault,
   fundValueCalculatorRouter,
@@ -22,9 +22,9 @@ export async function getVaultGavValue({
       args: [vault],
     });
 
-    const [asset, gavValue] = result;
+    const [asset, value] = result;
 
-    return { asset, gavValue };
+    return { asset, value };
   } catch (error) {
     // has tracked asset/position without at a valid price
     if (error instanceof ContractFunctionExecutionError) {
