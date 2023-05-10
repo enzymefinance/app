@@ -1,7 +1,9 @@
 import "@/lib/styles/globals.css";
 
+import { QueryClientProvider } from "@/components/QueryProvider";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { WagmiProvider } from "@/components/WagmiProvider";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -29,10 +31,14 @@ export default function RootLayout({
       <head />
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <div className="flex-1">{children}</div>
-          </div>
+          <WagmiProvider>
+            <QueryClientProvider>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+              </div>
+            </QueryClientProvider>
+          </WagmiProvider>
         </ThemeProvider>
       </body>
     </html>

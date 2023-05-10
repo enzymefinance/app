@@ -1,7 +1,7 @@
-import { type Network } from "../types";
 import { getAssetDecimals } from "./getAssetDecimals";
 import { getAssetName } from "./getAssetName";
 import { getAssetSymbol } from "./getAssetSymbol";
+import { type Network } from "@/lib/consts";
 import type { Address } from "viem";
 
 export async function getAssetInfo({

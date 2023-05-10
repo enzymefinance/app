@@ -1,13 +1,12 @@
 import { getExternalPositionsInfo } from "./getExternalPositionsInfo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { networks } from "@/lib/consts";
+import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo, getAssetInfoMultiple } from "@/lib/rpc/getAssetInfo";
 import { getBalanceMultiple } from "@/lib/rpc/getBalance";
 import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
-import { getVaultActiveExternalPositions } from "@/lib/rpc/getVaultActiveExternalPositions";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
@@ -22,8 +21,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     }),
   });
 
-  const network = networks[deployment];
-
+  const network = getNetworkByDeployment(deployment);
   const [name, owner, comptroller, trackedAssets] = await Promise.all([
     getVaultName({ vault, network }),
     getVaultOwner({ vault, network }),
@@ -92,5 +90,3 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     </Card>
   );
 }
-
-export const runtime = "edge";

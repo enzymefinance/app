@@ -13,4 +13,13 @@ module.exports = {
       ],
     ],
   },
+  webpack: (config) => {
+    config.resolve.fallback = config.resolve.fallback || {};
+    config.resolve.fallback.fs = false;
+    config.resolve.fallback.net = false;
+    config.resolve.fallback.tls = false;
+    config.resolve.fallback.encoding = false;
+
+    return config;
+  },
 };
