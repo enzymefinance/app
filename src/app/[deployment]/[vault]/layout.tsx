@@ -1,12 +1,11 @@
-import type { ReactNode } from "react";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import { assertParams } from "@/lib/params";
-import { z } from "@/lib/zod";
-import { networks } from "@/lib/consts";
-import { getVaultName } from "@/lib/rpc/getVaultName";
-import { handleContractError } from "@/lib/errors";
 import { Card } from "@/components/ui/card";
-import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { networks } from "@/lib/consts";
+import { handleContractError } from "@/lib/errors";
+import { assertParams } from "@/lib/params";
+import { getVaultName } from "@/lib/rpc/getVaultName";
+import { z } from "@/lib/zod";
+import type { ReactNode } from "react";
 
 export default async function VaultLayout(props: {
   children: ReactNode;
@@ -32,7 +31,7 @@ export default async function VaultLayout(props: {
         {name}
         {vault}
       </Card>
-      <Tabs defaultValue="overview" className="w-[400px]">
+      <Tabs defaultValue="overview" className="p-4">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
