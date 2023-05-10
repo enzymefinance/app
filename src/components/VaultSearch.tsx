@@ -1,11 +1,11 @@
 "use client";
 
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
 import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { VaultBasicInfoFragmentDoc, queryCoreSubgraph, useFragment } from "@/lib/gql";
 import { getAssetSymbol } from "@/lib/rpc/getAssetSymbol";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { vaultSearch } from "@/lib/subgraphs/core/vaultSearch";
-import { Combobox } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,7 +34,13 @@ function useVaultSearch(deployment: Deployment, query: string) {
         return [{ name: vaultName, symbol: vaultSymbol, address: query }];
       }
 
-      const data = await queryCoreSubgraph(vaultSearch, { name: query });
+      const data = await queryCoreSubgraph({
+        deployment,
+        document: vaultSearch,
+        variables: {
+          name: query,
+        },
+      });
       return data.vaults.map((vault) => {
         const fragment = useFragment(VaultBasicInfoFragmentDoc, vault);
         return { name: fragment.name, symbol: fragment.symbol, address: fragment.id as Address };
@@ -52,21 +58,42 @@ export function VaultSearch() {
   const [debounced, setDebounced] = useState("");
   useDebounce(() => setDebounced(value), 250, [value]);
 
-  const result = useVaultSearch("ethereum", debounced);
+  const ethereum = useVaultSearch("ethereum", debounced);
+  const polygon = useVaultSearch("polygon", debounced);
+
+  const ethereumData = ethereum?.data ?? [];
+  const polygonData = polygon?.data ?? [];
 
   return (
-    <Combobox onChange={(value: VaultBaseInfo) => router.push(`/ethereum/${value.address}`)}>
-      <Combobox.Input
-        onChange={(event) => setValue(event.target.value)}
-        displayValue={(item: VaultBaseInfo) => item.name}
-      />
-      <Combobox.Options>
-        {result?.data?.map((item) => (
-          <Combobox.Option key={item.address} value={item}>
-            {item.name}
-          </Combobox.Option>
-        ))}
-      </Combobox.Options>
-    </Combobox>
+    <Command shouldFilter={false} className="rounded-lg border shadow-md">
+      <CommandInput placeholder="Search vaults ..." onValueChange={(value) => setValue(value)} />
+      <CommandEmpty>No vaults found.</CommandEmpty>
+      {(ethereumData.length ?? 0) > 0 ? (
+        <CommandGroup heading="Ethereum">
+          {ethereumData.map((item) => (
+            <CommandItem
+              key={item.address}
+              value={item.address}
+              onSelect={() => router.push(`/ethereum/${item.address}`)}
+            >
+              {item.name}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      ) : null}
+      {(polygonData.length ?? 0) > 0 ? (
+        <CommandGroup heading="Polygon">
+          {polygonData.map((item) => (
+            <CommandItem
+              key={item.address}
+              value={item.address}
+              onSelect={() => router.push(`/polygon/${item.address}`)}
+            >
+              {item.name}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      ) : null}
+    </Command>
   );
 }
