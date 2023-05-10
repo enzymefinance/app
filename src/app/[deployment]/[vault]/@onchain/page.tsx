@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { networks } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo, getAssetInfoMultiple } from "@/lib/rpc/getAssetInfo";
@@ -9,12 +10,6 @@ import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { z } from "@/lib/zod";
-
-const networks = {
-  mainnet: "mainnet",
-  polygon: "polygon",
-  testnet: "polygon",
-} as const;
 
 export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
   const { vault, deployment } = assertParams({

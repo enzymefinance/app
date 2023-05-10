@@ -1,43 +1,36 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SUBGRAPH_URL, networks } from "@/lib/consts";
-import { useFragment } from "@/lib/generated/gql";
+import { networks } from "@/lib/consts";
 import {
   FeeDetailsCommonFragmentDoc,
   FeeDetailsFragmentDoc,
   PolicyDetailsCommonFragmentDoc,
   PolicyDetailsFragmentDoc,
-} from "@/lib/generated/gql/graphql";
-import { getPublicClient } from "@/lib/rpc";
+  queryCoreSubgraph,
+  useFragment,
+} from "@/lib/gql";
+import { assertParams } from "@/lib/params";
+import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
 import { vaultDetails } from "@/lib/subgraphs/core/vaultDetails";
-import { IVault } from "@enzymefinance/abis/IVault";
-import { GraphQLClient } from "graphql-request";
-import { type Address, getAddress } from "viem";
+import { z } from "@/lib/zod";
 
-const deployments = ["mainnet", "polygon", "testnet"] as const;
-
-const getTrackedAssets = async (deployment: typeof deployments[number], vaultId: Address) => {
-  const client = getPublicClient(networks[deployment]);
-
-  return await client.readContract({
-    abi: IVault,
-    address: vaultId,
-    functionName: "getTrackedAssets",
+export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
+  const { vault, deployment } = assertParams({
+    params,
+    schema: z.object({
+      deployment: z.deployment(),
+      vault: z.address(),
+    }),
   });
-};
 
-async function getVaultDetails(id: string) {
-  const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
-  return await client.request(vaultDetails, { id });
-}
+  const result = await queryCoreSubgraph(vaultDetails, {
+    id: params.vault,
+  });
 
-type VaultPageParams = { deployment: string; vault: string };
+  const trackedAssets = await getTrackedAssets({
+    network: networks[deployment],
+    vault,
+  });
 
-export default async function VaultPage({ params }: { params: VaultPageParams }) {
-  const deployment = params.deployment as typeof deployments[number];
-
-  const { vault } = await getVaultDetails(params.vault);
-
-  const trackedAssets = await getTrackedAssets(deployment, getAddress(params.vault));
   console.log(trackedAssets);
 
   return (
@@ -47,10 +40,10 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
           <CardTitle>Overview</CardTitle>
         </CardHeader>
         <CardContent>
-          <div>Name: {vault?.name}</div>
-          <div>Symbol: {vault?.symbol}</div>
-          <div>Address: {vault?.id}</div>
-          <div>Owner: {vault?.owner?.id}</div>
+          <div>Name: {result.vault?.name}</div>
+          <div>Symbol: {result.vault?.symbol}</div>
+          <div>Address: {result.vault?.id}</div>
+          <div>Owner: {result.vault?.owner?.id}</div>
         </CardContent>
       </Card>
       <Card>
@@ -67,7 +60,7 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
           <h3>
             <strong>Fees</strong>
           </h3>
-          {vault?.comptroller?.fees.map((fee) => {
+          {result.vault?.comptroller?.fees.map((fee) => {
             const details = useFragment(FeeDetailsFragmentDoc, fee);
             const common = useFragment(FeeDetailsCommonFragmentDoc, details);
 
@@ -80,7 +73,7 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
           <h3>
             <strong>Policies</strong>
           </h3>
-          {vault?.comptroller?.policies.map((policy) => {
+          {result.vault?.comptroller?.policies.map((policy) => {
             const details = useFragment(PolicyDetailsFragmentDoc, policy);
             const common = useFragment(PolicyDetailsCommonFragmentDoc, details);
 
@@ -99,8 +92,8 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
       {/*        </CardTitle>*/}
       {/*    </CardHeader>*/}
       {/*    <CardContent>*/}
-      {/*        <Link href={`${params.deployment}/${vault?.id}/deposit`} >Deposit</Link>*/}
-      {/*        <Link href={`${params.deployment}/${vault?.id}/redeem`} >Redeem</Link>*/}
+      {/*        <Link href={`${params.deployment}/${result.vault?.id}/deposit`} >Deposit</Link>*/}
+      {/*        <Link href={`${params.deployment}/${result.vault?.id}/redeem`} >Redeem</Link>*/}
       {/*    </CardContent>*/}
       {/*</Card>*/}
     </div>
