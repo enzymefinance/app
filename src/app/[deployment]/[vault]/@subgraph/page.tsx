@@ -1,5 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SUBGRAPH_URL, networks } from "@/lib/consts";
+import { useFragment } from "@/lib/generated/gql";
+import {
+  FeeDetailsCommonFragmentDoc,
+  FeeDetailsFragmentDoc,
+  PolicyDetailsCommonFragmentDoc,
+  PolicyDetailsFragmentDoc,
+} from "@/lib/generated/gql/graphql";
 import { getPublicClient } from "@/lib/rpc";
 import { vaultDetails } from "@/lib/subgraphs/core/vaultDetails";
 import { IVault } from "@enzymefinance/abis/IVault";
@@ -60,20 +67,26 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
           <h3>
             <strong>Fees</strong>
           </h3>
-          {vault?.comptroller?.fees.map((fee, i) => {
+          {vault?.comptroller?.fees.map((fee) => {
+            const details = useFragment(FeeDetailsFragmentDoc, fee);
+            const common = useFragment(FeeDetailsCommonFragmentDoc, details);
+
             return (
-              <div key={`fee-key-${i}`}>
-                <div>Fee Type: {fee.feeType}</div>
+              <div key={common.id}>
+                <div>Fee Type: {common.feeType}</div>
               </div>
             );
           })}
           <h3>
             <strong>Policies</strong>
           </h3>
-          {vault?.comptroller?.policies.map((policy, i) => {
+          {vault?.comptroller?.policies.map((policy) => {
+            const details = useFragment(PolicyDetailsFragmentDoc, policy);
+            const common = useFragment(PolicyDetailsCommonFragmentDoc, details);
+
             return (
-              <div key={`policy-key-${i}`}>
-                <div>Policy Type: {policy.policyType}</div>
+              <div key={common.id}>
+                <div>Policy Type: {common.policyType}</div>
               </div>
             );
           })}

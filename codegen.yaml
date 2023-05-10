@@ -1,6 +1,6 @@
 generates:
-  src/lib/subgraphs/core/generated/:
-    documents: src/lib/subgraphs/core/*.ts
+  src/lib/generated/gql/:
+    documents: src/lib/subgraphs/core/**/*.ts
     schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
     preset: client
     config:

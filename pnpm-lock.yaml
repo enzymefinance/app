@@ -18,6 +18,9 @@ dependencies:
   '@graphql-codegen/client-preset':
     specifier: ^3.0.1
     version: 3.0.1(graphql@16.6.0)
+  '@graphql-codegen/client-preset-swc-plugin':
+    specifier: ^0.2.0
+    version: 0.2.0
   '@graphql-typed-document-node/core':
     specifier: ^3.2.0
     version: 3.2.0(graphql@16.6.0)
@@ -1143,6 +1146,10 @@ packages:
       - enquirer
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /@graphql-codegen/client-preset-swc-plugin@0.2.0:
+    resolution: {integrity: sha512-wibvCKuB+pP1ggNzZnkMLQgfyr0l+71kZsfK9M9GxxV8kaFGypbT3eN2XP4U8wH35GTaceLDg9jTg2JSUpcWdg==}
     dev: false
 
   /@graphql-codegen/client-preset@3.0.1(graphql@16.6.0):

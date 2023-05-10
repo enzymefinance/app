@@ -1,4 +1,4 @@
-import { graphql } from "./generated/gql";
+import { graphql } from "@/lib/generated/gql";
 
 export const vaultDetails = graphql(`
   query VaultDetails($id: ID!) {
@@ -27,6 +27,7 @@ export const vaultDetails = graphql(`
   }
 
   fragment FeeDetails on Fee {
+    ...FeeDetailsCommon
     ...EntraceRateBurnFeeDetails
     ...EntranceRateDirectFeeDetails
     ...ExitRateBurnFeeDetails
@@ -96,6 +97,7 @@ export const vaultDetails = graphql(`
   }
 
   fragment PolicyDetails on Policy {
+    ...PolicyDetailsCommon
     ...AllowedAdapterIncomingAssetsPolicyDetails
     ...AllowedAdaptersPerManagerPolicyDetails
     ...AllowedAdaptersPolicyDetails
@@ -114,10 +116,8 @@ export const vaultDetails = graphql(`
     ...AdapterWhitelistPolicyDetails
     ...AssetBlacklistPolicyDetails
     ...AssetWhitelistPolicyDetails
-    ...AssetWhitelistPolicyDetails
     ...BuySharesCallerWhitelistPolicyDetails
     ...DepositorWhitelistPolicyDetails
-    ...GuaranteedRedemptionPolicyDetails
     ...GuaranteedRedemptionPolicyDetails
     ...MaxConcentrationPolicyDetails
   }

@@ -17,6 +17,7 @@
     "@enzymefinance/sdk": "^0.0.15",
     "@graphql-codegen/cli": "^3.3.1",
     "@graphql-codegen/client-preset": "^3.0.1",
+    "@graphql-codegen/client-preset-swc-plugin": "^0.2.0",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@playwright/test": "^1.33.0",
     "@types/node": "20.1.1",

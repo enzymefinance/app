@@ -1,4 +1,4 @@
-import { graphql } from "./generated/gql";
+import { graphql } from "@/lib/generated/gql";
 
 export const vaultList = graphql(`
   query VaultList {
