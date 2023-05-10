@@ -2,7 +2,7 @@
 
 import "@rainbow-me/rainbowkit/styles.css";
 
-import { ConnectButton, RainbowKitProvider, connectorsForWallets, darkTheme } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, connectorsForWallets, darkTheme } from "@rainbow-me/rainbowkit";
 import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import type { ReactNode } from "react";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
@@ -45,7 +45,6 @@ export function WagmiProvider({ children }: { children: ReactNode }) {
   return (
     <WagmiConfig config={config}>
       <RainbowKitProvider chains={chains} theme={darkTheme()}>
-        <ConnectButton />
         {children}
       </RainbowKitProvider>
     </WagmiConfig>
