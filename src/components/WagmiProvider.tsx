@@ -1,0 +1,51 @@
+"use client";
+
+import "@rainbow-me/rainbowkit/styles.css";
+
+import { ConnectButton, RainbowKitProvider, darkTheme, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import type { ReactNode } from "react";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { mainnet, polygon } from "wagmi/chains";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+
+const { chains, publicClient } = configureChains(
+  [mainnet, polygon],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => {
+        if (chain.network === "homestead") {
+          return { http: "/rpc/mainnet" };
+        }
+
+        if (chain.network === "matic") {
+          return { http: "/rpc/polygon" };
+        }
+
+        return null;
+      },
+    }),
+  ],
+);
+
+const { connectors } = getDefaultWallets({
+  appName: "Enzyme",
+  projectId: "3f1198cd2598cba7254e9be87f95cebe",
+  chains,
+});
+
+const config = createConfig({
+  autoConnect: true,
+  publicClient,
+  connectors,
+});
+
+export function WagmiProvider({ children }: { children: ReactNode }) {
+  return (
+    <WagmiConfig config={config}>
+      <RainbowKitProvider chains={chains} theme={darkTheme()}>
+        <ConnectButton />
+        {children}
+      </RainbowKitProvider>
+    </WagmiConfig>
+  );
+}

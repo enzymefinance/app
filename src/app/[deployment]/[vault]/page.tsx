@@ -58,5 +58,3 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     </Card>
   );
 }
-
-export const runtime = "edge";
