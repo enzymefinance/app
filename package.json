@@ -9,11 +9,16 @@
     "format": "rome format --write . && rome check --apply .",
     "lint": "rome check .",
     "typecheck": "tsc --noEmit",
-    "test": "playwright test"
+    "test": "playwright test",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
-    "@enzymefinance/abis": "^0.0.8",
-    "@enzymefinance/sdk": "^0.0.13",
+    "@enzymefinance/abis": "^0.0.9",
+    "@enzymefinance/sdk": "^0.0.15",
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/client-preset": "^3.0.1",
+    "@graphql-codegen/client-preset-swc-plugin": "^0.2.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@playwright/test": "^1.33.0",
     "@types/node": "20.1.1",
     "@types/react": "18.2.6",
@@ -21,8 +26,12 @@
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
+    "graphql": "^16.6.0",
+    "graphql-request": "^6.0.0",
+    "graphql-tag": "^2.12.6",
     "lucide-react": "^0.214.0",
     "next": "13.4.2-canary.3",
+    "next-themes": "^0.2.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -32,7 +41,8 @@
     "tailwindcss-animate": "^1.0.5",
     "typescript": "5.0.4",
     "viem": "^0.3.19",
-    "wagmi": "1.0.0-next.9"
+    "wagmi": "1.0.1",
+    "zod": "^3.21.4"
   },
   "packageManager": "pnpm@8.3.1",
   "pnpm": {
