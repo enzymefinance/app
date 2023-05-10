@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SUBGRAPH_URL, networks } from "@/lib/consts";
+import { networks } from "@/lib/consts";
 import { useFragment } from "@/lib/generated/gql";
 import {
   FeeDetailsCommonFragmentDoc,
@@ -7,10 +7,10 @@ import {
   PolicyDetailsCommonFragmentDoc,
   PolicyDetailsFragmentDoc,
 } from "@/lib/generated/gql/graphql";
+import { getSubgraphClient } from "@/lib/getSubgraphClient";
 import { getPublicClient } from "@/lib/rpc";
 import { vaultDetails } from "@/lib/subgraphs/core/vaultDetails";
 import { IVault } from "@enzymefinance/abis/IVault";
-import { GraphQLClient } from "graphql-request";
 import { type Address, getAddress } from "viem";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
@@ -26,7 +26,7 @@ const getTrackedAssets = async (deployment: typeof deployments[number], vaultId:
 };
 
 async function getVaultDetails(id: string) {
-  const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
+  const client = getSubgraphClient();
   return await client.request(vaultDetails, { id });
 }
 

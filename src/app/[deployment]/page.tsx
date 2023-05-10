@@ -1,14 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SUBGRAPH_URL, deployments } from "@/lib/consts";
+import { deployments } from "@/lib/consts";
+import { getSubgraphClient } from "@/lib/getSubgraphClient";
 import { vaultList } from "@/lib/subgraphs/core/vaultList";
-import { GraphQLClient } from "graphql-request";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
 async function getData() {
-  const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
+  const client = getSubgraphClient();
   return await client.request(vaultList);
 }
 
