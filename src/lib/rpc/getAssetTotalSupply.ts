@@ -1,9 +1,9 @@
-import type { Network } from "@/lib/consts";
+import type { Network } from "../types";
 import { getPublicClient } from "@/lib/rpc";
 import { type Address, parseAbi } from "viem";
 import { readContract } from "viem/contract";
 
-export async function getAssetDecimals({
+export async function getAssetTotalSupply({
   network,
   asset,
 }: {
@@ -11,11 +11,11 @@ export async function getAssetDecimals({
   asset: Address;
 }) {
   const client = getPublicClient(network);
-  const decimals = await readContract(client, {
-    abi: parseAbi(["function decimals() view returns (uint)"]),
-    functionName: "decimals",
+  const totalSupply = await readContract(client, {
+    abi: parseAbi(["function totalSupply() view returns (uint)"]),
+    functionName: "totalSupply",
     address: asset,
   });
 
-  return decimals;
+  return totalSupply;
 }
