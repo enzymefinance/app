@@ -11,7 +11,6 @@ export async function getAssetDecimals({
   asset: Address;
 }) {
   const client = getPublicClient(network);
-
   const decimals = await readContract(client, {
     abi: parseAbi(["function decimals() view returns (uint)"]),
     functionName: "decimals",

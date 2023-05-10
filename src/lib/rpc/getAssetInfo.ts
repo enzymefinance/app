@@ -17,5 +17,17 @@ export async function getAssetInfo({
     getAssetDecimals({ network, asset }),
   ]);
 
-  return { name, symbol, decimals };
+  return { name, symbol, decimals, address: asset };
+}
+
+export async function getAssetInfoMultiple({
+  network,
+  assets,
+}: {
+  network: Network;
+  assets: readonly Address[];
+}) {
+  const infos = await Promise.all(assets.map((asset) => getAssetInfo({ network, asset })));
+
+  return infos;
 }

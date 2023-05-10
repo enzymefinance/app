@@ -11,7 +11,6 @@ export async function getAssetName({
   asset: Address;
 }) {
   const client = getPublicClient(network);
-
   const name = await readContract(client, {
     abi: parseAbi(["function name() view returns (string)"]),
     functionName: "name",

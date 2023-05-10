@@ -1,6 +1,6 @@
 import { graphql } from "./generated/gql";
 
-export const vaultDetails = graphql(/* GraphQL */ `
+export const vaultDetails = graphql(`
   query VaultDetails($id: ID!) {
     vault(id: $id) {
       id

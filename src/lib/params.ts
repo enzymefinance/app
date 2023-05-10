@@ -4,11 +4,18 @@ import { z } from "zod";
 export function assertParams<TSchema extends z.AnyZodObject>({
   schema,
   params,
-}: { schema: TSchema; params: unknown }): z.output<TSchema> {
+  or = () => notFound(),
+}: {
+  schema: TSchema;
+  params: unknown;
+  or?: (error: z.ZodError) => never;
+}): z.output<TSchema> {
   const result = schema.safeParse(params);
   if (result.success) {
     return result.data;
   }
 
-  notFound();
+  or(result.error);
+
+  return undefined as never;
 }

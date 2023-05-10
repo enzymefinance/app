@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
-import { getAccountBalance } from "@/lib/rpc/getAccountBalance";
-import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
-import { getComptrollerDenominationAsset } from "@/lib/rpc/getComptrollerDenominationAsset";
+import { getAssetInfo, getAssetInfoMultiple } from "@/lib/rpc/getAssetInfo";
+import { getBalanceMultiple } from "@/lib/rpc/getBalance";
+import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { getVaultName } from "@/lib/rpc/getVaultName";
@@ -26,36 +26,17 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   });
 
   const network = networks[deployment];
-
-  console.log({ vault });
   const [name, owner, comptroller, trackedAssets] = await Promise.all([
-    getVaultName({
-      vault,
-      network,
-    }),
-    getVaultOwner({
-      vault,
-      network,
-    }),
-    getVaultComptroller({
-      vault,
-      network,
-    }),
-    getTrackedAssets({
-      vault,
-      network,
-    }),
+    getVaultName({ vault, network }),
+    getVaultOwner({ vault, network }),
+    getVaultComptroller({ vault, network }),
+    getTrackedAssets({ vault, network }),
   ]).catch(handleContractError());
 
   const [trackedAssetsInfo, , denominationAsset] = await Promise.all([
-    Promise.all(trackedAssets.map((trackedAsset) => getAssetInfo({ network, asset: trackedAsset }))),
-    Promise.all(
-      trackedAssets.map((trackedAsset) => getAccountBalance({ network, asset: trackedAsset, account: vault })),
-    ),
-    getComptrollerDenominationAsset({
-      network,
-      comptroller,
-    }),
+    getAssetInfoMultiple({ network, assets: trackedAssets }),
+    getBalanceMultiple({ network, account: vault, assets: trackedAssets }),
+    getDenominationAsset({ network, comptroller }),
   ]).catch(handleContractError());
 
   const denominationAssetInfo = await getAssetInfo({
@@ -71,10 +52,9 @@ export default async function VaultPage({ params }: { params: { deployment: stri
       <CardContent>
         <div>owner: {owner}</div>
         <div>denomination asset: {denominationAssetInfo.symbol}</div>
-
         <div>
           {trackedAssetsInfo.map((trackedAssetInfo) => (
-            <div key={trackedAssetInfo.symbol}>
+            <div key={trackedAssetInfo.address}>
               {trackedAssetInfo.symbol} {trackedAssetInfo.name}
             </div>
           ))}

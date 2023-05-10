@@ -11,7 +11,6 @@ export async function getAssetSymbol({
   asset: Address;
 }) {
   const client = getPublicClient(network);
-
   const symbol = await readContract(client, {
     abi: parseAbi(["function symbol() view returns (string)"]),
     functionName: "symbol",

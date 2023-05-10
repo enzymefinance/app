@@ -12,7 +12,6 @@ export async function getVaultComptroller({
   vault: Address;
 }) {
   const client = getPublicClient(network);
-
   const accessor = await readContract(client, {
     abi: IVault,
     functionName: "getAccessor",
