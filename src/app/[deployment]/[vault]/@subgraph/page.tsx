@@ -1,16 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SUBGRAPH_URL, networks } from "@/lib/consts";
-import { useFragment } from "@/lib/generated/gql";
 import {
-  FeeDetailsCommonFragmentDoc,
-  FeeDetailsFragmentDoc,
-  PolicyDetailsCommonFragmentDoc,
-  PolicyDetailsFragmentDoc,
-} from "@/lib/generated/gql/graphql";
+  FUND_DEPLOYER_ENCORE,
+  FUND_DEPLOYER_PHOENIX,
+  FUND_DEPLOYER_SULU,
+  FUND_VALUE_CALCULATOR_ROUTER,
+  networks,
+} from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
-import { vaultDetails } from "@/lib/subgraphs/core/vaultDetails";
+import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
+import { getAssetSymbol } from "@/lib/rpc/getAssetSymbol";
+import { getAssetTotalSupply } from "@/lib/rpc/getAssetTotalSupply";
+import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
+import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
+import { getVaultGavValue } from "@/lib/rpc/getVaultGavValue";
+import { getVaultName } from "@/lib/rpc/getVaultName";
+import { getVaultNetShareValue } from "@/lib/rpc/getVaultNetShareValue";
+import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
+import { getVaultRelease } from "@/lib/rpc/getVaultRelease";
+import type { Network } from "@/lib/types";
 import { IVault } from "@enzymefinance/abis/IVault";
-import { GraphQLClient } from "graphql-request";
 import { type Address, getAddress } from "viem";
 
 const deployments = ["mainnet", "polygon", "testnet"] as const;
@@ -25,20 +33,54 @@ const getTrackedAssets = async (deployment: typeof deployments[number], vaultId:
   });
 };
 
-async function getVaultDetails(id: string) {
-  const client = new GraphQLClient(SUBGRAPH_URL, { fetch: fetch });
-  return await client.request(vaultDetails, { id });
+async function getVaultDetails({ network, vault }: { network: Network; vault: Address }) {
+  const [release, netShareValue, sharesTotalSupply, gavValue, name, symbol, owner, comptroller] = await Promise.all([
+    getVaultRelease({
+      network,
+      vault,
+      fundDeployerSulu: FUND_DEPLOYER_SULU,
+      fundDeployerEncore: FUND_DEPLOYER_ENCORE,
+      fundDeployerPhoenix: FUND_DEPLOYER_PHOENIX,
+    }),
+    getVaultNetShareValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
+    getAssetTotalSupply({ network, asset: vault }),
+    getVaultGavValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
+    getVaultName({ network, vault }),
+    getAssetSymbol({ network, asset: vault }),
+    getVaultOwner({ network, vault }),
+    getVaultComptroller({ network, vault }),
+  ]);
+
+  const denominationAsset = await getAssetInfo({
+    network,
+    asset: await getDenominationAsset({ network, comptroller }),
+  });
+
+  return {
+    release,
+    netShareValue,
+    sharesTotalSupply,
+    gavValue,
+    id: vault,
+    name,
+    symbol,
+    owner,
+    denominationAsset,
+  };
 }
 
 type VaultPageParams = { deployment: string; vault: string };
 
 export default async function VaultPage({ params }: { params: VaultPageParams }) {
   const deployment = params.deployment as typeof deployments[number];
+  const network = networks[deployment];
+  const vault = getAddress(params.vault);
 
-  const { vault } = await getVaultDetails(params.vault);
+  const vaultDetails = await getVaultDetails({ vault, network });
 
   const trackedAssets = await getTrackedAssets(deployment, getAddress(params.vault));
-  console.log(trackedAssets);
+
+  console.log({ vaultDetails, trackedAssets });
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -47,10 +89,10 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
           <CardTitle>Overview</CardTitle>
         </CardHeader>
         <CardContent>
-          <div>Name: {vault?.name}</div>
-          <div>Symbol: {vault?.symbol}</div>
-          <div>Address: {vault?.id}</div>
-          <div>Owner: {vault?.owner?.id}</div>
+          <div>Name: {vaultDetails.name}</div>
+          <div>Symbol: {vaultDetails.symbol}</div>
+          <div>Address: {vaultDetails.id}</div>
+          <div>Owner: {vaultDetails.owner}</div>
         </CardContent>
       </Card>
       <Card>
@@ -67,29 +109,10 @@ export default async function VaultPage({ params }: { params: VaultPageParams })
           <h3>
             <strong>Fees</strong>
           </h3>
-          {vault?.comptroller?.fees.map((fee) => {
-            const details = useFragment(FeeDetailsFragmentDoc, fee);
-            const common = useFragment(FeeDetailsCommonFragmentDoc, details);
 
-            return (
-              <div key={common.id}>
-                <div>Fee Type: {common.feeType}</div>
-              </div>
-            );
-          })}
           <h3>
             <strong>Policies</strong>
           </h3>
-          {vault?.comptroller?.policies.map((policy) => {
-            const details = useFragment(PolicyDetailsFragmentDoc, policy);
-            const common = useFragment(PolicyDetailsCommonFragmentDoc, details);
-
-            return (
-              <div key={common.id}>
-                <div>Policy Type: {common.policyType}</div>
-              </div>
-            );
-          })}
         </CardContent>
       </Card>
       {/*<Card>*/}
