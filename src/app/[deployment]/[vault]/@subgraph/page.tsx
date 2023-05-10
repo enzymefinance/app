@@ -34,23 +34,23 @@ const getTrackedAssets = async (deployment: typeof deployments[number], vaultId:
 };
 
 async function getVaultDetails({ network, vault }: { network: Network; vault: Address }) {
-  const [release, netShareValue, sharesTotalSupply, grossAssetValue, name, symbol, owner, comptroller] = await Promise.all([
-    getVaultRelease({
-      network,
-      vault,
-      fundDeployerSulu: FUND_DEPLOYER_SULU,
-      fundDeployerEncore: FUND_DEPLOYER_ENCORE,
-      fundDeployerPhoenix: FUND_DEPLOYER_PHOENIX,
-    }),
-    getVaultNetShareValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
-    getAssetTotalSupply({ network, asset: vault }),
-    getVaultGrossAssetValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
-    getVaultName({ network, vault }),
-    getAssetSymbol({ network, asset: vault }),
-    getVaultOwner({ network, vault }),
-    getVaultComptroller({ network, vault }),
-  ]);
-
+  const [release, netShareValue, sharesTotalSupply, grossAssetValue, name, symbol, owner, comptroller] =
+    await Promise.all([
+      getVaultRelease({
+        network,
+        vault,
+        fundDeployerSulu: FUND_DEPLOYER_SULU,
+        fundDeployerEncore: FUND_DEPLOYER_ENCORE,
+        fundDeployerPhoenix: FUND_DEPLOYER_PHOENIX,
+      }),
+      getVaultNetShareValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
+      getAssetTotalSupply({ network, asset: vault }),
+      getVaultGrossAssetValue({ network, vault, fundValueCalculatorRouter: FUND_VALUE_CALCULATOR_ROUTER }),
+      getVaultName({ network, vault }),
+      getAssetSymbol({ network, asset: vault }),
+      getVaultOwner({ network, vault }),
+      getVaultComptroller({ network, vault }),
+    ]);
 
   const denominationAsset = await getAssetInfo({
     network,
