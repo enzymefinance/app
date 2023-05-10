@@ -2,7 +2,8 @@
 
 import "@rainbow-me/rainbowkit/styles.css";
 
-import { ConnectButton, RainbowKitProvider, darkTheme, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import { ConnectButton, RainbowKitProvider, connectorsForWallets, darkTheme } from "@rainbow-me/rainbowkit";
+import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import type { ReactNode } from "react";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { mainnet, polygon } from "wagmi/chains";
@@ -27,11 +28,12 @@ const { chains, publicClient } = configureChains(
   ],
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "Enzyme",
-  projectId: "3f1198cd2598cba7254e9be87f95cebe",
-  chains,
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended",
+    wallets: [injectedWallet({ chains })],
+  },
+]);
 
 const config = createConfig({
   autoConnect: true,
