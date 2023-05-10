@@ -10,8 +10,6 @@ import Link from "next/link";
 
 export default async function VaultLayout(props: {
   children: ReactNode;
-  // configuration: ReactNode;
-  // portfolio: ReactNode;
   params: { deployment: string; vault: string };
 }) {
   const { vault, deployment } = assertParams({
