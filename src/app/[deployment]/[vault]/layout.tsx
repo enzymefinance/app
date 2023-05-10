@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import { assertParams } from "@/lib/params";
 import { z } from "@/lib/zod";
 import { networks } from "@/lib/consts";
@@ -10,6 +10,8 @@ import Link from "next/link";
 
 export default async function VaultLayout(props: {
   children: ReactNode;
+  configuration: ReactNode;
+  portfolio: ReactNode;
   params: { deployment: string; vault: string };
 }) {
   const { vault, deployment } = assertParams({
@@ -42,8 +44,10 @@ export default async function VaultLayout(props: {
             <TabsTrigger value="configuration">Configuration</TabsTrigger>
           </Link>
         </TabsList>
+        <TabsContent value="overview">{props.children}</TabsContent>
+        <TabsContent value="portfolio">{props.portfolio}</TabsContent>
+        <TabsContent value="configuration">{props.configuration}</TabsContent>
       </Tabs>
-      {props.children}
     </div>
   );
 }
