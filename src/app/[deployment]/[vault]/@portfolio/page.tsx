@@ -16,11 +16,7 @@ const mockPortfolioData = [
 ];
 
 export default function PortfolioPage() {
-  return (
-    <>
-      {TokenHoldingsTable(mockPortfolioData)}
-    </>
-  );
+  return <>{TokenHoldingsTable(mockPortfolioData)}</>;
 }
 
 export const runtime = "edge";

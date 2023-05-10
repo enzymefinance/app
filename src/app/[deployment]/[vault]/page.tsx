@@ -1,4 +1,4 @@
-import { networks } from "@/lib/consts";
+import { getNetworkByDeployment, networks } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
@@ -17,7 +17,8 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     }),
   });
 
-  const network = networks[deployment];
+  const network = getNetworkByDeployment(deployment);
+
   const [owner, comptroller] = await Promise.all([
     getVaultOwner({ vault, network }),
     getVaultComptroller({ vault, network }),
