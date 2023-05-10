@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { assertParams } from "@/lib/params";
 import { z } from "@/lib/zod";
 import { networks } from "@/lib/consts";
@@ -42,10 +42,8 @@ export default async function VaultLayout(props: {
             <TabsTrigger value="configuration">Configuration</TabsTrigger>
           </Link>
         </TabsList>
-        <TabsContent value="">{props.children}</TabsContent>
-        <TabsContent value="portfolio">{props.children}</TabsContent>
-        <TabsContent value="configuration">{props.children}</TabsContent>
       </Tabs>
+      {props.children}
     </div>
   );
 }
