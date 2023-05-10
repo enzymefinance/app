@@ -1,13 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { networks } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
 import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
-import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { z } from "@/lib/zod";
+import { VaultTile } from "@/components/VaultTile";
 
 export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
   const { vault, deployment } = assertParams({
@@ -19,15 +18,14 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   });
 
   const network = networks[deployment];
-  const [name, owner, comptroller] = await Promise.all([
-    getVaultName({ vault, network }),
+  const [owner, comptroller] = await Promise.all([
     getVaultOwner({ vault, network }),
     getVaultComptroller({ vault, network }),
   ]).catch(handleContractError());
 
-  const [denominationAsset] = await Promise.all([
-    getDenominationAsset({ network, comptroller }),
-  ]).catch(handleContractError());
+  const [denominationAsset] = await Promise.all([getDenominationAsset({ network, comptroller })]).catch(
+    handleContractError(),
+  );
 
   const denominationAssetInfo = await getAssetInfo({
     network,
@@ -35,14 +33,13 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   }).catch(handleContractError());
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div>owner: {owner}</div>
-        <div>denomination asset: {denominationAssetInfo.symbol}</div>
-      </CardContent>
-    </Card>
+    <div className="grid grid-cols-3 grid-rows-2 gap-4 pt-2">
+      <VaultTile title="Owner" description={owner} />
+      <VaultTile title="Denomination Asset" description={denominationAssetInfo.symbol} />
+      <VaultTile title="Total supply" description="$0.99" />
+      <VaultTile title="GAV" description="$1,001.52" />
+      <VaultTile title="Share price" description="$1,001.52" />
+      <VaultTile title="Release" description="Sulu" />
+    </div>
   );
 }
