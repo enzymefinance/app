@@ -1,25 +1,26 @@
+import type { Network } from "./consts";
 import { isServer } from "./environment";
 import { cache } from "react";
 import { createPublicClient, http } from "viem";
 
-export let mainnetRpcUrl = "/rpc/mainnet";
+export let ethereumRpcUrl = "/rpc/ethereum";
 export let polygonRpcUrl = "/rpc/polygon";
 
 if (isServer) {
-  mainnetRpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`;
+  ethereumRpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`;
   polygonRpcUrl = `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
 }
 
-export function getRpcUrl(network: "mainnet" | "polygon") {
+export function getRpcUrl(network: Network) {
   switch (network) {
-    case "mainnet":
-      return mainnetRpcUrl;
+    case "ethereum":
+      return ethereumRpcUrl;
     case "polygon":
       return polygonRpcUrl;
   }
 }
 
-export const getPublicClient = cache(function getPublicClient(network: "mainnet" | "polygon") {
+export const getPublicClient = cache(function getPublicClient(network: Network) {
   return createPublicClient({
     transport: http(getRpcUrl(network)),
     name: network,

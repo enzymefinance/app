@@ -15,7 +15,7 @@ const { chains, publicClient } = configureChains(
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.network === "homestead") {
-          return { http: "/rpc/mainnet" };
+          return { http: "/rpc/ethereum" };
         }
 
         if (chain.network === "matic") {

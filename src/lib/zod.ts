@@ -1,12 +1,15 @@
+import { type Deployment, deployments } from "./consts";
 import { type Address, isAddress } from "viem";
 import { z as zz } from "zod";
 
-function address() {
-  return z.string().refine(((value) => isAddress(value)) as (value: string) => value is Address);
+function address(message?: string) {
+  return z.string().refine(((value) => isAddress(value)) as (value: string) => value is Address, message);
 }
 
-function deployment() {
-  return z.union([z.literal("mainnet"), z.literal("polygon"), z.literal("testnet")]);
+function deployment(message?: string) {
+  return z
+    .string()
+    .refine(((value) => deployments.includes(value as Deployment)) as (value: string) => value is Deployment, message);
 }
 
 export const z = {

@@ -1,10 +1,10 @@
-import type { Network } from "@/lib/consts";
+import type { Network } from "../types";
 import { getPublicClient } from "@/lib/rpc";
 import { IVault } from "@enzymefinance/abis/IVault";
 import type { Address } from "viem";
 import { readContract } from "viem/contract";
 
-export async function getTrackedAssets({
+export async function getVaultFundDeployer({
   network,
   vault,
 }: {
@@ -12,11 +12,11 @@ export async function getTrackedAssets({
   vault: Address;
 }) {
   const client = getPublicClient(network);
-  const trackedAssets = await readContract(client, {
+  const fundDeployer = await readContract(client, {
     abi: IVault,
-    functionName: "getTrackedAssets",
+    functionName: "getFundDeployer",
     address: vault,
   });
 
-  return trackedAssets;
+  return fundDeployer;
 }

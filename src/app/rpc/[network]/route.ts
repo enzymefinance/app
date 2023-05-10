@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest, { params }: { params: { network: string } }) {
   const network = params.network;
-  if (network !== "mainnet" && network !== "polygon") {
+  if (network !== "ethereum" && network !== "polygon") {
     return new Response(undefined, { status: 404 });
   }
 

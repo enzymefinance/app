@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { networks } from "@/lib/consts";
+import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
@@ -18,16 +18,16 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     }),
   });
 
-  const network = networks[deployment];
+  const network = getNetworkByDeployment(deployment);
   const [name, owner, comptroller] = await Promise.all([
     getVaultName({ vault, network }),
     getVaultOwner({ vault, network }),
     getVaultComptroller({ vault, network }),
   ]).catch(handleContractError());
 
-  const [denominationAsset] = await Promise.all([
-    getDenominationAsset({ network, comptroller }),
-  ]).catch(handleContractError());
+  const [denominationAsset] = await Promise.all([getDenominationAsset({ network, comptroller })]).catch(
+    handleContractError(),
+  );
 
   const denominationAssetInfo = await getAssetInfo({
     network,
