@@ -1,4 +1,4 @@
-import type { Network } from "../types";
+import type { Network } from "../consts";
 import { getPublicClient } from "@/lib/rpc";
 import { type Address, parseAbi } from "viem";
 import { readContract } from "viem/contract";

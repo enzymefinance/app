@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { networks } from "@/lib/consts";
+import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getVaultName } from "@/lib/rpc/getVaultName";
@@ -21,7 +21,7 @@ export default async function VaultLayout(props: {
     }),
   });
 
-  const network = networks[deployment];
+  const network = getNetworkByDeployment(deployment);
 
   const [name] = await Promise.all([getVaultName({ vault, network })]).catch(handleContractError());
 

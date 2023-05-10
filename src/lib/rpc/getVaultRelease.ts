@@ -1,4 +1,4 @@
-import type { Network } from "../types";
+import type { Network } from "../consts";
 import { getVaultFundDeployer } from "./getVaultFundDeployer";
 import { type Address, isAddressEqual } from "viem";
 

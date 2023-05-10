@@ -5,6 +5,7 @@ import { createPublicClient, http } from "viem";
 
 export let ethereumRpcUrl = "/rpc/ethereum";
 export let polygonRpcUrl = "/rpc/polygon";
+console.log({ isServer, a: process.env.ALCHEMY_API_KEY });
 
 if (isServer) {
   ethereumRpcUrl = `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`;
@@ -21,6 +22,8 @@ export function getRpcUrl(network: Network) {
 }
 
 export const getPublicClient = cache(function getPublicClient(network: Network) {
+  console.log({ result: getRpcUrl(network) });
+
   return createPublicClient({
     transport: http(getRpcUrl(network)),
     name: network,

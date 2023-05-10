@@ -4,7 +4,8 @@ import {
   FUND_DEPLOYER_PHOENIX,
   FUND_DEPLOYER_SULU,
   FUND_VALUE_CALCULATOR_ROUTER,
-  networks,
+  type Network,
+  getNetworkByDeployment,
 } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
 import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
@@ -17,14 +18,13 @@ import { getVaultName } from "@/lib/rpc/getVaultName";
 import { getVaultNetShareValue } from "@/lib/rpc/getVaultNetShareValue";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { getVaultRelease } from "@/lib/rpc/getVaultRelease";
-import type { Network } from "@/lib/types";
 import { IVault } from "@enzymefinance/abis/IVault";
 import { type Address, getAddress } from "viem";
 
-const deployments = ["mainnet", "polygon", "testnet"] as const;
+const deployments = ["ethereum", "polygon", "testnet"] as const;
 
 const getTrackedAssets = async (deployment: typeof deployments[number], vaultId: Address) => {
-  const client = getPublicClient(networks[deployment]);
+  const client = getPublicClient(getNetworkByDeployment(deployment));
 
   return await client.readContract({
     abi: IVault,
@@ -74,7 +74,7 @@ type VaultPageParams = { deployment: string; vault: string };
 
 export default async function VaultPage({ params }: { params: VaultPageParams }) {
   const deployment = params.deployment as typeof deployments[number];
-  const network = networks[deployment];
+  const network = getNetworkByDeployment(deployment);
   const vault = getAddress(params.vault);
 
   const vaultDetails = await getVaultDetails({ vault, network });
