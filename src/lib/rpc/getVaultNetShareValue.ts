@@ -1,4 +1,4 @@
-import type { Network } from "../consts";
+import type { Network } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
 import { IFundValueCalculatorRouter } from "@enzymefinance/abis/IFundValueCalculatorRouter";
 import { type Address, ContractFunctionExecutionError } from "viem";

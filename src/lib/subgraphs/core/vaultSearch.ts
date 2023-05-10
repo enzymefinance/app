@@ -2,7 +2,7 @@ import { graphql } from "@/lib/gql";
 
 export const vaultSearch = graphql(`
   query VaultSearch($name: String!) {
-    vaults(first: 20, where: {
+    vaults(first: 5, where: {
       name_contains_nocase: $name
     }) {
       ...VaultBasicInfo
