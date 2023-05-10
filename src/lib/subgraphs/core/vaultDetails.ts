@@ -17,204 +17,252 @@ export const vaultDetails = graphql(/* GraphQL */ `
           symbol
         }
         fees {
-          ... on EntranceRateBurnFee {
-            id
-            feeType
-            rate
-          }
-          ... on EntranceRateDirectFee {
-            id
-            feeType
-            rate
-            recipient {
-              id
-            }
-          }
-          ... on ExitRateBurnFee {
-            feeType
-            id
-            inKindRate
-            specificAssetsRate
-          }
-          ... on ExitRateDirectFee {
-            id
-            feeType
-            recipient {
-              id
-            }
-            inKindRate
-            specificAssetsRate
-          }
-          ... on ManagementFee {
-            feeType
-            recipient {
-              id
-            }
-            scaledPerSecondRate
-          }
-          ... on MinSharesSupplyFee {
-            feeType
-            id
-          }
-          ... on PerformanceFee {
-            feeType
-            highWaterMark
-            rate
-            recipient {
-              id
-            }
-          }
-          ... on UnknownFee {
-            id
-            feeType
-          }
+          ...FeeDetails
         }
         policies {
-          ... on AllowedAdapterIncomingAssetsPolicy {
-            id
-            policyType
-            addressLists {
-              id
-              items
-            }
-          }
-          ... on AllowedAdaptersPerManagerPolicy {
-            id
-            policyType
-            userAddressLists {
-              id
-              addressLists {
-                items
-                id
-              }
-              userAddress
-            }
-          }
-          ... on AllowedAdaptersPolicy {
-            id
-            policyType
-            addressLists {
-              items
-              id
-            }
-          }
-          ... on AllowedAssetsForRedemptionPolicy {
-            addressLists {
-              id
-              items
-            }
-            id
-            policyType
-          }
-          ... on AllowedDepositRecipientsPolicy {
-            id
-            policyType
-            addressLists {
-              id
-              items
-            }
-          }
-          ... on AllowedExternalPositionTypesPerManagerPolicy {
-            id
-            userUintLists {
-              id
-              userAddress
-              uintLists {
-                id
-                items
-              }
-            }
-            policyType
-          }
-          ... on AllowedExternalPositionTypesPolicy {
-            id
-            policyType
-            externalPositionTypes
-          }
-          ... on AllowedSharesTransferRecipientsPolicy {
-            addressLists {
-              id
-              items
-            }
-            id
-            policyType
-          }
-          ... on CumulativeSlippageTolerancePolicy {
-            id
-            cumulativeSlippage
-            lastSlippageTimestamp
-            policyType
-            tolerance
-          }
-          ... on MinAssetBalancesPostRedemptionPolicy {
-            id
-            assetBalances {
-              asset {
-                name
-                id
-                symbol
-              }
-              id
-              amount
-            }
-            policyType
-          }
-          ... on MinMaxDepositPolicy {
-            id
-            minDepositAmount
-            maxDepositAmount
-            policyType
-          }
-          ... on OnlyRemoveDustExternalPositionPolicy {
-            id
-            policyType
-          }
-          ... on OnlyUntrackDustOrPricelessAssetsPolicy {
-            id
-            policyType
-          }
-          ... on UnknownPolicy {
-            id
-            policyType
-          }
-          ... on AdapterBlacklistPolicy {
-            id
-            policyType
-          }
-          ... on AdapterWhitelistPolicy {
-            id
-            policyType
-          }
-          ... on AssetBlacklistPolicy {
-            id
-            policyType
-          }
-          ... on AssetWhitelistPolicy {
-            policyType
-          }
-          ... on AssetWhitelistPolicy {
-            id
-          }
-          ... on BuySharesCallerWhitelistPolicy {
-            id
-            policyType
-          }
-          ... on DepositorWhitelistPolicy {
-            id
-            policyType
-          }
-          ... on GuaranteedRedemptionPolicy {
-            policyType
-          }
-          ... on GuaranteedRedemptionPolicy {
-            id
-          }
-          ... on MaxConcentrationPolicy {
-            id
-            policyType
-          }
+          ...PolicyDetails
         }
       }
     }
+  }
+
+  fragment FeeDetails on Fee {
+    ...EntraceRateBurnFeeDetails
+    ...EntranceRateDirectFeeDetails
+    ...ExitRateBurnFeeDetails
+    ...ExitRateDirectFeeDetails
+    ...ManagementFeeDetails
+    ...MinSharesSupplyFeeDetails
+    ...PerformanceFeeDetails
+    ...UnknownFeeDetails
+  }
+
+  fragment FeeDetailsCommon on Fee {
+    id
+    feeType
+  }
+
+  fragment EntraceRateBurnFeeDetails on EntranceRateBurnFee {
+    ...FeeDetailsCommon
+    rate
+  }
+
+  fragment EntranceRateDirectFeeDetails on EntranceRateDirectFee {
+    ...FeeDetailsCommon
+    rate
+    recipient {
+      id
+    }
+  }
+
+  fragment ExitRateBurnFeeDetails on ExitRateBurnFee {
+    ...FeeDetailsCommon
+    inKindRate
+    specificAssetsRate
+  }
+
+  fragment ExitRateDirectFeeDetails on ExitRateDirectFee {
+    ...FeeDetailsCommon
+    inKindRate
+    specificAssetsRate
+    recipient {
+      id
+    }
+  }
+
+  fragment ManagementFeeDetails on ManagementFee {
+    ...FeeDetailsCommon
+    scaledPerSecondRate
+    recipient {
+      id
+    }
+  }
+
+  fragment MinSharesSupplyFeeDetails on MinSharesSupplyFee {
+    ...FeeDetailsCommon
+  }
+
+  fragment PerformanceFeeDetails on PerformanceFee {
+    ...FeeDetailsCommon
+    highWaterMark
+    rate
+    recipient {
+      id
+    }
+  }
+
+  fragment UnknownFeeDetails on UnknownFee {
+    ...FeeDetailsCommon
+  }
+
+  fragment PolicyDetails on Policy {
+    ...AllowedAdapterIncomingAssetsPolicyDetails
+    ...AllowedAdaptersPerManagerPolicyDetails
+    ...AllowedAdaptersPolicyDetails
+    ...AllowedAssetsForRedemptionPolicyDetails
+    ...AllowedDepositRecipientsPolicyDetails
+    ...AllowedExternalPositionTypesPerManagerPolicyDetails
+    ...AllowedExternalPositionTypesPolicyDetails
+    ...AllowedSharesTransferRecipientsPolicyDetails
+    ...CumulativeSlippageTolerancePolicyDetails
+    ...MinAssetBalancesPostRedemptionPolicyDetails
+    ...MinMaxDepositPolicyDetails
+    ...OnlyRemoveDustExternalPositionPolicyDetails
+    ...OnlyUntrackDustOrPricelessAssetsPolicyDetails
+    ...UnknownPolicyDetails
+    ...AdapterBlacklistPolicyDetails
+    ...AdapterWhitelistPolicyDetails
+    ...AssetBlacklistPolicyDetails
+    ...AssetWhitelistPolicyDetails
+    ...AssetWhitelistPolicyDetails
+    ...BuySharesCallerWhitelistPolicyDetails
+    ...DepositorWhitelistPolicyDetails
+    ...GuaranteedRedemptionPolicyDetails
+    ...GuaranteedRedemptionPolicyDetails
+    ...MaxConcentrationPolicyDetails
+  }
+
+  fragment PolicyDetailsCommon on Policy {
+    id
+    policyType
+  }
+
+  fragment AllowedAdapterIncomingAssetsPolicyDetails on AllowedAdapterIncomingAssetsPolicy {
+    ...PolicyDetailsCommon
+    addressLists {
+      id
+      items
+    }
+  }
+
+  fragment AllowedAdaptersPerManagerPolicyDetails on AllowedAdaptersPerManagerPolicy {
+    ...PolicyDetailsCommon
+    userAddressLists {
+      id
+      addressLists {
+        items
+        id
+      }
+      userAddress
+    }
+  }
+
+  fragment AllowedAdaptersPolicyDetails on AllowedAdaptersPolicy {
+    ...PolicyDetailsCommon
+    addressLists {
+      items
+      id
+    }
+  }
+
+  fragment AllowedAssetsForRedemptionPolicyDetails on AllowedAssetsForRedemptionPolicy {
+    ...PolicyDetailsCommon
+    addressLists {
+      id
+      items
+    }
+  }
+
+  fragment AllowedDepositRecipientsPolicyDetails on AllowedDepositRecipientsPolicy {
+    ...PolicyDetailsCommon
+    addressLists {
+      id
+      items
+    }
+  }
+
+  fragment AllowedExternalPositionTypesPerManagerPolicyDetails on AllowedExternalPositionTypesPerManagerPolicy {
+    ...PolicyDetailsCommon
+    userUintLists {
+      id
+      userAddress
+      uintLists {
+        id
+        items
+      }
+    }
+  }
+
+  fragment AllowedExternalPositionTypesPolicyDetails on AllowedExternalPositionTypesPolicy {
+    ...PolicyDetailsCommon
+    externalPositionTypes
+  }
+
+  fragment AllowedSharesTransferRecipientsPolicyDetails on AllowedSharesTransferRecipientsPolicy {
+    ...PolicyDetailsCommon
+    addressLists {
+      id
+      items
+    }
+  }
+
+  fragment CumulativeSlippageTolerancePolicyDetails on CumulativeSlippageTolerancePolicy {
+    ...PolicyDetailsCommon
+    cumulativeSlippage
+    lastSlippageTimestamp
+    tolerance
+  }
+
+  fragment MinAssetBalancesPostRedemptionPolicyDetails on MinAssetBalancesPostRedemptionPolicy {
+    ...PolicyDetailsCommon
+    assetBalances {
+      asset {
+        name
+        id
+        symbol
+      }
+      id
+      amount
+    }
+  }
+
+  fragment MinMaxDepositPolicyDetails on MinMaxDepositPolicy {
+    ...PolicyDetailsCommon
+    minDepositAmount
+    maxDepositAmount
+  }
+
+  fragment OnlyRemoveDustExternalPositionPolicyDetails on OnlyRemoveDustExternalPositionPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment OnlyUntrackDustOrPricelessAssetsPolicyDetails on OnlyUntrackDustOrPricelessAssetsPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment UnknownPolicyDetails on UnknownPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment AdapterBlacklistPolicyDetails on AdapterBlacklistPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment AdapterWhitelistPolicyDetails on AdapterWhitelistPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment AssetBlacklistPolicyDetails on AssetBlacklistPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment AssetWhitelistPolicyDetails on AssetWhitelistPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment BuySharesCallerWhitelistPolicyDetails on BuySharesCallerWhitelistPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment DepositorWhitelistPolicyDetails on DepositorWhitelistPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment GuaranteedRedemptionPolicyDetails on GuaranteedRedemptionPolicy {
+    ...PolicyDetailsCommon
+  }
+
+  fragment MaxConcentrationPolicyDetails on MaxConcentrationPolicy {
+    ...PolicyDetailsCommon
   }
 `);
