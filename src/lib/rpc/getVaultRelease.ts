@@ -1,5 +1,5 @@
-import type { Network } from "../consts";
 import { getVaultFundDeployer } from "./getVaultFundDeployer";
+import type { Network } from "@/lib/consts";
 import { type Address, isAddressEqual } from "viem";
 
 export async function getVaultRelease({
