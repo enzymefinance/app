@@ -1,4 +1,5 @@
-import { getNetworkByDeployment, networks } from "@/lib/consts";
+import { VaultTile } from "@/components/VaultTile";
+import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
@@ -6,7 +7,6 @@ import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { z } from "@/lib/zod";
-import { VaultTile } from "@/components/VaultTile";
 
 export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
   const { vault, deployment } = assertParams({
