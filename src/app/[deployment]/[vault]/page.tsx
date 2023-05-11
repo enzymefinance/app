@@ -33,15 +33,13 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     getDenominationAsset({ network, comptroller }),
   ]).catch(handleContractError());
 
-  console.log(trackedAssetsInfo)
+  console.log(trackedAssetsInfo);
   const denominationAssetInfo = await getAssetInfo({
     network,
     asset: denominationAsset,
   }).catch(handleContractError());
 
-
   console.log(externalPositionsInfo);
-
 
   return (
     <div className="grid grid-cols-1 grid-rows-6 gap-4 pt-2 sm:grid-cols-3 sm:grid-rows-2">

@@ -15,15 +15,16 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
       vault: z.address(),
     }),
   });
-  
+
   const network = getNetworkByDeployment(deployment);
-  
+
   const trackedAssets = await getTrackedAssets({ vault, network }).catch(handleContractError());
 
   const portfolioAssets = await Promise.all(
-    trackedAssets.map(async (asset) => (
-      { asset: await getAssetInfo({ network, asset }), balance: await getBalance({ network, account: vault, asset })}
-    ))
+    trackedAssets.map(async (asset) => ({
+      asset: await getAssetInfo({ network, asset }),
+      balance: await getBalance({ network, account: vault, asset }),
+    })),
   ).catch(handleContractError());
 
   return (
