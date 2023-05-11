@@ -6,5 +6,3 @@ export default function ConfigurationPage() {
     </>
   );
 }
-
-export const runtime = "edge";
