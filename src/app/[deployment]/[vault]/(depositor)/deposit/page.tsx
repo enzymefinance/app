@@ -1,0 +1,34 @@
+import VaultApprove from "../../../../../components/VaultApprove";
+import VaultBuyShares from "../../../../../components/VaultBuyShares";
+import { getAssetInfo } from "../../../../../lib/rpc/getAssetInfo";
+import { getNetworkByDeployment } from "@/lib/consts";
+import { assertParams } from "@/lib/params";
+import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
+import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
+import { z } from "@/lib/zod";
+
+export default async function DepositPage({ params }: { params: { deployment: string; vault: string } }) {
+  const { vault, deployment } = assertParams({
+    params,
+    schema: z.object({
+      deployment: z.deployment(),
+      vault: z.address(),
+    }),
+  });
+
+  const network = getNetworkByDeployment(deployment);
+
+  const comptroller = await getVaultComptroller({ vault, network });
+  const denominationAsset = await getDenominationAsset({ comptroller, network });
+
+  const assetInfo = await getAssetInfo({ asset: denominationAsset, network });
+
+  return (
+    <>
+      <VaultApprove comptroller={comptroller} denominationAsset={denominationAsset} />
+      <br />
+      <br />
+      <VaultBuyShares comptroller={comptroller} denominationAsset={denominationAsset} />
+    </>
+  );
+}
