@@ -11,7 +11,7 @@ interface PortfolioAssets {
   balance: bigint,
 }
 
-export function TokenHoldingsTable(portfolioAssets: PortfolioAssets[]) {
+export function TokenHoldingsTable({ portfolioAssets }: {portfolioAssets: PortfolioAssets[] }) {
   return (
     <div className="w-full">
       <h1 className="my-4 text-lg">Token Holdings</h1>
