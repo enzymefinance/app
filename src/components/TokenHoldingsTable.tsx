@@ -1,11 +1,14 @@
 import { BigIntDisplay } from "./BigIntDisplay";
+import { Title } from "./Title";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { AssetWithAmount } from "@/lib/types";
 
 export function TokenHoldingsTable({ portfolioAssets }: { portfolioAssets: AssetWithAmount[] }) {
   return (
-    <div className="w-full">
-      <h1 className="my-4 text-lg">Token Holdings</h1>
+    <div className="w-full mt-12">
+      <Title size="xl" appearance="primary">
+        Token Holdings
+      </Title>
       {portfolioAssets.length > 0 ? (
         <Table>
           <TableCaption>A list of your current Portfolio assets!</TableCaption>
