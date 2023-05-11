@@ -12,7 +12,7 @@ export async function getAssetTotalSupply({
 }) {
   const client = getPublicClient(network);
   const totalSupply = await readContract(client, {
-    abi: parseAbi(["function totalSupply() view returns (uint)"]),
+    abi: parseAbi(["function totalSupply() view returns (uint)"] as const),
     functionName: "totalSupply",
     address: asset,
   });
