@@ -21,7 +21,7 @@ export async function getAssetName({
   try {
     try {
       const name = await readContract(client, {
-        abi: parseAbi(["function name() view returns (string)"]),
+        abi: parseAbi(["function name() view returns (string)"] as const),
         functionName: "name",
         address: asset,
       });
@@ -31,7 +31,7 @@ export async function getAssetName({
       if (error instanceof ContractFunctionExecutionError) {
         // TODO: Once `viem` exports the `SliceOutOfBoundsError` class, we should use that here too (`error.cause`).
         const name = await readContract(client, {
-          abi: parseAbi(["function name() view returns (bytes32)"]),
+          abi: parseAbi(["function name() view returns (bytes32)"] as const),
           functionName: "name",
           address: asset,
         });

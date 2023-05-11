@@ -1,13 +1,14 @@
 import "@/lib/styles/globals.css";
 
 import { QueryClientProvider } from "@/components/QueryProvider";
+import { RouteTransitionIndicator } from "@/components/RouteTransitionIndicator";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { WagmiProvider } from "@/components/WagmiProvider";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 
 export const metadata: Metadata = {
   title: {
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <head />
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <RouteTransitionIndicator />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <WagmiProvider>
             <QueryClientProvider>

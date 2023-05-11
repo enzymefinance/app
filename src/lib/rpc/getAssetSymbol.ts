@@ -21,7 +21,7 @@ export async function getAssetSymbol({
   try {
     try {
       const symbol = await readContract(client, {
-        abi: parseAbi(["function symbol() view returns (string)"]),
+        abi: parseAbi(["function symbol() view returns (string)"] as const),
         functionName: "symbol",
         address: asset,
       });
@@ -31,7 +31,7 @@ export async function getAssetSymbol({
       if (error instanceof ContractFunctionExecutionError) {
         // TODO: Once `viem` exports the `SliceOutOfBoundsError` class, we should use that here too (`error.cause`).
         const symbol = await readContract(client, {
-          abi: parseAbi(["function symbol() view returns (bytes32)"]),
+          abi: parseAbi(["function symbol() view returns (bytes32)"] as const),
           functionName: "symbol",
           address: asset,
         });
