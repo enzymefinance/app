@@ -19,6 +19,13 @@ module.exports = {
       net: false,
       tls: false,
       encoding: false,
+      path: false,
+      http: false,
+      https: false,
+      zlib: false,
+      os: false,
+      stream: false,
+      crypto: false,
     };
 
     return config;
