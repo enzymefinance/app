@@ -2,6 +2,7 @@
 
 import "@rainbow-me/rainbowkit/styles.css";
 
+import { getRpcUrl } from "@/lib/rpc";
 import { RainbowKitProvider, connectorsForWallets, darkTheme } from "@rainbow-me/rainbowkit";
 import {
   coinbaseWallet,
@@ -21,11 +22,11 @@ const { chains, publicClient } = configureChains(
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.network === "homestead") {
-          return { http: "/rpc/ethereum" };
+          return { http: getRpcUrl("ethereum") };
         }
 
         if (chain.network === "matic") {
-          return { http: "/rpc/polygon" };
+          return { http: getRpcUrl("polygon") };
         }
 
         return null;
