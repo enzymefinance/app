@@ -22,7 +22,6 @@ export default async function VaultLayout(props: {
   });
 
   const network = getNetworkByDeployment(deployment);
-
   const [name] = await Promise.all([getVaultName({ vault, network })]).catch(handleContractError());
 
   return (
