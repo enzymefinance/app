@@ -4,13 +4,15 @@ import { IFundValueCalculatorRouter } from "@enzymefinance/abis/IFundValueCalcul
 import { type Address, ContractFunctionExecutionError } from "viem";
 import { simulateContract } from "viem/contract";
 
-export async function getVaultNetShareValue({
+export async function getVaultGavInAsset({
   network,
   vault,
+  asset,
   fundValueCalculatorRouter,
 }: {
   network: Network;
   vault: Address;
+  asset: Address;
   fundValueCalculatorRouter: Address;
 }) {
   const client = getPublicClient(network);
@@ -18,15 +20,15 @@ export async function getVaultNetShareValue({
   try {
     const { result } = await simulateContract(client, {
       abi: IFundValueCalculatorRouter,
-      functionName: "calcNetShareValue",
+      functionName: "calcGavInAsset",
       address: fundValueCalculatorRouter,
-      args: [vault],
+      args: [vault, asset],
     });
-    const [asset, value] = result;
 
-    return { asset, value };
+    return result;
   } catch (error) {
-    // has tracked asset/position without at a valid price
+    console.log(error);
+    // TODO: More selectively catch this error here.
     if (error instanceof ContractFunctionExecutionError) {
       return undefined;
     }
