@@ -23,7 +23,11 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
   );
   const currentPortfolioAssets = portfolioAssets ? portfolioAssets.filter((asset) => asset.amount > 0) : [];
 
-  const externalPositions = await getExternalPositionsInfo({ vault, network, externalPositionFactory: getContract(deployment, "ExternalPositionFactory") });
+  const externalPositions = await getExternalPositionsInfo({
+    vault,
+    network,
+    externalPositionFactory: getContract(deployment, "ExternalPositionFactory"),
+  });
 
   return (
     <>
