@@ -1,14 +1,5 @@
-import { getExternalPositionsInfo } from "../../../lib/rpc/getExternalPositionsInfo";
 import { VaultTile } from "@/components/VaultTile";
-import { getNetworkByDeployment } from "@/lib/consts";
-import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
-import { getAmountMultiple } from "@/lib/rpc/getAmount";
-import { getAssetInfo, getAssetInfoMultiple } from "@/lib/rpc/getAssetInfo";
-import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
-import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
-import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
-import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
 import { z } from "@/lib/zod";
 
 export default async function VaultPage({ params }: { params: { deployment: string; vault: string } }) {
@@ -20,33 +11,9 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     }),
   });
 
-  const network = getNetworkByDeployment(deployment);
-  const [owner, comptroller, trackedAssets, _externalPositionsInfo] = await Promise.all([
-    getVaultOwner({ vault, network }),
-    getVaultComptroller({ vault, network }),
-    getTrackedAssets({ vault, network }),
-    getExternalPositionsInfo({ vault, network }),
-  ]).catch(handleContractError());
-
-  const [_trackedAssetsInfo, , denominationAsset] = await Promise.all([
-    getAssetInfoMultiple({ network, assets: trackedAssets }),
-    getAmountMultiple({ network, account: vault, assets: trackedAssets }),
-    getDenominationAsset({ network, comptroller }),
-  ]).catch(handleContractError());
-
-  const denominationAssetInfo = await getAssetInfo({
-    network,
-    asset: denominationAsset,
-  }).catch(handleContractError());
-
   return (
     <div className="grid grid-cols-1 grid-rows-6 gap-4 pt-2 sm:grid-cols-3 sm:grid-rows-2">
-      <VaultTile title="Owner" description={owner} />
-      <VaultTile title="Denomination Asset" description={denominationAssetInfo.symbol} />
-      <VaultTile title="Total supply" description="$0.99" />
-      <VaultTile title="GAV" description="$1,001.52" />
-      <VaultTile title="Share price" description="$1,001.52" />
-      <VaultTile title="Release" description="Sulu" />
+      <VaultTile title="Vault" description={vault} />
     </div>
   );
 }
