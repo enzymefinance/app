@@ -15,12 +15,12 @@ interface VaultApproveProps {
 
 export default function VaultApprove({ comptroller, denominationAsset, decimals }: VaultApproveProps) {
   const schema = z.object({
-    amount: z.string(),
+    amount: z.bigint(),
   });
 
-  const { register, handleSubmit, getFieldState } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
-      amount: "1",
+      amount: 1000000000000000000n,
     },
     resolver: zodResolver(schema),
   });
@@ -32,14 +32,14 @@ export default function VaultApprove({ comptroller, denominationAsset, decimals 
   });
 
   const onSubmit = (data: zz.infer<typeof schema>) => {
-    console.log(data);
-    write({ args: [comptroller, parseUnits(`${Number(data.amount)}`, Number(decimals))] });
+    write({ args: [comptroller, data.amount] });
   };
 
   return (
     <form name="approve" onSubmit={handleSubmit(onSubmit)}>
       <h1>Step 1: Approve </h1>
       <input {...register("amount")} />
+      <br />
       <button type="submit">Submit</button>
     </form>
   );

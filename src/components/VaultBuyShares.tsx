@@ -16,12 +16,12 @@ interface VaultBuySharesProps {
 
 export default function VaultBuyShares({ comptroller, decimals }: VaultBuySharesProps) {
   const schema = z.object({
-    amount: z.string(),
+    amount: z.bigint(),
   });
 
-  const { register, handleSubmit, getFieldState } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
-      amount: "1",
+      amount: 1000000000000000000n,
     },
     resolver: zodResolver(schema),
   });
@@ -33,13 +33,14 @@ export default function VaultBuyShares({ comptroller, decimals }: VaultBuyShares
   });
 
   const onSubmit = (data: zz.infer<typeof schema>) => {
-    write({ args: [parseUnits(`${Number(data.amount)}`, Number(decimals)), 1n] });
+    write({ args: [data.amount, 1n] });
   };
 
   return (
     <form name="buyShares" onSubmit={handleSubmit(onSubmit)}>
       <h1>Step 2: Deposit</h1>
       <input {...register("amount")} />
+      <br />
       <button type="submit">Submit</button>
     </form>
   );
