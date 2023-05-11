@@ -21,8 +21,6 @@ export default async function DepositPage({ params }: { params: { deployment: st
   const comptroller = await getVaultComptroller({ vault, network });
   const denominationAsset = await getDenominationAsset({ comptroller, network });
 
-  const assetInfo = await getAssetInfo({ asset: denominationAsset, network });
-
   return (
     <>
       <VaultApprove comptroller={comptroller} denominationAsset={denominationAsset} />
