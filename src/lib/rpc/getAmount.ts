@@ -14,7 +14,7 @@ export async function getAmount({
 }) {
   const client = getPublicClient(network);
   const amount = await readContract(client, {
-    abi: parseAbi(["function balanceOf(address account) view returns (uint256)"]),
+    abi: parseAbi(["function balanceOf(address account) view returns (uint256)"] as const),
     functionName: "balanceOf",
     address: asset,
     args: [account],

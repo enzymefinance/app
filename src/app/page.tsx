@@ -1,4 +1,4 @@
-import {VaultSearch} from "@/components/VaultSearch";
+import { VaultSearch } from "@/components/VaultSearch";
 
 export default function RootPage() {
   return (

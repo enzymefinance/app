@@ -1,12 +1,13 @@
 "use client";
 
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandShortcut } from "./ui/command";
 import { type Deployment, deployments, getNetworkByDeployment } from "@/lib/consts";
 import { VaultBasicInfoFragmentDoc, queryCoreSubgraph, useFragment } from "@/lib/gql";
 import { getAssetSymbol } from "@/lib/rpc/getAssetSymbol";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { vaultSearch } from "@/lib/subgraphs/core/vaultSearch";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useDebounce } from "react-use";
@@ -48,9 +49,7 @@ function useVaultSearch(deployment: Deployment, query: string) {
         return { name: fragment.name, symbol: fragment.symbol, address: fragment.id as Address };
       });
     },
-    placeholderData: (previous) => {
-      return significant && !isAddress(query) ? previous : undefined;
-    },
+    placeholderData: (previous) => (significant && !isAddress(query) ? previous : undefined),
   });
 
   return result;
@@ -62,7 +61,7 @@ export function VaultSearch() {
   useDebounce(() => setDebounced(value), 250, [value]);
 
   return (
-    <Command shouldFilter={false} className="rounded-lg border shadow-md">
+    <Command shouldFilter={false} className="rounded-lg border shadow-md" loop={true}>
       <CommandInput placeholder="Search vaults ..." onValueChange={(value) => setValue(value)} />
       <CommandEmpty>No vaults found.</CommandEmpty>
       {deployments.map((deployment) => (
@@ -90,7 +89,9 @@ function VaultSearchDeploymentGroup({ deployment, query }: { deployment: Deploym
           value={item.address}
           onSelect={() => router.push(`/${deployment}/${item.address}`)}
         >
-          {item.name}
+          <Link href={`/${deployment}/${item.address}`} className="block">
+            {item.name}
+          </Link>
         </CommandItem>
       ))}
     </CommandGroup>

@@ -5,8 +5,8 @@ import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { z } from "@/lib/zod";
-import type { ReactNode } from "react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export default async function VaultLayout(props: {
   children: ReactNode;
@@ -24,7 +24,7 @@ export default async function VaultLayout(props: {
   });
 
   const network = getNetworkByDeployment(deployment);
-  const [name] = await Promise.all([getVaultName({ vault, network })]).catch(handleContractError());
+  const name = await getVaultName({ vault, network }).catch(handleContractError());
 
   return (
     <div className="p-4 space-y-4 container mx-auto">
