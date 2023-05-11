@@ -7,21 +7,6 @@ import { getBalance } from "@/lib/rpc/getBalance";
 import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
 import { z } from "@/lib/zod";
 
-const mockPortfolioData = [
-  {
-    asset: "ETH",
-    balance: "1.0000",
-    price: "$3,000.00",
-    value: "$3,000.00",
-  },
-  {
-    asset: "DAI",
-    balance: "1,000.0000",
-    price: "$1.00",
-    value: "$1,000.00",
-  },
-];
-
 export default async function PortfolioPage({ params }: { params: { deployment: string; vault: string } }) {
   const { vault, deployment } = assertParams({
     params,
@@ -43,7 +28,7 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
 
   return (
     <>
-      {TokenHoldingsTable(portfolioAssets)}
+      <TokenHoldingsTable portfolioAssets={portfolioAssets} />
     </>
   );
 }
