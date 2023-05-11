@@ -2,25 +2,25 @@
 
 import { z } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { type Address, parseAbi } from "viem";
+import { type Address, parseAbi, parseUnits } from "viem";
 import { useContractWrite } from "wagmi";
 import { z as zz } from "zod";
 
-interface VaultDepositProps {
+interface VaultApproveProps {
   comptroller: Address;
   denominationAsset: Address;
+  decimals: bigint;
 }
 
-export default function VaultApprove({ comptroller, denominationAsset }: VaultDepositProps) {
+export default function VaultApprove({ comptroller, denominationAsset, decimals }: VaultApproveProps) {
   const schema = z.object({
-    amount: z.bigint(),
+    amount: z.string(),
   });
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, getFieldState } = useForm({
     defaultValues: {
-      amount: 0n,
+      amount: "1",
     },
     resolver: zodResolver(schema),
   });
@@ -31,21 +31,16 @@ export default function VaultApprove({ comptroller, denominationAsset }: VaultDe
     functionName: "approve",
   });
 
-  const onSubmit = useCallback(
-    () => (data: zz.infer<typeof schema>) => {
-      write({ args: [comptroller, data.amount] });
-    },
-    [comptroller, schema],
-  );
+  const onSubmit = (data: zz.infer<typeof schema>) => {
+    console.log(data);
+    write({ args: [comptroller, parseUnits(`${Number(data.amount)}`, Number(decimals))] });
+  };
 
   return (
-    <>
+    <form name="approve" onSubmit={handleSubmit(onSubmit)}>
       <h1>Step 1: Approve </h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="number" min={0} {...register("amount")} />
-        <br />
-        <button type='submit'>Submit</button>
-      </form>
-    </>
+      <input {...register("amount")} />
+      <button type="submit">Submit</button>
+    </form>
   );
 }

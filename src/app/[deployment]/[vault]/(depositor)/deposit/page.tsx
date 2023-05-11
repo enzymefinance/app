@@ -1,8 +1,9 @@
-import VaultApprove from "../../../../../components/VaultApprove";
-import VaultBuyShares from "../../../../../components/VaultBuyShares";
-import { getAssetInfo } from "../../../../../lib/rpc/getAssetInfo";
+import VaultApprove from "@/components/VaultApprove";
+import VaultBuyShares from "@/components/VaultBuyShares";
 import { getNetworkByDeployment } from "@/lib/consts";
 import { assertParams } from "@/lib/params";
+import { getAssetDecimals } from "@/lib/rpc/getAssetDecimals";
+import { getAssetInfo } from "@/lib/rpc/getAssetInfo";
 import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { z } from "@/lib/zod";
@@ -21,12 +22,14 @@ export default async function DepositPage({ params }: { params: { deployment: st
   const comptroller = await getVaultComptroller({ vault, network });
   const denominationAsset = await getDenominationAsset({ comptroller, network });
 
+  const decimals = await getAssetDecimals({ asset: denominationAsset, network });
+
   return (
     <>
-      <VaultApprove comptroller={comptroller} denominationAsset={denominationAsset} />
+      <VaultApprove comptroller={comptroller} denominationAsset={denominationAsset} decimals={decimals} />
       <br />
       <br />
-      <VaultBuyShares comptroller={comptroller} denominationAsset={denominationAsset} />
+      <VaultBuyShares comptroller={comptroller} denominationAsset={denominationAsset} decimals={decimals} />
     </>
   );
 }
