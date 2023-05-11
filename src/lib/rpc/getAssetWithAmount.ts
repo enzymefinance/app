@@ -12,10 +12,7 @@ export async function getAssetWithAmount({
   account: Address;
   asset: Address;
 }) {
-  const [info, amount] = await Promise.all([
-    getAssetInfo({ network, asset }),
-    getAmount({ network, account, asset }),
-  ]);
+  const [info, amount] = await Promise.all([getAssetInfo({ network, asset }), getAmount({ network, account, asset })]);
 
   return { ...info, amount };
 }

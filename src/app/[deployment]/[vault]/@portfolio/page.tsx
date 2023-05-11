@@ -14,14 +14,14 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
       vault: z.address(),
     }),
   });
-  
+
   const network = getNetworkByDeployment(deployment);
-  
+
   const trackedAssets = await getTrackedAssets({ vault, network }).catch(handleContractError());
 
   const portfolioAssets = await Promise.all(
-    trackedAssets.map(async (asset) => await getAssetWithAmount({ network, account: vault, asset })
-    )).catch(handleContractError());
+    trackedAssets.map(async (asset) => await getAssetWithAmount({ network, account: vault, asset })),
+  ).catch(handleContractError());
 
   const currentPortfolioAssets = portfolioAssets ? portfolioAssets.filter((asset) => asset.amount > 0) : [];
 
