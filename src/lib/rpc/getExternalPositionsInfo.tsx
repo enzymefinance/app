@@ -1,4 +1,4 @@
-import type { Network } from "@/lib/consts";
+import { EXTERNAL_POSITION_FACTORY, type Network } from "@/lib/consts";
 import { getDebtAssets } from "@/lib/rpc/getDebtAssets";
 import { getExternalPositionType } from "@/lib/rpc/getExternalPositionType";
 import { getLabelForExternalPositionType } from "@/lib/rpc/getLabelForPositionType";
@@ -14,7 +14,6 @@ export async function getExternalPositionsInfo({
   network: Network;
 }) {
   const externalPositions = await getVaultActiveExternalPositions({ vault, network });
-  const externalPositionFactory = "0x0aacb782205dde9eff4862ace9849dce1ca3409f";
   const externalPositionsInfo = await Promise.all(
     externalPositions.map(async (externalPosition) => {
       const [externalPositionType, debtAssets, managedAssets] = await Promise.all([
@@ -25,7 +24,7 @@ export async function getExternalPositionsInfo({
 
       const externalPositionLabel = await getLabelForExternalPositionType({
         network,
-        externalPositionFactory,
+        externalPositionFactory: EXTERNAL_POSITION_FACTORY,
         typeId: externalPositionType,
       });
 
