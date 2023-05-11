@@ -1,3 +1,4 @@
+import { getAssetInfo } from "./getAssetInfo";
 import type { Network } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
 import { IExternalPosition } from "@enzymefinance/abis/IExternalPosition";
@@ -20,8 +21,10 @@ export async function getManagedAssets({
     address,
   });
 
-  return assets.map((asset, index) => ({
-    asset,
-    amount: amounts[index],
-  }));
+  return Promise.all(
+    assets.map(async (asset, index) => ({
+      asset: await getAssetInfo({ network, asset }),
+      amount: amounts[index] ?? BigInt(0),
+    })),
+  );
 }
