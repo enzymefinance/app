@@ -6,16 +6,16 @@ import { readContract } from "viem/contract";
 
 export async function getExternalPositionType({
   network,
-  vault,
+  address,
 }: {
   network: Network;
-  vault: Address;
+  address: Address;
 }) {
   const client = getPublicClient(network);
   const externalPositionType = await readContract(client, {
     abi: IExternalPositionProxy,
     functionName: "getExternalPositionType",
-    address: vault,
+    address,
   });
 
   return externalPositionType;

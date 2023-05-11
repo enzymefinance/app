@@ -1,21 +1,23 @@
-import { getVaultFundDeployer } from "./getVaultFundDeployer";
+import { getFundDeployerForVaultProxy } from "./getFundDeployerForVaultProxy";
 import type { Network } from "@/lib/consts";
 import { type Address, isAddressEqual } from "viem";
 
 export async function getVaultRelease({
   network,
   vault,
+  dispatcher,
   fundDeployerSulu,
   fundDeployerEncore,
   fundDeployerPhoenix,
 }: {
+  dispatcher: Address;
   network: Network;
   vault: Address;
   fundDeployerSulu: Address;
   fundDeployerEncore: Address;
   fundDeployerPhoenix: Address;
 }): Promise<{ name: string; version: number }> {
-  const fundDeployer = await getVaultFundDeployer({ network, vault });
+  const fundDeployer = await getFundDeployerForVaultProxy({ network, vault, dispatcher });
 
   if (isAddressEqual(fundDeployer, fundDeployerSulu)) {
     return { name: "Sulu", version: 4 };
