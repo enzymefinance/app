@@ -15,7 +15,7 @@ export async function getExternalPositionsInfo({
 }) {
   const externalPositions = await getVaultActiveExternalPositions({ vault, network });
   const externalPositionsInfo = await Promise.all(
-    externalPositions.map(async (externalPosition) => {
+    externalPositions.map(async (externalPosition, i) => {
       const [externalPositionType, debtAssets, managedAssets] = await Promise.all([
         getExternalPositionType({ network, address: externalPosition }),
         getDebtAssets({ network, address: externalPosition }),
