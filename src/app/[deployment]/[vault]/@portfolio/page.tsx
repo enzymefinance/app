@@ -23,9 +23,11 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
     trackedAssets.map(async (asset) => await getAssetWithAmount({ network, account: vault, asset })
     )).catch(handleContractError());
 
+  const currentPortfolioAssets = portfolioAssets ? portfolioAssets.filter((asset) => asset.amount > 0) : [];
+
   return (
     <>
-      <TokenHoldingsTable portfolioAssets={portfolioAssets} />
+      <TokenHoldingsTable portfolioAssets={currentPortfolioAssets} />
     </>
   );
 }
