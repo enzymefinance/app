@@ -31,5 +31,3 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
     </>
   );
 }
-
-export const runtime = "edge";
