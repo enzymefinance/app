@@ -27,13 +27,13 @@ export default async function VaultLayout(props: {
   const [name] = await Promise.all([getVaultName({ vault, network })]).catch(handleContractError());
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 container mx-auto">
       <Card>
         <CardHeader>
           <CardTitle>{name}</CardTitle>
         </CardHeader>
         <CardContent>{vault}</CardContent>
-        <Link href={`${deployment}/${vault}/deposit`}>DEposit</Link>
+        <Link href={`${deployment}/${vault}/deposit`}>Deposit</Link>
       </Card>
       <Tabs defaultValue="overview" className="mb-4">
         <TabsList className="grid grid-rows-1 grid-cols-3 space-x-2 px-3">
