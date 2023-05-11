@@ -4,7 +4,7 @@ import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getAssetInfo, getAssetInfoMultiple } from "@/lib/rpc/getAssetInfo";
-import { getBalanceMultiple } from "@/lib/rpc/getBalance";
+import { getAmountMultiple } from "@/lib/rpc/getAmount";
 import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
 import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
@@ -29,7 +29,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
 
   const [trackedAssetsInfo, , denominationAsset] = await Promise.all([
     getAssetInfoMultiple({ network, assets: trackedAssets }),
-    getBalanceMultiple({ network, account: vault, assets: trackedAssets }),
+    getAmountMultiple({ network, account: vault, assets: trackedAssets }),
     getDenominationAsset({ network, comptroller }),
   ]).catch(handleContractError());
 
