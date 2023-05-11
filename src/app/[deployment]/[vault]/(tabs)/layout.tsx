@@ -6,9 +6,11 @@ import { assertParams } from "@/lib/params";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { z } from "@/lib/zod";
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 export default async function VaultLayout(props: {
   children: ReactNode;
+  overview: ReactNode;
   configuration: ReactNode;
   portfolio: ReactNode;
   params: { deployment: string; vault: string };
@@ -25,12 +27,13 @@ export default async function VaultLayout(props: {
   const [name] = await Promise.all([getVaultName({ vault, network })]).catch(handleContractError());
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 container mx-auto">
       <Card>
         <CardHeader>
           <CardTitle>{name}</CardTitle>
         </CardHeader>
         <CardContent>{vault}</CardContent>
+        <Link href={`${deployment}/${vault}/deposit`}>Deposit</Link>
       </Card>
       <Tabs defaultValue="overview" className="mb-4">
         <TabsList className="grid grid-rows-1 grid-cols-3 space-x-2 px-3">
@@ -39,7 +42,7 @@ export default async function VaultLayout(props: {
           <TabsTrigger value="configuration">Configuration</TabsTrigger>
         </TabsList>
         <div>
-          <TabsContent value="overview">{props.children}</TabsContent>
+          <TabsContent value="overview">{props.overview}</TabsContent>
           <TabsContent value="portfolio">{props.portfolio}</TabsContent>
           <TabsContent value="configuration">{props.configuration}</TabsContent>
         </div>

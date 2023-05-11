@@ -41,12 +41,16 @@ function useVaultSearch(deployment: Deployment, query: string) {
           name: query,
         },
       });
-      return data.vaults.map((vault) => {
+
+      const vaults = data.releases.flatMap((release) => release.vaults ?? []);
+      return vaults.map((vault) => {
         const fragment = useFragment(VaultBasicInfoFragmentDoc, vault);
         return { name: fragment.name, symbol: fragment.symbol, address: fragment.id as Address };
       });
     },
-    keepPreviousData: significant && !isAddress(query),
+    placeholderData: (previous) => {
+      return significant && !isAddress(query) ? previous : undefined;
+    },
   });
 
   return result;

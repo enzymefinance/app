@@ -112,5 +112,3 @@ export default async function ConfigurationPage({
     </>
   );
 }
-
-export const runtime = "edge";
