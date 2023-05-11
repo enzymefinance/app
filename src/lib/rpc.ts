@@ -22,7 +22,9 @@ export const getPublicClient = cache(function getPublicClient(network: Network) 
     transport: http(getRpcUrl(network)),
     name: network,
     batch: {
-      multicall: true,
+      multicall: {
+        wait: 1,
+      },
     },
   });
 });

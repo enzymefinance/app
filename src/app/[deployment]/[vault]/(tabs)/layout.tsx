@@ -5,8 +5,8 @@ import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
 import { getVaultName } from "@/lib/rpc/getVaultName";
 import { z } from "@/lib/zod";
-import type { ReactNode } from "react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export default async function VaultLayout(props: {
   children: ReactNode;
@@ -24,16 +24,16 @@ export default async function VaultLayout(props: {
   });
 
   const network = getNetworkByDeployment(deployment);
-  const [name] = await Promise.all([getVaultName({ vault, network })]).catch(handleContractError());
+  const name = await getVaultName({ vault, network }).catch(handleContractError());
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 container mx-auto">
       <Card>
         <CardHeader>
           <CardTitle>{name}</CardTitle>
         </CardHeader>
         <CardContent>{vault}</CardContent>
-        <Link href={`${deployment}/${vault}/deposit`}>DEposit</Link>
+        <Link href={`${deployment}/${vault}/deposit`}>Deposit</Link>
       </Card>
       <Tabs defaultValue="overview" className="mb-4">
         <TabsList className="grid grid-rows-1 grid-cols-3 space-x-2 px-3">

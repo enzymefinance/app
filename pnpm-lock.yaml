@@ -43,19 +43,19 @@ dependencies:
     specifier: ^1.0.0
     version: 1.0.0(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.21)(wagmi@1.0.2)
   '@tanstack/react-query':
-    specifier: 5.0.0-alpha.26
+    specifier: ^5.0.0-alpha.26
     version: 5.0.0-alpha.26(react-dom@18.2.0)(react@18.2.0)
   '@types/node':
-    specifier: 20.1.2
+    specifier: ^20.1.2
     version: 20.1.2
   '@types/react':
-    specifier: 18.2.6
+    specifier: ^18.2.6
     version: 18.2.6
   '@types/react-dom':
-    specifier: 18.2.4
+    specifier: ^18.2.4
     version: 18.2.4
   autoprefixer:
-    specifier: 10.4.14
+    specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.23)
   class-variance-authority:
     specifier: ^0.6.0
@@ -76,22 +76,22 @@ dependencies:
     specifier: ^2.12.6
     version: 2.12.6(graphql@16.6.0)
   lucide-react:
-    specifier: ^0.215.0
-    version: 0.215.0(react@18.2.0)
+    specifier: ^0.216.0
+    version: 0.216.0(react@18.2.0)
   next:
-    specifier: 13.4.2-canary.4
+    specifier: ^13.4.2-canary.4
     version: 13.4.2-canary.4(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@13.4.2-canary.4)(react-dom@18.2.0)(react@18.2.0)
   postcss:
-    specifier: 8.4.23
+    specifier: ^8.4.23
     version: 8.4.23
   react:
-    specifier: 18.2.0
+    specifier: ^18.2.0
     version: 18.2.0
   react-dom:
-    specifier: 18.2.0
+    specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-hook-form:
     specifier: ^7.43.9
@@ -106,19 +106,19 @@ dependencies:
     specifier: ^1.12.0
     version: 1.12.0
   tailwindcss:
-    specifier: 3.3.2
+    specifier: ^3.3.2
     version: 3.3.2
   tailwindcss-animate:
     specifier: ^1.0.5
     version: 1.0.5(tailwindcss@3.3.2)
   typescript:
-    specifier: 5.0.4
+    specifier: ^5.0.4
     version: 5.0.4
   viem:
     specifier: ^0.3.21
     version: 0.3.21(typescript@5.0.4)(zod@3.21.4)
   wagmi:
-    specifier: 1.0.2
+    specifier: ^1.0.2
     version: 1.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.21)(zod@3.21.4)
   zod:
     specifier: ^3.21.4
@@ -5192,8 +5192,8 @@ packages:
       yallist: 4.0.0
     dev: false
 
-  /lucide-react@0.215.0(react@18.2.0):
-    resolution: {integrity: sha512-1ka+bR/WDw5dzkzj9UJbDat9cg/bMNOxWpVnsAlZGPW6+6QJlEJxgCgOp7umO7ihLLFBm0Pm5M/qK57FCoz/gA==}
+  /lucide-react@0.216.0(react@18.2.0):
+    resolution: {integrity: sha512-PGWXs6JXI/08rhfkmj/joji0MAKDCcms44j0LYILO4J36AWqKhgjjaZ6WECRSyZ9TQe5gOrAR0g38O8cKrQngw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:

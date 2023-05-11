@@ -1,36 +1,32 @@
+import { BigIntDisplay } from "./BigIntDisplay";
+import { Title } from "./Title";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { type Address, formatUnits } from "viem";
+import type { AssetWithAmount } from "@/lib/types";
 
-interface PortfolioAssets {
-  asset: {
-    name: string;
-    symbol: string;
-    decimals: bigint;
-    address: Address;
-  };
-  balance: bigint;
-}
-
-export function TokenHoldingsTable({ portfolioAssets }: { portfolioAssets: PortfolioAssets[] }) {
+export function TokenHoldingsTable({ portfolioAssets }: { portfolioAssets: AssetWithAmount[] }) {
   return (
-    <div className="w-full">
-      <h1 className="my-4 text-lg">Token Holdings</h1>
+    <div className="w-full mt-12">
+      <Title size="xl" appearance="primary">
+        Token Holdings
+      </Title>
       {portfolioAssets.length > 0 ? (
         <Table>
           <TableCaption>A list of your current Portfolio assets!</TableCaption>
           <TableHeader className="w-full">
             <TableRow>
               <TableHead>Asset</TableHead>
-              <TableHead className="text-right">Balance</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {portfolioAssets.map((row) => (
-              <TableRow key={row.asset.symbol}>
+            {portfolioAssets.map((asset) => (
+              <TableRow key={asset.symbol}>
                 <TableCell className="font-medium">
-                  {row.asset.symbol} {row.asset.name}
+                  {asset.symbol} {asset.name}
                 </TableCell>
-                <TableCell className="text-right">{formatUnits(row.balance, Number(row.asset.decimals))}</TableCell>
+                <TableCell className="text-right">
+                  <BigIntDisplay asset={asset} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
