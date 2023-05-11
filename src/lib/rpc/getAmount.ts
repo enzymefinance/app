@@ -3,7 +3,7 @@ import { getPublicClient } from "@/lib/rpc";
 import { type Address, parseAbi } from "viem";
 import { readContract } from "viem/contract";
 
-export async function getBalance({
+export async function getAmount({
   network,
   account,
   asset,
@@ -13,17 +13,17 @@ export async function getBalance({
   asset: Address;
 }) {
   const client = getPublicClient(network);
-  const balance = await readContract(client, {
+  const amount = await readContract(client, {
     abi: parseAbi(["function balanceOf(address account) view returns (uint256)"]),
     functionName: "balanceOf",
     address: asset,
     args: [account],
   });
 
-  return balance;
+  return amount;
 }
 
-export async function getBalanceMultiple({
+export async function getAmountMultiple({
   network,
   account,
   assets,
@@ -32,7 +32,7 @@ export async function getBalanceMultiple({
   account: Address;
   assets: readonly Address[];
 }) {
-  const balances = await Promise.all(assets.map((asset) => getBalance({ network, account, asset })));
+  const balances = await Promise.all(assets.map((asset) => getAmount({ network, account, asset })));
 
   return balances;
 }
