@@ -16,7 +16,7 @@ export function TokenHoldingsTable({ portfolioAssets }: { portfolioAssets: Asset
             </TableRow>
           </TableHeader>
           <TableBody>
-            {portfolioAssets.map((asset: any) => (
+            {portfolioAssets.map((asset) => (
               <TableRow key={asset.symbol}>
                 <TableCell className="font-medium">
                   {asset.symbol} {asset.name}

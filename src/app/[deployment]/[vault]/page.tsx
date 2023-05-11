@@ -20,14 +20,14 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   });
 
   const network = getNetworkByDeployment(deployment);
-  const [owner, comptroller, trackedAssets, externalPositionsInfo] = await Promise.all([
+  const [owner, comptroller, trackedAssets, _externalPositionsInfo] = await Promise.all([
     getVaultOwner({ vault, network }),
     getVaultComptroller({ vault, network }),
     getTrackedAssets({ vault, network }),
     getExternalPositionsInfo({ vault, network }),
   ]).catch(handleContractError());
 
-  const [trackedAssetsInfo, , denominationAsset] = await Promise.all([
+  const [_trackedAssetsInfo, , denominationAsset] = await Promise.all([
     getAssetInfoMultiple({ network, assets: trackedAssets }),
     getAmountMultiple({ network, account: vault, assets: trackedAssets }),
     getDenominationAsset({ network, comptroller }),
