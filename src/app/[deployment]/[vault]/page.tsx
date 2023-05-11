@@ -1,4 +1,4 @@
-import { getExternalPositionsInfo } from "./getExternalPositionsInfo";
+import { getExternalPositionsInfo } from "../../../lib/rpc/getExternalPositionsInfo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
@@ -22,11 +22,12 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   });
 
   const network = getNetworkByDeployment(deployment);
-  const [name, owner, comptroller, trackedAssets] = await Promise.all([
+  const [name, owner, comptroller, trackedAssets, externalPositionsInfo] = await Promise.all([
     getVaultName({ vault, network }),
     getVaultOwner({ vault, network }),
     getVaultComptroller({ vault, network }),
     getTrackedAssets({ vault, network }),
+    getExternalPositionsInfo({ vault, network }),
   ]).catch(handleContractError());
 
   const [trackedAssetsInfo, , denominationAsset] = await Promise.all([
@@ -35,15 +36,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
     getDenominationAsset({ network, comptroller }),
   ]).catch(handleContractError());
 
-  const denominationAssetInfo = await getAssetInfo({
-    network,
-    asset: denominationAsset,
-  }).catch(handleContractError());
-
-  const externalPositionsInfo = await getExternalPositionsInfo({
-    vault,
-    network,
-  });
+  const denominationAssetInfo = await getAssetInfo({ network, asset: denominationAsset }).catch(handleContractError());
 
   console.log(externalPositionsInfo);
   /*

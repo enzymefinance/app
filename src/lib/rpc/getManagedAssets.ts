@@ -1,4 +1,4 @@
-import type { Network } from "../types";
+import type { Network } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
 import { IExternalPosition } from "@enzymefinance/abis/IExternalPosition";
 import type { Address } from "viem";
@@ -12,25 +12,16 @@ export async function getManagedAssets({
   address: Address;
 }) {
   const client = getPublicClient(network);
-  const { result } = await simulateContract(client, {
+  const {
+    result: [assets, amounts],
+  } = await simulateContract(client, {
     abi: IExternalPosition,
     functionName: "getManagedAssets",
     address,
   });
 
-  const parsed = result[0].map((res, i) => {
-    return {
-      asset: res,
-      amount: result[1][i],
-    };
-  });
-
-  return parsed;
-
-  // .map((res, i) => {
-  //   return {
-  //     asset: res,
-  //     // amount: managedAssets.result[i],
-  //   };
-  // });
+  return assets.map((asset, index) => ({
+    asset,
+    amount: amounts[index],
+  }));
 }
