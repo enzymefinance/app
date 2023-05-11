@@ -4,13 +4,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import { getRpcUrl } from "@/lib/rpc";
 import { RainbowKitProvider, connectorsForWallets, darkTheme } from "@rainbow-me/rainbowkit";
-import {
-  coinbaseWallet,
-  injectedWallet,
-  metaMaskWallet,
-  rainbowWallet,
-  walletConnectWallet,
-} from "@rainbow-me/rainbowkit/wallets";
+import { coinbaseWallet, injectedWallet, rainbowWallet, walletConnectWallet } from "@rainbow-me/rainbowkit/wallets";
 import type { ReactNode } from "react";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { mainnet, polygon } from "wagmi/chains";
@@ -38,7 +32,7 @@ const { chains, publicClient } = configureChains(
 const connectors = connectorsForWallets([
   {
     groupName: "Recommended",
-    wallets: [injectedWallet({ chains }), rainbowWallet({ chains }), metaMaskWallet({ chains })],
+    wallets: [injectedWallet({ chains }), rainbowWallet({ chains })],
   },
   {
     groupName: "Others",
