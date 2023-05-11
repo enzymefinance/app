@@ -13,7 +13,10 @@ export default async function VaultListPage({ params }: { params: { deployment: 
     }),
   });
 
-  const result = await queryCoreSubgraph(vaultList);
+  const result = await queryCoreSubgraph({
+    deployment,
+    document: vaultList,
+  });
 
   return (
     <div>

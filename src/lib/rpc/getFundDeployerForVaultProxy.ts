@@ -1,21 +1,24 @@
 import type { Network } from "@/lib/consts";
 import { getPublicClient } from "@/lib/rpc";
-import { IVault } from "@enzymefinance/abis/IVault";
+import { IDispatcher } from "@enzymefinance/abis/IDispatcher";
 import type { Address } from "viem";
 import { readContract } from "viem/contract";
 
-export async function getVaultFundDeployer({
+export async function getFundDeployerForVaultProxy({
   network,
   vault,
+  dispatcher,
 }: {
   network: Network;
   vault: Address;
+  dispatcher: Address;
 }) {
   const client = getPublicClient(network);
   const fundDeployer = await readContract(client, {
-    abi: IVault,
-    functionName: "getFundDeployer",
-    address: vault,
+    abi: IDispatcher,
+    functionName: "getFundDeployerForVaultProxy",
+    address: dispatcher,
+    args: [vault],
   });
 
   return fundDeployer;
