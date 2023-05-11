@@ -34,7 +34,7 @@ export default async function VaultPage({ params }: { params: { deployment: stri
   }).catch(handleContractError());
 
   return (
-    <div className="grid grid-cols-3 grid-rows-2 gap-4 pt-2">
+    <div className="grid grid-cols-1 grid-rows-6 gap-4 pt-2 sm:grid-cols-3 sm:grid-rows-2">
       <VaultTile title="Owner" description={owner} />
       <VaultTile title="Denomination Asset" description={denominationAssetInfo.symbol} />
       <VaultTile title="Total supply" description="$0.99" />
