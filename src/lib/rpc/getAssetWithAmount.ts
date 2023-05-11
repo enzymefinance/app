@@ -1,7 +1,7 @@
-import type { Address } from "viem";
 import type { Network } from "../consts";
-import { getAssetInfo } from "./getAssetInfo";
 import { getAmount } from "./getAmount";
+import { getAssetInfo } from "./getAssetInfo";
+import type { Address } from "viem";
 
 export async function getAssetWithAmount({
   network,

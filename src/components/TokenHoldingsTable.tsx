@@ -1,6 +1,6 @@
+import { BigIntDisplay } from "./BigIntDisplay";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { AssetWithAmount } from "@/lib/types";
-import { BigIntDisplay } from "./BigIntDisplay";
 
 export function TokenHoldingsTable({ portfolioAssets }: { portfolioAssets: AssetWithAmount[] }) {
   return (
