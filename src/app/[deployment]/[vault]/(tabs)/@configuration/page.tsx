@@ -5,6 +5,9 @@ import { ExitRateDirectFee } from "@/components/Fees/ExitRateDirectFee";
 import { ManagementFee } from "@/components/Fees/ManagementFee";
 import { MinSharesSupplyFee } from "@/components/Fees/MinSharesSupplyFee";
 import { PerformanceFee } from "@/components/Fees/PerformanceFee";
+import { AllowedDepositRecipintsPolicy } from "@/components/Policies/AllowedDepositRecipientsPolicy";
+import { AllowedSharesTransferRecipientsPolicy } from "@/components/Policies/AllowedSharesTransferRecipientsPolicy";
+import { MinMaxInvestmentPolicy } from "@/components/Policies/MinMaxInvestmentPolicy";
 import { Title } from "@/components/Title";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -62,6 +65,29 @@ const getFeeComponent = ({
   }
 };
 
+const getPolicyComponent = ({
+  network,
+  comptrollerProxy,
+  policy,
+}: {
+  network: Network;
+  comptrollerProxy: Address;
+  policy: Address;
+}) => {
+  switch (policy) {
+    case ALLOWED_DEPOSIT_RECIPIENTS_POLICY:
+      return <AllowedDepositRecipintsPolicy policy={policy} network={network} comptrollerProxy={comptrollerProxy} />;
+    case ALLOWED_SHARES_TRANSFER_RECIPIENTS_POLICY:
+      return (
+        <AllowedSharesTransferRecipientsPolicy policy={policy} network={network} comptrollerProxy={comptrollerProxy} />
+      );
+    case MIN_MAX_INVESTMENT_POLICY:
+      return <MinMaxInvestmentPolicy policy={policy} network={network} comptrollerProxy={comptrollerProxy} />;
+    default:
+      return <>Unknown Policy</>;
+  }
+};
+
 export default async function ConfigurationPage({
   params,
 }: {
@@ -106,6 +132,17 @@ export default async function ConfigurationPage({
       <div className="space-y-4">
         {enabledFeesForFund.map((fee: Address) => {
           return <Suspense fallback={<Skeleton />}>{getFeeComponent({ fee, network, comptrollerProxy })}</Suspense>;
+        })}
+      </div>
+
+      <Title size="xl" appearance="primary">
+        Policies
+      </Title>
+      <div className="space-y-4">
+        {enabledPoliciesForFund.map((policy: Address) => {
+          return (
+            <Suspense fallback={<Skeleton />}>{getPolicyComponent({ policy, network, comptrollerProxy })}</Suspense>
+          );
         })}
       </div>
     </>
