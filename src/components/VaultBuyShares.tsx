@@ -46,8 +46,6 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
 
   const approvedAmount = allowance.data ?? 0n;
 
-  console.log({ approvedAmount });
-
   const balance = useBalanceOf({
     network,
     token: denominationAsset,
@@ -56,10 +54,7 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
 
   const accountBalance = balance.data ?? 0n;
 
-  console.log({ accountBalance });
-
   const onSubmit = async (data: output<typeof schema>) => {
-    console.log("a");
     if (data.amount > approvedAmount) {
       console.log("Cannot deposit more than approved amount. Nice try!");
       return;
