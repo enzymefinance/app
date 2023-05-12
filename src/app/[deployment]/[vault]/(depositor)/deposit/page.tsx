@@ -1,3 +1,4 @@
+import { PageLayout } from "@/components/PageLayout";
 import { VaultApprove } from "@/components/VaultApprove";
 import { VaultBuyShares } from "@/components/VaultBuyShares";
 import { assertParams } from "@/lib/params";
@@ -20,9 +21,9 @@ export default async function DepositPage({ params }: { params: { deployment: st
   const denominationAsset = await getDenominationAsset(client, { comptroller });
 
   return (
-    <>
+    <PageLayout>
       <VaultApprove deployment={deployment} comptroller={comptroller} denominationAsset={denominationAsset} />
       <VaultBuyShares deployment={deployment} comptroller={comptroller} denominationAsset={denominationAsset} />
-    </>
+    </PageLayout>
   );
 }

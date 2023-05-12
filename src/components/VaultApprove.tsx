@@ -1,5 +1,6 @@
 "use client";
 
+import { Title } from "./Title";
 import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { z } from "@/lib/zod";
@@ -56,7 +57,7 @@ export function VaultApprove({ deployment, comptroller, denominationAsset }: Vau
 
   return (
     <form name="approve" onSubmit={handleSubmit(onSubmit)}>
-      <h1>Step 1: Approve </h1>
+      <Title appearance="primary">Step 1: Approve </Title>
       Currently approved amount: {approvedAmount.toString()}
       <br />
       <input {...register("amount")} />

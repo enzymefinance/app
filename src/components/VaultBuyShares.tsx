@@ -1,5 +1,6 @@
 "use client";
 
+import { Title } from "./Title";
 import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { useBalanceOf } from "@/lib/hooks/useBalanceOf";
@@ -82,7 +83,7 @@ export function VaultBuyShares({ deployment, comptroller, denominationAsset }: V
 
   return accountBalance === undefined ? null : (
     <form name="buyShares" onSubmit={handleSubmit(onSubmit)}>
-      <h1>Step 2: Deposit</h1>
+      <Title appearance="primary">Step 2: Deposit</Title>
       Denomination asset balance: {accountBalance?.toString()}
       Currently approved amount: {approvedAmount?.toString()}
       <br />
