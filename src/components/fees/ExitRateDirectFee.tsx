@@ -3,6 +3,7 @@ import { type Network, ZERO_ADDRESS } from "@/lib/consts";
 import { type Address } from "viem";
 import { getExitRateDirectFee } from "@/lib/rpc/getExitRateDirectFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {BigIntDisplay} from "@/components/BigIntDisplay";
 
 export const ExitRateDirectFee = asSyncComponent(
   async ({
@@ -22,8 +23,8 @@ export const ExitRateDirectFee = asSyncComponent(
       address: fee,
     });
 
-    const rateInKind = result.inKindRateForFund.toString();
-    const rateSpecificAsset = result.specificAssetsRateForFund.toString();
+    const rateInKind = result.inKindRateForFund
+    const rateSpecificAsset = result.specificAssetsRateForFund
     const recipient =
       result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
@@ -33,8 +34,8 @@ export const ExitRateDirectFee = asSyncComponent(
           <CardTitle>Exit Rate Direct Fee</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
-          <p className="text-sm font-medium leading-none">Rate (in kind): {rateInKind}</p>
-          <p className="text-sm font-medium leading-none">Rate (specific asset): {rateSpecificAsset}</p>
+          <p className="text-sm font-medium leading-none">Rate (in kind): <BigIntDisplay amount={rateInKind} />%</p>
+          <p className="text-sm font-medium leading-none">Rate (specific asset): <BigIntDisplay amount={rateSpecificAsset} />%</p>
 
           <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>

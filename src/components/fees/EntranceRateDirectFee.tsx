@@ -3,6 +3,7 @@ import { type Network } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getEntranceRateDirectFee } from "@/lib/rpc/getEntranceRateDirectFee";
 import { type Address } from "viem";
+import {BigIntDisplay} from "@/components/BigIntDisplay";
 
 export const EntranceRateDirectFee = asSyncComponent(
   async ({
@@ -22,7 +23,7 @@ export const EntranceRateDirectFee = asSyncComponent(
       address: fee,
     });
 
-    const rate = result.rateForFund.toString();
+    const rate = result.rateForFund
 
     return (
       <Card>
@@ -30,7 +31,7 @@ export const EntranceRateDirectFee = asSyncComponent(
           <CardTitle>Entrance Rate Direct Fee</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
-          <p className="text-sm font-medium leading-none">Rate: {rate}</p>
+          <p className="text-sm font-medium leading-none">Rate: <BigIntDisplay amount={rate} />%</p>
         </CardContent>
       </Card>
     );

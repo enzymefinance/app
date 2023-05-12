@@ -44,7 +44,8 @@ export const PerformanceFee = asSyncComponent(
           <CardTitle>Performance Fee</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
-          <p className="text-sm font-medium leading-none">Rate: <BigIntDisplay amount={rate} decimals={0} />%</p>
+          {/*  TODO: fix rate */}
+          <p className="text-sm font-medium leading-none">Rate: <BigIntDisplay amount={rate} />%</p>
           <p className="text-sm font-medium leading-none">High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}</p>
           <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>
