@@ -29,12 +29,12 @@ export default async function VaultLayout(props: {
 
   return (
     <div className="space-y-4 container mx-auto">
-      <div className="flex justify-between">
+      <div className="flex flex-col md:flex-row justify-between">
         <div>
           <Title appearance="primary" size="xl">
             {name}
           </Title>
-          <p>{vault}</p>
+          <p className="break-words">{vault}</p>
         </div>
         <div>
           <Button className="mt-4">

@@ -64,7 +64,7 @@ export function VaultSearch() {
   return (
     <Command shouldFilter={false} className="rounded-lg border shadow-md" loop={true}>
       <CommandInput placeholder="Search vaults ..." onValueChange={(value) => setValue(value)} />
-      <CommandEmpty>No vaults found.</CommandEmpty>
+      {/* <CommandEmpty>No vaults found.</CommandEmpty> */}
       {deployments.map((deployment) => (
         <VaultSearchDeploymentGroup key={deployment} deployment={deployment} query={debounced} />
       ))}
