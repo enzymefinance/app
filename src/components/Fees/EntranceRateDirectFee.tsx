@@ -1,8 +1,8 @@
-import { asSyncComponent } from "@/lib/next";
-import { type Network } from "@/lib/consts";
-import { type Address } from "viem";
-import { getEntranceRateDirectFee } from "@/lib/rpc/getEntranceRateDirectFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type Network } from "@/lib/consts";
+import { asSyncComponent } from "@/lib/next";
+import { getEntranceRateDirectFee } from "@/lib/rpc/getEntranceRateDirectFee";
+import { type Address } from "viem";
 
 export const EntranceRateDirectFee = asSyncComponent(
   async ({

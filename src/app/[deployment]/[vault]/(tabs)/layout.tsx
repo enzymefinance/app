@@ -1,6 +1,5 @@
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
