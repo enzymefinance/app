@@ -26,10 +26,10 @@ export default async function DepositPage({ params }: { params: { deployment: st
 
   return (
     <>
-      <VaultApprove comptroller={comptroller} denominationAsset={denominationAsset} decimals={decimals} />
+      <VaultApprove network={network} comptroller={comptroller} denominationAsset={denominationAsset} />
       <br />
       <br />
-      <VaultBuyShares comptroller={comptroller} denominationAsset={denominationAsset} decimals={decimals} />
+      <VaultBuyShares network={network} comptroller={comptroller} denominationAsset={denominationAsset} />
     </>
   );
 }
