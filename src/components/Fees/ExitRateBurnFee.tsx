@@ -1,8 +1,8 @@
-import { asSyncComponent } from "@/lib/next";
-import { type Network } from "@/lib/consts";
-import { type Address } from "viem";
-import { getExitRateBurnFee } from "@/lib/rpc/getExitRateBurnFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type Network } from "@/lib/consts";
+import { asSyncComponent } from "@/lib/next";
+import { getExitRateBurnFee } from "@/lib/rpc/getExitRateBurnFee";
+import { type Address } from "viem";
 
 export const ExitRateBurnFee = asSyncComponent(
   async ({

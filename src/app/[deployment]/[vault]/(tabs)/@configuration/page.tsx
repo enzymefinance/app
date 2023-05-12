@@ -1,3 +1,10 @@
+import { EntranceRateBurnFee } from "@/components/Fees/EntranceRateBurnFee";
+import { EntranceRateDirectFee } from "@/components/Fees/EntranceRateDirectFee";
+import { ExitRateBurnFee } from "@/components/Fees/ExitRateBurnFee";
+import { ExitRateDirectFee } from "@/components/Fees/ExitRateDirectFee";
+import { ManagementFee } from "@/components/Fees/ManagementFee";
+import { PerformanceFee } from "@/components/Fees/PerformanceFee";
+import { Title } from "@/components/Title";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Network, getNetworkByDeployment } from "@/lib/consts";
 import {
@@ -15,13 +22,6 @@ import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { z } from "@/lib/zod";
 import { Suspense } from "react";
 import type { Address } from "viem";
-import { Title } from "@/components/Title";
-import { ExitRateBurnFee } from "@/components/Fees/ExitRateBurnFee";
-import { ExitRateDirectFee } from "@/components/Fees/ExitRateDirectFee";
-import { EntranceRateBurnFee } from "@/components/Fees/EntranceRateBurnFee";
-import { EntranceRateDirectFee } from "@/components/Fees/EntranceRateDirectFee";
-import { ManagementFee } from "@/components/Fees/ManagementFee";
-import { PerformanceFee } from "@/components/Fees/PerformanceFee";
 
 const getFeeComponent = ({
   network,
