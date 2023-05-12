@@ -24,6 +24,7 @@ export const PerformanceFee = asSyncComponent(
 
     // TODO: convert it
     const convertedScaledPerSecondRate = result.feeInfoForFund.rate.toString();
+    const highWatermark = result.feeInfoForFund.highWaterMark.toString();
     const recipient =
       result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
@@ -34,6 +35,7 @@ export const PerformanceFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">Rate: {convertedScaledPerSecondRate}</p>
+          <p className="text-sm font-medium leading-none">High watermark {highWatermark}</p>
           <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>
       </Card>

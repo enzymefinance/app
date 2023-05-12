@@ -3,6 +3,7 @@ import { type Network, ZERO_ADDRESS } from "@/lib/consts";
 import { type Address } from "viem";
 import { getManagementFee } from "@/lib/rpc/getManagementFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { convertScaledPerSecondRateToRate } from "@enzymefinance/sdk";
 
 export const ManagementFee = asSyncComponent(
   async ({
@@ -22,8 +23,11 @@ export const ManagementFee = asSyncComponent(
       address: fee,
     });
 
-    // TODO: convert it
-    const convertedScaledPerSecondRate = result.feeInfoForFund.scaledPerSecondRate.toString();
+    const convertedScaledPerSecondRate = convertScaledPerSecondRateToRate({
+      scaledPerSecondRate: result.feeInfoForFund.scaledPerSecondRate,
+      adjustInflation: true,
+    }).toString()
+
     const recipient =
       result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
@@ -33,7 +37,7 @@ export const ManagementFee = asSyncComponent(
           <CardTitle>Management Fee</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
-          <p className="text-sm font-medium leading-none">Rate: {convertedScaledPerSecondRate}</p>
+          <p className="text-sm font-medium leading-none">Rate: {convertedScaledPerSecondRate}%</p>
           <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>
       </Card>

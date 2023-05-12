@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import {type Network, getNetworkByDeployment, MIN_SHARES_SUPPLY_FEE} from "@/lib/consts";
+import { type Network, getNetworkByDeployment, MIN_SHARES_SUPPLY_FEE } from "@/lib/consts";
 import {
   ENTRANCE_RATE_BURN_FEE,
   ENTRANCE_RATE_DIRECT_FEE,
@@ -22,7 +22,8 @@ import { EntranceRateBurnFee } from "@/components/Fees/EntranceRateBurnFee";
 import { EntranceRateDirectFee } from "@/components/Fees/EntranceRateDirectFee";
 import { ManagementFee } from "@/components/Fees/ManagementFee";
 import { PerformanceFee } from "@/components/Fees/PerformanceFee";
-import {MinSharesSupplyFee} from "@/components/Fees/MinSharesSupplyFee";
+import { MinSharesSupplyFee } from "@/components/Fees/MinSharesSupplyFee";
+import { UnknownFee } from "@/components/Fees/UnknownFee";
 
 const getFeeComponent = ({
   network,
@@ -64,7 +65,7 @@ const getFeeComponent = ({
     case MIN_SHARES_SUPPLY_FEE:
       return <MinSharesSupplyFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
     default:
-      return <>Unknown fee</>;
+      return <UnknownFee />;
   }
 };
 
@@ -98,18 +99,22 @@ export default async function ConfigurationPage({
 
   return (
     <>
-      <Title size="xl" appearance="primary">
-        Fees
-      </Title>
-      <div className="space-y-4">
-        {enabledFeesForFund.map((fee: Address) => {
-          return (
-            <Suspense fallback={<Skeleton />}>
-              {getFeeComponent({ fee, network, comptrollerProxy, feeManager })}
-            </Suspense>
-          );
-        })}
-      </div>
+      {enabledFeesForFund.length > 0 ? (
+        <>
+          <Title size="xl" appearance="primary">
+            Fees
+          </Title>
+          <div className="space-y-4">
+            {enabledFeesForFund.map((fee: Address) => {
+              return (
+                <Suspense fallback={<Skeleton />}>
+                  {getFeeComponent({ fee, network, comptrollerProxy, feeManager })}
+                </Suspense>
+              );
+            })}
+          </div>
+        </>
+      ) : null}
     </>
   );
 }
