@@ -9,10 +9,12 @@ export const EntranceRateBurnFee = asSyncComponent(
     network,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     network: Network;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const result = await getEntranceRateBurnFee({
       network,

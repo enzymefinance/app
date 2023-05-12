@@ -1,5 +1,5 @@
 import { asSyncComponent } from "@/lib/next";
-import { type Network } from "@/lib/consts";
+import { type Network, ZERO_ADDRESS } from "@/lib/consts";
 import { type Address } from "viem";
 import { getPerformanceFee } from "@/lib/rpc/getPerformanceFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,10 +9,12 @@ export const PerformanceFee = asSyncComponent(
     network,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     network: Network;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const result = await getPerformanceFee({
       network,
@@ -20,12 +22,20 @@ export const PerformanceFee = asSyncComponent(
       address: fee,
     });
 
+    // TODO: convert it
+    const convertedScaledPerSecondRate = result.feeInfoForFund.rate.toString();
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Performance Fee</CardTitle>
+          <CardTitle>Management Fee</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent className="space-y-1">
+          <p className="text-sm font-medium leading-none">Rate: {convertedScaledPerSecondRate}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
+        </CardContent>
       </Card>
     );
   },

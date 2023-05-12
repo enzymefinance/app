@@ -6,6 +6,8 @@ export const deployments = ["ethereum", "polygon", "testnet"] as const;
 export type Network = typeof networks[number];
 export const networks = ["ethereum", "polygon"] as const;
 
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 export function getNetworkByDeployment(deployment: Deployment): Network {
   switch (deployment) {
     case "ethereum":
