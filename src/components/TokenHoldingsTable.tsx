@@ -25,7 +25,7 @@ export function TokenHoldingsTable({ portfolioAssets }: { portfolioAssets: Asset
                   {asset.symbol} {asset.name}
                 </TableCell>
                 <TableCell className="text-right">
-                  <BigIntDisplay asset={asset} />
+                  <BigIntDisplay amount={asset.amount} decimals={asset.decimals} />
                 </TableCell>
               </TableRow>
             ))}

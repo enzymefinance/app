@@ -19,8 +19,11 @@ interface ExternalPositionsType {
 
 export function ExternalPositions({
   externalPositions,
-}: { network: Network; externalPositions: ExternalPositionsType[] }) {
-  if (!externalPositions || externalPositions.length === 0) {
+}: {
+  network: Network;
+  externalPositions: ExternalPositionsType[];
+}) {
+  if (externalPositions.length === 0) {
     return null;
   }
 
@@ -54,7 +57,7 @@ export function ExternalPositions({
                               <div className="font-medium">
                                 {asset.symbol} {asset.name}
                               </div>
-                              <BigIntDisplay asset={{ ...asset, amount }} />
+                              <BigIntDisplay amount={amount} decimals={asset.decimals} />
                             </div>
                           );
                         }
@@ -72,7 +75,7 @@ export function ExternalPositions({
                               <div className="font-medium">
                                 {asset.symbol} {asset.name}
                               </div>
-                              <BigIntDisplay asset={{ ...asset, amount }} />
+                              <BigIntDisplay amount={amount} decimals={asset.decimals} />
                             </div>
                           );
                         }
