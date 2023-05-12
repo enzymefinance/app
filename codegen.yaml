@@ -1,0 +1,8 @@
+generates:
+  src/lib/generated/gql/:
+    documents: src/lib/subgraphs/core/**/*.ts
+    schema: https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme-core
+    preset: client
+    config:
+      useTypeImports: true
+      avoidOptional: true

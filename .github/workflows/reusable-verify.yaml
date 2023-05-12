@@ -1,0 +1,73 @@
+name: Verify
+on:
+  workflow_call:
+
+jobs:
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Check linting
+        run: pnpm run lint
+
+  types:
+    name: Types
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Generate code
+        run: pnpm run codegen
+
+      - name: Check types
+        run: pnpm run typecheck
+
+  test:
+    name: Test (${{ matrix.shard }} of ${{ matrix.total }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1]
+        total: [1]
+        # shard: [1, 2, 3, 4, 5]
+        # total: [5]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Install playwright browsers
+        run: pnpm playwright install --with-deps
+
+      - name: Generate code
+        run: pnpm run codegen
+
+      - name: Create build
+        run: pnpm run build
+
+      - name: Start preview
+        run: pnpm run start &
+        env:
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+
+      - name: Run tests
+        run: pnpm playwright test --shard ${{ matrix.shard }}/${{ matrix.total }}
