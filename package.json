@@ -7,6 +7,7 @@
     "start": "next start",
     "deploy": "pnpx vercel deploy",
     "format": "rome format --write . && rome check --apply .",
+    "format:unsafe": "rome check --apply-unsafe .",
     "lint": "rome check .",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",

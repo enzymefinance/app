@@ -1,3 +1,4 @@
+import { PageLayout } from "@/components/PageLayout";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -28,7 +29,7 @@ export default async function VaultLayout(props: {
   const name = await getVaultName(client, { vault }).catch(handleContractError());
 
   return (
-    <div className="space-y-4 container mx-auto">
+    <PageLayout>
       <div className="flex flex-col md:flex-row justify-between">
         <div>
           <Title appearance="primary" size="xl">
@@ -54,6 +55,6 @@ export default async function VaultLayout(props: {
           <TabsContent value="configuration">{props.configuration}</TabsContent>
         </div>
       </Tabs>
-    </div>
+    </PageLayout>
   );
 }
