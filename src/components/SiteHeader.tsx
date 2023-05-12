@@ -1,8 +1,6 @@
-"use client";
-
+import { ConnectButton } from "./ConnectButton";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 
 export function SiteHeader() {

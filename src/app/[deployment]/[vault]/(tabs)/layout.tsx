@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Title } from "@/components/Title";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
@@ -27,14 +28,20 @@ export default async function VaultLayout(props: {
   const name = await getVaultName({ vault, network }).catch(handleContractError());
 
   return (
-    <div className="p-4 space-y-4 container mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle>{name}</CardTitle>
-        </CardHeader>
-        <CardContent>{vault}</CardContent>
-        <Link href={`${deployment}/${vault}/deposit`}>Deposit</Link>
-      </Card>
+    <div className="space-y-4 container mx-auto">
+      <div className="flex justify-between">
+        <div>
+          <Title appearance="primary" size="xl">
+            {name}
+          </Title>
+          <p>{vault}</p>
+        </div>
+        <div>
+          <Button className="mt-4">
+            <Link href={`${deployment}/${vault}/deposit`}>Deposit</Link>
+          </Button>
+        </div>
+      </div>
       <Tabs defaultValue="overview" className="mb-4">
         <TabsList className="grid grid-rows-1 grid-cols-3 space-x-2 px-3">
           <TabsTrigger value="overview">Overview</TabsTrigger>

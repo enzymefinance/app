@@ -1,10 +1,16 @@
-import type { AssetWithAmount } from "@/lib/types";
-import { formatUnits } from "viem";
+import { formatNumber } from "@/lib/format";
 
-export function BigIntDisplay({ asset }: { asset: AssetWithAmount | undefined }) {
-  if (!asset) {
+export function BigIntDisplay({
+  amount,
+  decimals = 18,
+  currency,
+}: { amount: bigint; currency?: string; decimals?: number | bigint }) {
+  if (amount === undefined) {
     return null;
   }
 
-  return <span>{formatUnits(asset.amount, Number(asset.decimals))}</span>;
+  const formatted =
+    currency === undefined ? formatNumber({ amount, decimals }) : formatNumber({ amount, decimals, currency });
+
+  return <span>{formatted}</span>;
 }
