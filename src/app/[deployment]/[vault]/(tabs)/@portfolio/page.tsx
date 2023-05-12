@@ -1,11 +1,12 @@
 import { ExternalPositions } from "@/components/ExternalPositions";
 import { TokenHoldingsTable } from "@/components/TokenHoldingsTable";
-import { getContract, getNetworkByDeployment } from "@/lib/consts";
+import { getContract } from "@/lib/consts";
 import { assertParams } from "@/lib/params";
-import { getAssetWithAmount } from "@/lib/rpc/getAssetWithAmount";
-import { getExternalPositionsInfo } from "@/lib/rpc/getExternalPositionsInfo";
-import { getTrackedAssets } from "@/lib/rpc/getTrackedAssets";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { z } from "@/lib/zod";
+import { getAssetWithAmount } from "@enzymefinance/sdk";
+import { getExternalPositionsInfo } from "@enzymefinance/sdk";
+import { getTrackedAssets } from "@enzymefinance/sdk";
 
 export default async function PortfolioPage({ params }: { params: { deployment: string; vault: string } }) {
   const { vault, deployment } = assertParams({
@@ -16,23 +17,21 @@ export default async function PortfolioPage({ params }: { params: { deployment: 
     }),
   });
 
-  const network = getNetworkByDeployment(deployment);
-  const trackedAssets = await getTrackedAssets({ vault, network });
+  const client = getPublicClientForDeployment(deployment);
+  const trackedAssets = await getTrackedAssets(client, { vault });
   const portfolioAssets = await Promise.all(
-    trackedAssets.map(async (asset) => await getAssetWithAmount({ network, account: vault, asset })),
+    trackedAssets.map((asset) => getAssetWithAmount(client, { account: vault, asset })),
   );
   const currentPortfolioAssets = portfolioAssets ? portfolioAssets.filter((asset) => asset.amount > 0) : [];
-
-  const externalPositions = await getExternalPositionsInfo({
+  const externalPositions = await getExternalPositionsInfo(client, {
     vault,
-    network,
     externalPositionFactory: getContract(deployment, "ExternalPositionFactory"),
   });
 
   return (
     <>
       <TokenHoldingsTable portfolioAssets={currentPortfolioAssets} />
-      <ExternalPositions network={network} externalPositions={externalPositions} />
+      <ExternalPositions deployment={deployment} externalPositions={externalPositions} />
     </>
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandShortcut } from "./ui/command";
-import { type Deployment, deployments, getNetworkByDeployment } from "@/lib/consts";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./ui/command";
+import { type Deployment, deployments } from "@/lib/consts";
 import { VaultBasicInfoFragmentDoc, queryCoreSubgraph, useFragment } from "@/lib/gql";
-import { getAssetSymbol } from "@/lib/rpc/getAssetSymbol";
-import { getVaultName } from "@/lib/rpc/getVaultName";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { vaultSearch } from "@/lib/subgraphs/core/vaultSearch";
+import { getAssetSymbol } from "@enzymefinance/sdk";
+import { getVaultName } from "@enzymefinance/sdk";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,10 +27,10 @@ function useVaultSearch(deployment: Deployment, query: string) {
     queryKey: ["useVaultSearch", deployment, query],
     queryFn: async () => {
       if (isAddress(query)) {
-        const network = getNetworkByDeployment(deployment);
+        const client = getPublicClientForDeployment(deployment);
         const [vaultName, vaultSymbol] = await Promise.all([
-          getVaultName({ network, vault: query }),
-          getAssetSymbol({ network, asset: query }),
+          getVaultName(client, { vault: query }),
+          getAssetSymbol(client, { asset: query }),
         ]);
 
         return [{ name: vaultName, symbol: vaultSymbol, address: query }];

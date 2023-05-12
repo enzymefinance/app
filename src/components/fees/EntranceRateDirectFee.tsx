@@ -1,21 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type Network } from "@/lib/consts";
+import { type Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
-import { getEntranceRateDirectFee } from "@/lib/rpc/getEntranceRateDirectFee";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+import { getEntranceRateDirectFee } from "@enzymefinance/sdk";
 import { type Address } from "viem";
 
 export const EntranceRateDirectFee = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     fee,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
   }) => {
-    const result = await getEntranceRateDirectFee({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getEntranceRateDirectFee(client, {
       comptrollerProxy,
       address: fee,
     });

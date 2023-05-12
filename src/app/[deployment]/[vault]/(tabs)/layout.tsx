@@ -1,11 +1,11 @@
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
-import { getVaultName } from "@/lib/rpc/getVaultName";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { z } from "@/lib/zod";
+import { getVaultName } from "@enzymefinance/sdk";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -24,8 +24,8 @@ export default async function VaultLayout(props: {
     }),
   });
 
-  const network = getNetworkByDeployment(deployment);
-  const name = await getVaultName({ vault, network }).catch(handleContractError());
+  const client = getPublicClientForDeployment(deployment);
+  const name = await getVaultName(client, { vault }).catch(handleContractError());
 
   return (
     <div className="space-y-4 container mx-auto">
