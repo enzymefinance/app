@@ -50,7 +50,7 @@ export function ExternalPositions({
                     ? row.debtAssets.map(({ asset, amount }) => {
                         if (amount > 0) {
                           return (
-                            <div key={asset.address}>
+                            <div key={asset.address} className="border border-1 p-4">
                               <div className="font-medium">
                                 {asset.symbol} {asset.name}
                               </div>
@@ -68,7 +68,7 @@ export function ExternalPositions({
                     ? row.managedAssets.map(({ asset, amount }) => {
                         if (amount > 0) {
                           return (
-                            <div key={asset.address} className="border border-1">
+                            <div key={asset.address} className="border border-1 p-4">
                               <div className="font-medium">
                                 {asset.symbol} {asset.name}
                               </div>
