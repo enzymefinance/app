@@ -3,6 +3,7 @@ import { EntranceRateDirectFee } from "@/components/Fees/EntranceRateDirectFee";
 import { ExitRateBurnFee } from "@/components/Fees/ExitRateBurnFee";
 import { ExitRateDirectFee } from "@/components/Fees/ExitRateDirectFee";
 import { ManagementFee } from "@/components/Fees/ManagementFee";
+import { MinSharesSupplyFee } from "@/components/Fees/MinSharesSupplyFee";
 import { PerformanceFee } from "@/components/Fees/PerformanceFee";
 import { Title } from "@/components/Title";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,6 +14,7 @@ import {
   EXIT_RATE_BURN_FEE,
   EXIT_RATE_DIRECT_FEE,
   MANAGEMENT_FEE,
+  MIN_SHARES_SUPPLY_FEE,
   PERFORMANCE_FEE,
 } from "@/lib/consts";
 import { assertParams } from "@/lib/params";
@@ -45,6 +47,8 @@ const getFeeComponent = ({
       return <ManagementFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
     case PERFORMANCE_FEE:
       return <PerformanceFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    case MIN_SHARES_SUPPLY_FEE:
+      return <MinSharesSupplyFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
     default:
       return <>Unknown fee</>;
   }
