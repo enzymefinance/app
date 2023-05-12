@@ -1,4 +1,6 @@
-import { getNetworkByDeployment } from "@/lib/consts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { type Network, getNetworkByDeployment } from "@/lib/consts";
 import {
   ENTRANCE_RATE_BURN_FEE,
   ENTRANCE_RATE_DIRECT_FEE,
@@ -7,6 +9,7 @@ import {
   MANAGEMENT_FEE,
   PERFORMANCE_FEE,
 } from "@/lib/consts";
+import { asSyncComponent } from "@/lib/next";
 import { assertParams } from "@/lib/params";
 import { getEnabledFeesForFund } from "@/lib/rpc/getEnabledFeesForFund";
 import { getEntranceRateBurnFee } from "@/lib/rpc/getEntranceRateBurnFee";
@@ -18,6 +21,197 @@ import { getManagementFee } from "@/lib/rpc/getManagementFee";
 import { getPerformanceFee } from "@/lib/rpc/getPerformanceFee";
 import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { z } from "@/lib/zod";
+import { Suspense } from "react";
+import type { Address } from "viem";
+
+const ExitRateBurnFee = asSyncComponent(
+  async ({
+    network,
+    comptrollerProxy,
+    fee,
+  }: {
+    network: Network;
+    comptrollerProxy: Address;
+    fee: Address;
+  }) => {
+    const result = await getExitRateBurnFee({
+      network,
+      comptrollerProxy,
+      address: fee,
+    });
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Exit Rate Burn Fee</CardTitle>
+        </CardHeader>
+        <CardContent>...</CardContent>
+      </Card>
+    );
+  },
+);
+
+const ExitRateDirectFee = asSyncComponent(
+  async ({
+    network,
+    comptrollerProxy,
+    fee,
+  }: {
+    network: Network;
+    comptrollerProxy: Address;
+    fee: Address;
+  }) => {
+    const result = await getExitRateDirectFee({
+      network,
+      comptrollerProxy,
+      address: fee,
+    });
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Exit Rate Direct Fee</CardTitle>
+        </CardHeader>
+        <CardContent>...</CardContent>
+      </Card>
+    );
+  },
+);
+
+const EntranceRateBurnFee = asSyncComponent(
+  async ({
+    network,
+    comptrollerProxy,
+    fee,
+  }: {
+    network: Network;
+    comptrollerProxy: Address;
+    fee: Address;
+  }) => {
+    const result = await getEntranceRateBurnFee({
+      network,
+      comptrollerProxy,
+      address: fee,
+    });
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Entrance Rate Burn Fee</CardTitle>
+        </CardHeader>
+        <CardContent>...</CardContent>
+      </Card>
+    );
+  },
+);
+
+const EntranceRateDirectFee = asSyncComponent(
+  async ({
+    network,
+    comptrollerProxy,
+    fee,
+  }: {
+    network: Network;
+    comptrollerProxy: Address;
+    fee: Address;
+  }) => {
+    const result = await getEntranceRateDirectFee({
+      network,
+      comptrollerProxy,
+      address: fee,
+    });
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Entrance Rate Direct Fee</CardTitle>
+        </CardHeader>
+        <CardContent>...</CardContent>
+      </Card>
+    );
+  },
+);
+
+const PerformanceFee = asSyncComponent(
+  async ({
+    network,
+    comptrollerProxy,
+    fee,
+  }: {
+    network: Network;
+    comptrollerProxy: Address;
+    fee: Address;
+  }) => {
+    const result = await getPerformanceFee({
+      network,
+      comptrollerProxy,
+      address: fee,
+    });
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Performance Fee</CardTitle>
+        </CardHeader>
+        <CardContent>...</CardContent>
+      </Card>
+    );
+  },
+);
+
+const ManagementFee = asSyncComponent(
+  async ({
+    network,
+    comptrollerProxy,
+    fee,
+  }: {
+    network: Network;
+    comptrollerProxy: Address;
+    fee: Address;
+  }) => {
+    const result = await getManagementFee({
+      network,
+      comptrollerProxy,
+      address: fee,
+    });
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Management Fee</CardTitle>
+        </CardHeader>
+        <CardContent>...</CardContent>
+      </Card>
+    );
+  },
+);
+
+const getfeeComponent = ({
+  network,
+  comptrollerProxy,
+  fee,
+}: {
+  network: Network;
+  comptrollerProxy: Address;
+  fee: Address;
+}) => {
+  switch (fee) {
+    case EXIT_RATE_BURN_FEE:
+      return <ExitRateBurnFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    case EXIT_RATE_DIRECT_FEE:
+      return <ExitRateDirectFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    case ENTRANCE_RATE_BURN_FEE:
+      return <EntranceRateBurnFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    case ENTRANCE_RATE_DIRECT_FEE:
+      return <EntranceRateDirectFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    case MANAGEMENT_FEE:
+      return <ManagementFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    case PERFORMANCE_FEE:
+      return <PerformanceFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+    default:
+      return <>Unknown fee</>;
+  }
+};
 
 export default async function ConfigurationPage({
   params,
@@ -49,66 +243,13 @@ export default async function ConfigurationPage({
 
   console.log("FEES", enabledFeesForFund);
 
-  let result;
-
-  if (enabledFeesForFund.includes(EXIT_RATE_BURN_FEE)) {
-    result = await getExitRateBurnFee({
-      network,
-      comptrollerProxy,
-      address: EXIT_RATE_BURN_FEE,
-    });
-    console.log("EXIT_RATE_BURN_FEE", result);
-  }
-
-  if (enabledFeesForFund.includes(EXIT_RATE_DIRECT_FEE)) {
-    result = await getExitRateDirectFee({
-      network,
-      comptrollerProxy,
-      address: EXIT_RATE_DIRECT_FEE,
-    });
-    console.log("EXIT_RATE_DIRECT_FEE", result);
-  }
-
-  if (enabledFeesForFund.includes(ENTRANCE_RATE_DIRECT_FEE)) {
-    result = await getEntranceRateDirectFee({
-      network,
-      comptrollerProxy,
-      address: ENTRANCE_RATE_DIRECT_FEE,
-    });
-    console.log("ENTRANCE_RATE_DIRECT_FEE", result);
-  }
-
-  if (enabledFeesForFund.includes(ENTRANCE_RATE_BURN_FEE)) {
-    result = await getEntranceRateBurnFee({
-      network,
-      comptrollerProxy,
-      address: ENTRANCE_RATE_BURN_FEE,
-    });
-    console.log("ENTRANCE_RATE_BURN_FEE", result);
-  }
-
-  if (enabledFeesForFund.includes(PERFORMANCE_FEE)) {
-    result = await getPerformanceFee({
-      network,
-      comptrollerProxy,
-      address: PERFORMANCE_FEE,
-    });
-    console.log("PERF", result);
-  }
-
-  if (enabledFeesForFund.includes(MANAGEMENT_FEE)) {
-    result = await getManagementFee({
-      network,
-      comptrollerProxy,
-      address: MANAGEMENT_FEE,
-    });
-    console.log("MANG", result);
-  }
-
   return (
     <>
       <h2>Configuration</h2>
       <p>TODO</p>
+      {enabledFeesForFund.map((fee: Address) => {
+        return <Suspense fallback={<Skeleton />}>{getfeeComponent({ fee, network, comptrollerProxy })}</Suspense>;
+      })}
     </>
   );
 }
