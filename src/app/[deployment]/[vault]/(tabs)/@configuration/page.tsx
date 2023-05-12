@@ -1,14 +1,14 @@
-import { EntranceRateBurnFee } from "@/components/Fees/EntranceRateBurnFee";
-import { EntranceRateDirectFee } from "@/components/Fees/EntranceRateDirectFee";
-import { ExitRateBurnFee } from "@/components/Fees/ExitRateBurnFee";
-import { ExitRateDirectFee } from "@/components/Fees/ExitRateDirectFee";
-import { ManagementFee } from "@/components/Fees/ManagementFee";
-import { MinSharesSupplyFee } from "@/components/Fees/MinSharesSupplyFee";
-import { PerformanceFee } from "@/components/Fees/PerformanceFee";
-import { AllowedDepositRecipintsPolicy } from "@/components/Policies/AllowedDepositRecipientsPolicy";
-import { AllowedSharesTransferRecipientsPolicy } from "@/components/Policies/AllowedSharesTransferRecipientsPolicy";
-import { MinMaxInvestmentPolicy } from "@/components/Policies/MinMaxInvestmentPolicy";
 import { Title } from "@/components/Title";
+import { EntranceRateBurnFee } from "@/components/fees/EntranceRateBurnFee";
+import { EntranceRateDirectFee } from "@/components/fees/EntranceRateDirectFee";
+import { ExitRateBurnFee } from "@/components/fees/ExitRateBurnFee";
+import { ExitRateDirectFee } from "@/components/fees/ExitRateDirectFee";
+import { ManagementFee } from "@/components/fees/ManagementFee";
+import { MinSharesSupplyFee } from "@/components/fees/MinSharesSupplyFee";
+import { PerformanceFee } from "@/components/fees/PerformanceFee";
+import { AllowedDepositRecipintsPolicy } from "@/components/policies/AllowedDepositRecipientsPolicy";
+import { AllowedSharesTransferRecipientsPolicy } from "@/components/policies/AllowedSharesTransferRecipientsPolicy";
+import { MinMaxInvestmentPolicy } from "@/components/policies/MinMaxInvestmentPolicy";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   ENTRANCE_RATE_BURN_FEE,
