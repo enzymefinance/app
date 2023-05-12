@@ -49,7 +49,12 @@ const config = createConfig({
 export function WagmiProvider({ children }: { children: ReactNode }) {
   return (
     <WagmiConfig config={config}>
-      <RainbowKitProvider chains={chains} theme={darkTheme()}>
+      <RainbowKitProvider
+        chains={chains}
+        theme={darkTheme({
+          accentColor: "#8b5cf6",
+        })}
+      >
         {children}
       </RainbowKitProvider>
     </WagmiConfig>

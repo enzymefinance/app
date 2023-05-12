@@ -19,8 +19,11 @@ interface ExternalPositionsType {
 
 export function ExternalPositions({
   externalPositions,
-}: { network: Network; externalPositions: ExternalPositionsType[] }) {
-  if (!externalPositions || externalPositions.length === 0) {
+}: {
+  network: Network;
+  externalPositions: ExternalPositionsType[];
+}) {
+  if (externalPositions.length === 0) {
     return null;
   }
 
@@ -50,11 +53,11 @@ export function ExternalPositions({
                     ? row.debtAssets.map(({ asset, amount }) => {
                         if (amount > 0) {
                           return (
-                            <div key={asset.address}>
+                            <div key={asset.address} className="border border-1 p-4">
                               <div className="font-medium">
                                 {asset.symbol} {asset.name}
                               </div>
-                              <BigIntDisplay asset={{ ...asset, amount }} />
+                              <BigIntDisplay amount={amount} decimals={asset.decimals} />
                             </div>
                           );
                         }
@@ -68,11 +71,11 @@ export function ExternalPositions({
                     ? row.managedAssets.map(({ asset, amount }) => {
                         if (amount > 0) {
                           return (
-                            <div key={asset.address} className="border border-1">
+                            <div key={asset.address} className="border border-1 p-4">
                               <div className="font-medium">
                                 {asset.symbol} {asset.name}
                               </div>
-                              <BigIntDisplay asset={{ ...asset, amount }} />
+                              <BigIntDisplay amount={amount} decimals={asset.decimals} />
                             </div>
                           );
                         }
