@@ -1,6 +1,5 @@
-import type { Network } from "./consts";
+import { type Deployment, type Network, getNetworkByDeployment } from "./consts";
 import { isServer } from "./environment";
-1;
 import { cache } from "react";
 import { createPublicClient, http } from "viem";
 
@@ -28,3 +27,7 @@ export const getPublicClient = cache(function getPublicClient(network: Network) 
     },
   });
 });
+
+export function getPublicClientForDeployment(deployment: Deployment) {
+  return getPublicClient(getNetworkByDeployment(deployment));
+}

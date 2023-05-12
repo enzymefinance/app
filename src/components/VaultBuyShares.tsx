@@ -1,23 +1,25 @@
 "use client";
 
-import type { Network } from "@/lib/consts";
+import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { useBalanceOf } from "@/lib/hooks/useBalanceOf";
-import { getBuySharesAmount } from "@/lib/rpc/getBuySharesAmount";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { type output, z } from "@/lib/zod";
 import { IComptroller } from "@enzymefinance/abis/IComptroller";
+import { getBuySharesAmount } from "@enzymefinance/sdk";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type Address, zeroAddress } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 
 interface VaultBuySharesProps {
-  network: Network;
+  deployment: Deployment;
   comptroller: Address;
   denominationAsset: Address;
 }
 
-export function VaultBuyShares({ network, comptroller, denominationAsset }: VaultBuySharesProps) {
+export function VaultBuyShares({ deployment, comptroller, denominationAsset }: VaultBuySharesProps) {
+  const network = getNetworkByDeployment(deployment);
   const { address, isConnecting, isDisconnected } = useAccount();
 
   const schema = z.object({
@@ -65,8 +67,8 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
       return;
     }
 
-    const sharesReceived = await getBuySharesAmount({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const sharesReceived = await getBuySharesAmount(client, {
       comptroller,
       amount: data.amount,
       account: address ?? zeroAddress,

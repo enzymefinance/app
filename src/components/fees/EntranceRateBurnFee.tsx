@@ -1,21 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type Network } from "@/lib/consts";
+import { type Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
-import { getEntranceRateBurnFee } from "@/lib/rpc/getEntranceRateBurnFee";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+import { getEntranceRateBurnFee } from "@enzymefinance/sdk";
 import { type Address } from "viem";
 
 export const EntranceRateBurnFee = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     fee,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
   }) => {
-    const result = await getEntranceRateBurnFee({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getEntranceRateBurnFee(client, {
       comptrollerProxy,
       address: fee,
     });

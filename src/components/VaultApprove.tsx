@@ -1,22 +1,22 @@
 "use client";
 
-import type { Network } from "@/lib/consts";
+import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { z } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { type Address, parseAbi, parseUnits, zeroAddress } from "viem";
+import { type Address, parseAbi, zeroAddress } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import { z as zz } from "zod";
 
 interface VaultApproveProps {
-  network: Network;
+  deployment: Deployment;
   comptroller: Address;
   denominationAsset: Address;
 }
 
-export function VaultApprove({ network, comptroller, denominationAsset }: VaultApproveProps) {
+export function VaultApprove({ deployment, comptroller, denominationAsset }: VaultApproveProps) {
   const { address, isConnecting, isDisconnected } = useAccount();
 
   const schema = z.object({
@@ -37,7 +37,7 @@ export function VaultApprove({ network, comptroller, denominationAsset }: VaultA
   });
 
   const allowance = useAllowance({
-    network,
+    network: getNetworkByDeployment(deployment),
     token: denominationAsset,
     owner: address ?? zeroAddress,
     spender: comptroller,
