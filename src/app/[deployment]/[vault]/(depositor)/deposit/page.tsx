@@ -16,15 +16,12 @@ export default async function DepositPage({ params }: { params: { deployment: st
   });
 
   const network = getNetworkByDeployment(deployment);
-
   const comptroller = await getVaultComptroller({ vault, network });
   const denominationAsset = await getDenominationAsset({ comptroller, network });
 
   return (
     <>
-      {/* <VaultApprove network={network} comptroller={comptroller} denominationAsset={denominationAsset} /> */}
-      <br />
-      <br />
+      <VaultApprove network={network} comptroller={comptroller} denominationAsset={denominationAsset} />
       <VaultBuyShares network={network} comptroller={comptroller} denominationAsset={denominationAsset} />
     </>
   );

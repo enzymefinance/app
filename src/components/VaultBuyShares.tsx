@@ -1,17 +1,15 @@
 "use client";
 
-import { useBalanceOf } from "../lib/hooks/useBalanceOf";
 import type { Network } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
+import { useBalanceOf } from "@/lib/hooks/useBalanceOf";
 import { getBuySharesAmount } from "@/lib/rpc/getBuySharesAmount";
-import { z } from "@/lib/zod";
+import { type output, z } from "@/lib/zod";
 import { IComptroller } from "@enzymefinance/abis/IComptroller";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { type Address, zeroAddress } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
-import { z as zz } from "zod";
 
 interface VaultBuySharesProps {
   network: Network;
@@ -46,7 +44,7 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
     spender: comptroller,
   });
 
-  const approvedAmount = useMemo(() => allowance.data ?? 0n, [allowance.data]);
+  const approvedAmount = allowance.data ?? 0n;
 
   console.log({ approvedAmount });
 
@@ -56,11 +54,11 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
     account: address ?? zeroAddress,
   });
 
-  const accountBalance = useMemo(() => balance.data ?? 0n, [balance.data]);
+  const accountBalance = balance.data ?? 0n;
 
   console.log({ accountBalance });
 
-  const onSubmit = async (data: zz.infer<typeof schema>) => {
+  const onSubmit = async (data: output<typeof schema>) => {
     console.log("a");
     if (data.amount > approvedAmount) {
       console.log("Cannot deposit more than approved amount. Nice try!");
@@ -80,12 +78,11 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
     write({ args: [data.amount, minShares] });
   };
 
-  return (
+  return accountBalance === undefined ? null : (
     <form name="buyShares" onSubmit={handleSubmit(onSubmit)}>
       <h1>Step 2: Deposit</h1>
-      Denomination asset balance: {accountBalance.toString()}
-      <br />
-      Currently approved amount: {approvedAmount.toString()}
+      Denomination asset balance: {accountBalance?.toString()}
+      Currently approved amount: {approvedAmount?.toString()}
       <br />
       <input {...register("amount")} />
       <br />
