@@ -1,18 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type Network } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
-import { getExitRateBurnFee } from "@/lib/rpc/getExitRateBurnFee";
+import { type Network, ZERO_ADDRESS } from "@/lib/consts";
 import { type Address } from "viem";
+import { getExitRateBurnFee } from "@/lib/rpc/getExitRateBurnFee";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const ExitRateBurnFee = asSyncComponent(
   async ({
     network,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     network: Network;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const result = await getExitRateBurnFee({
       network,
@@ -20,12 +22,21 @@ export const ExitRateBurnFee = asSyncComponent(
       address: fee,
     });
 
+    const rateInKind = result.inKindRateForFund.toString();
+    const rateSpecificAsset = result.specificAssetsRateForFund.toString();
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Exit Rate Burn Fee</CardTitle>
+          <CardTitle>Exit Rate Direct Fee</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent className="space-y-1">
+          <p className="text-sm font-medium leading-none">Rate (in kind): {rateInKind}</p>
+          <p className="text-sm font-medium leading-none">Rate (specific asset): {rateSpecificAsset}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
+        </CardContent>
       </Card>
     );
   },

@@ -35,33 +35,51 @@ import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
 import { z } from "@/lib/zod";
 import { Suspense } from "react";
 import type { Address } from "viem";
+import { UnknownFee } from "@/components/fees/UnknownFee";
 
 const getFeeComponent = ({
   network,
   comptrollerProxy,
   fee,
+  feeManager,
 }: {
   network: Network;
   comptrollerProxy: Address;
   fee: Address;
+  feeManager: Address;
 }) => {
   switch (fee) {
     case EXIT_RATE_BURN_FEE:
-      return <ExitRateBurnFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ExitRateBurnFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case EXIT_RATE_DIRECT_FEE:
-      return <ExitRateDirectFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ExitRateDirectFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case ENTRANCE_RATE_BURN_FEE:
-      return <EntranceRateBurnFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <EntranceRateBurnFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case ENTRANCE_RATE_DIRECT_FEE:
-      return <EntranceRateDirectFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <EntranceRateDirectFee
+          fee={fee}
+          network={network}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case MANAGEMENT_FEE:
-      return <ManagementFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return <ManagementFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case PERFORMANCE_FEE:
-      return <PerformanceFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return <PerformanceFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case MIN_SHARES_SUPPLY_FEE:
-      return <MinSharesSupplyFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <MinSharesSupplyFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     default:
-      return <>Unknown fee</>;
+      return <UnknownFee />;
   }
 };
 
@@ -131,7 +149,11 @@ export default async function ConfigurationPage({
       </Title>
       <div className="space-y-4">
         {enabledFeesForFund.map((fee: Address) => {
-          return <Suspense fallback={<Skeleton />}>{getFeeComponent({ fee, network, comptrollerProxy })}</Suspense>;
+          return (
+            <Suspense fallback={<Skeleton />}>
+              {getFeeComponent({ fee, network, comptrollerProxy, feeManager })}
+            </Suspense>
+          );
         })}
       </div>
 

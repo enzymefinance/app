@@ -9,10 +9,12 @@ export const EntranceRateDirectFee = asSyncComponent(
     network,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     network: Network;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const result = await getEntranceRateDirectFee({
       network,
@@ -20,12 +22,16 @@ export const EntranceRateDirectFee = asSyncComponent(
       address: fee,
     });
 
+    const rate = result.rateForFund.toString();
+
     return (
       <Card>
         <CardHeader>
           <CardTitle>Entrance Rate Direct Fee</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent className="space-y-1">
+          <p className="text-sm font-medium leading-none">Rate: {rate}</p>
+        </CardContent>
       </Card>
     );
   },

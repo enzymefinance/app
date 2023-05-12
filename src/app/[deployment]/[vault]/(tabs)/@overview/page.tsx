@@ -30,7 +30,7 @@ export default function VaultPage({ params }: { params: { deployment: string; va
         <VaultOwner vault={vault} deployment={deployment} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
-        <VaultDenonimationAsset vault={vault} deployment={deployment} />
+        <VaultDenominationAsset vault={vault} deployment={deployment} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <VaultTotalSupply vault={vault} deployment={deployment} />
@@ -51,7 +51,7 @@ const numberFormat = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-const VaultDenonimationAsset = asSyncComponent(async function ({
+const VaultDenominationAsset = asSyncComponent(async function ({
   deployment,
   vault,
 }: { deployment: Deployment; vault: Address }) {
