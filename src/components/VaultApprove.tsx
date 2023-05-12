@@ -1,7 +1,7 @@
 "use client";
 
-import type { Network } from "../lib/consts";
-import { useAllowance } from "../lib/hooks/useAllowance";
+import type { Network } from "@/lib/consts";
+import { useAllowance } from "@/lib/hooks/useAllowance";
 import { z } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
@@ -16,7 +16,7 @@ interface VaultApproveProps {
   denominationAsset: Address;
 }
 
-export default function VaultApprove({ network, comptroller, denominationAsset }: VaultApproveProps) {
+export function VaultApprove({ network, comptroller, denominationAsset }: VaultApproveProps) {
   const { address, isConnecting, isDisconnected } = useAccount();
 
   const schema = z.object({
@@ -47,9 +47,10 @@ export default function VaultApprove({ network, comptroller, denominationAsset }
 
   const onSubmit = (data: zz.infer<typeof schema>) => {
     if (data.amount <= approvedAmount) {
-      console.log("Approving less than already approved.");
+      console.log("Approving less (or equal_ than already approved. Why would you do that?");
       return;
     }
+
     write({ args: [comptroller, data.amount] });
   };
 
