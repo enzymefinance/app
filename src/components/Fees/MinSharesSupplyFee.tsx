@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Network } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
-import { getExitRateBurnFee } from "@/lib/rpc/getExitRateBurnFee";
+import { getMinSharesSupplyFee } from "@/lib/rpc/getMinSharesSupplyFee";
 import { type Address } from "viem";
 
-export const ExitRateBurnFee = asSyncComponent(
+export const MinSharesSupplyFee = asSyncComponent(
   async ({
     network,
     comptrollerProxy,
@@ -14,7 +14,7 @@ export const ExitRateBurnFee = asSyncComponent(
     comptrollerProxy: Address;
     fee: Address;
   }) => {
-    const result = await getExitRateBurnFee({
+    const result = await getMinSharesSupplyFee({
       network,
       comptrollerProxy,
       address: fee,
@@ -23,7 +23,7 @@ export const ExitRateBurnFee = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Exit Rate Burn Fee</CardTitle>
+          <CardTitle>Min Shares Supply Fee</CardTitle>
         </CardHeader>
         <CardContent>...</CardContent>
       </Card>
