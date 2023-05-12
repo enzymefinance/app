@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { type Network, getNetworkByDeployment } from "@/lib/consts";
+import {type Network, getNetworkByDeployment, MIN_SHARES_SUPPLY_FEE} from "@/lib/consts";
 import {
   ENTRANCE_RATE_BURN_FEE,
   ENTRANCE_RATE_DIRECT_FEE,
@@ -22,6 +22,7 @@ import { EntranceRateBurnFee } from "@/components/Fees/EntranceRateBurnFee";
 import { EntranceRateDirectFee } from "@/components/Fees/EntranceRateDirectFee";
 import { ManagementFee } from "@/components/Fees/ManagementFee";
 import { PerformanceFee } from "@/components/Fees/PerformanceFee";
+import {MinSharesSupplyFee} from "@/components/Fees/MinSharesSupplyFee";
 
 const getFeeComponent = ({
   network,
@@ -60,6 +61,8 @@ const getFeeComponent = ({
       return <ManagementFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case PERFORMANCE_FEE:
       return <PerformanceFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
+    case MIN_SHARES_SUPPLY_FEE:
+      return <MinSharesSupplyFee fee={fee} network={network} comptrollerProxy={comptrollerProxy} />;
     default:
       return <>Unknown fee</>;
   }

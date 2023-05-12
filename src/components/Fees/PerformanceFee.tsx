@@ -30,7 +30,7 @@ export const PerformanceFee = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Management Fee</CardTitle>
+          <CardTitle>Performance Fee</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">Rate: {convertedScaledPerSecondRate}</p>
