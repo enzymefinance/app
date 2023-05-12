@@ -8,10 +8,12 @@ export async function getBuySharesAmount({
   network,
   comptroller,
   amount,
+  account,
 }: {
   network: Network;
   comptroller: Address;
   amount: bigint;
+  account: Address;
 }) {
   const client = getPublicClient(network);
   const { result } = await simulateContract(client, {
@@ -19,6 +21,7 @@ export async function getBuySharesAmount({
     functionName: "buyShares",
     address: comptroller,
     args: [amount, 1n],
+    account,
   });
 
   return result;

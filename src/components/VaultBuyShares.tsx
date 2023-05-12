@@ -70,7 +70,12 @@ export function VaultBuyShares({ network, comptroller, denominationAsset }: Vaul
       return;
     }
 
-    const sharesReceived = await getBuySharesAmount({ network, comptroller, amount: data.amount });
+    const sharesReceived = await getBuySharesAmount({
+      network,
+      comptroller,
+      amount: data.amount,
+      account: address ?? zeroAddress,
+    });
 
     const maxSlippage = BigInt(0.01 * 10000); // 1%
     const minShares = (sharesReceived * (10000n - maxSlippage)) / 10000n;
