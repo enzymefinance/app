@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type Deployment } from "@/lib/consts";
+import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
 import { getExitRateDirectFee } from "@enzymefinance/sdk";
-import { type Address } from "viem";
+import type { Address } from "viem";
 
 export const ExitRateDirectFee = asSyncComponent(
   async ({

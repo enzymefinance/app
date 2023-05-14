@@ -6,7 +6,7 @@ import { VaultBasicInfoFragmentDoc, queryCoreSubgraph, useFragment } from "@/lib
 import { vaultListByAccount } from "@/lib/subgraphs/core/vaultListByAccount";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { type Address } from "viem";
+import type { Address } from "viem";
 import { useAccount } from "wagmi";
 
 function useVaultListByAccount(account?: Address) {
