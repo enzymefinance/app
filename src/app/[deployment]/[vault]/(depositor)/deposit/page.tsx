@@ -1,10 +1,11 @@
+import { PageLayout } from "@/components/PageLayout";
 import { VaultApprove } from "@/components/VaultApprove";
 import { VaultBuyShares } from "@/components/VaultBuyShares";
-import { getNetworkByDeployment } from "@/lib/consts";
 import { assertParams } from "@/lib/params";
-import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
-import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { z } from "@/lib/zod";
+import { getDenominationAsset } from "@enzymefinance/sdk";
+import { getVaultComptroller } from "@enzymefinance/sdk";
 
 export default async function DepositPage({ params }: { params: { deployment: string; vault: string } }) {
   const { vault, deployment } = assertParams({
@@ -15,14 +16,14 @@ export default async function DepositPage({ params }: { params: { deployment: st
     }),
   });
 
-  const network = getNetworkByDeployment(deployment);
-  const comptroller = await getVaultComptroller({ vault, network });
-  const denominationAsset = await getDenominationAsset({ comptroller, network });
+  const client = getPublicClientForDeployment(deployment);
+  const comptroller = await getVaultComptroller(client, { vault });
+  const denominationAsset = await getDenominationAsset(client, { comptroller });
 
   return (
-    <>
-      <VaultApprove network={network} comptroller={comptroller} denominationAsset={denominationAsset} />
-      <VaultBuyShares network={network} comptroller={comptroller} denominationAsset={denominationAsset} />
-    </>
+    <PageLayout>
+      <VaultApprove deployment={deployment} comptroller={comptroller} denominationAsset={denominationAsset} />
+      <VaultBuyShares deployment={deployment} comptroller={comptroller} denominationAsset={denominationAsset} />
+    </PageLayout>
   );
 }

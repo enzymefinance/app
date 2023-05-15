@@ -1,5 +1,5 @@
 import { asSyncComponent } from "@/lib/next";
-import { type Network, ZERO_ADDRESS } from "@/lib/consts";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
 import { type Address } from "viem";
 import { getPerformanceFee } from "@/lib/rpc/getPerformanceFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,30 +7,32 @@ import {BigIntDisplay} from "@/components/BigIntDisplay";
 import {getDenominationAsset} from "@/lib/rpc/getDenominationAsset";
 import {getAssetSymbol} from "@/lib/rpc/getAssetSymbol";
 import {getAssetDecimals} from "@/lib/rpc/getAssetDecimals";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+
 
 export const PerformanceFee = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     fee,
     feeManager,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
     feeManager: Address;
   }) => {
-    const result = await getPerformanceFee({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getPerformanceFee(client, {
       comptrollerProxy,
       address: fee,
     });
 
-    const denominationAsset = await  getDenominationAsset({ network, comptroller: comptrollerProxy})
+    const denominationAsset = await  getDenominationAsset({ network: deployment, comptroller: comptrollerProxy})
 
-      const symbol = await getAssetSymbol({network, asset: denominationAsset})
+      const symbol = await getAssetSymbol({network: deployment, asset: denominationAsset})
 
-      const decimals = await getAssetDecimals({network, asset: denominationAsset})
+      const decimals = await getAssetDecimals({network: deployment, asset: denominationAsset})
 
     const rate = result.feeInfoForFund.rate;
     const highWatermark = result.feeInfoForFund.highWaterMark

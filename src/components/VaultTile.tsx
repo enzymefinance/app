@@ -12,7 +12,7 @@ export function VaultTile({ title, description }: VaultTileProps) {
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="flex items-align">
-        <div>{description}</div>
+        <div className="break-all">{description}</div>
       </CardContent>
     </Card>
   );

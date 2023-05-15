@@ -1,7 +1,7 @@
 import { BigIntDisplay } from "./BigIntDisplay";
 import { Title } from "./Title";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import type { Network } from "@/lib/consts";
+import type { Deployment } from "@/lib/consts";
 import type { Asset } from "@/lib/types";
 import type { Address } from "viem";
 
@@ -20,7 +20,7 @@ interface ExternalPositionsType {
 export function ExternalPositions({
   externalPositions,
 }: {
-  network: Network;
+  deployment: Deployment;
   externalPositions: ExternalPositionsType[];
 }) {
   if (externalPositions.length === 0) {

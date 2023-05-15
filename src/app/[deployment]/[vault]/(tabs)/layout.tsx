@@ -1,11 +1,12 @@
+import { PageLayout } from "@/components/PageLayout";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getNetworkByDeployment } from "@/lib/consts";
 import { handleContractError } from "@/lib/errors";
 import { assertParams } from "@/lib/params";
-import { getVaultName } from "@/lib/rpc/getVaultName";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { z } from "@/lib/zod";
+import { getVaultName } from "@enzymefinance/sdk";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -24,17 +25,17 @@ export default async function VaultLayout(props: {
     }),
   });
 
-  const network = getNetworkByDeployment(deployment);
-  const name = await getVaultName({ vault, network }).catch(handleContractError());
+  const client = getPublicClientForDeployment(deployment);
+  const name = await getVaultName(client, { vault }).catch(handleContractError());
 
   return (
-    <div className="space-y-4 container mx-auto">
-      <div className="flex justify-between">
+    <PageLayout>
+      <div className="flex flex-col md:flex-row justify-between">
         <div>
           <Title appearance="primary" size="xl">
             {name}
           </Title>
-          <p>{vault}</p>
+          <p className="break-words">{vault}</p>
         </div>
         <div>
           <Button className="mt-4">
@@ -54,6 +55,6 @@ export default async function VaultLayout(props: {
           <TabsContent value="configuration">{props.configuration}</TabsContent>
         </div>
       </Tabs>
-    </div>
+    </PageLayout>
   );
 }

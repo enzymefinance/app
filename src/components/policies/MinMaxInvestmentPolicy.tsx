@@ -1,21 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type Network } from "@/lib/consts";
+import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
-import { getMinMaxInvestmentPolicy } from "@/lib/rpc/getMinMaxInvestmentPolicy";
-import { type Address } from "viem";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+import { getMinMaxInvestmentPolicy } from "@enzymefinance/sdk";
+import type { Address } from "viem";
 
 export const MinMaxInvestmentPolicy = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     policy,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     policy: Address;
   }) => {
-    const result = await getMinMaxInvestmentPolicy({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getMinMaxInvestmentPolicy(client, {
       comptrollerProxy,
       address: policy,
     });

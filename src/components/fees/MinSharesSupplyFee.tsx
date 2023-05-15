@@ -1,23 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type Network } from "@/lib/consts";
+import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
-import { getMinSharesSupplyFee } from "@/lib/rpc/getMinSharesSupplyFee";
-import { type Address } from "viem";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+import { getMinSharesSupplyFee } from "@enzymefinance/sdk";
+import type { Address } from "viem";
 
 export const MinSharesSupplyFee = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     fee,
     feeManager,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
     feeManager: Address;
   }) => {
-    const result = await getMinSharesSupplyFee({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getMinSharesSupplyFee(client, {
       comptrollerProxy,
       address: fee,
     });

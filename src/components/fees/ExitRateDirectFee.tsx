@@ -1,24 +1,24 @@
-import { asSyncComponent } from "@/lib/next";
-import { type Network, ZERO_ADDRESS } from "@/lib/consts";
-import { type Address } from "viem";
-import { getExitRateDirectFee } from "@/lib/rpc/getExitRateDirectFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {BigIntDisplay} from "@/components/BigIntDisplay";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
+import { asSyncComponent } from "@/lib/next";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+import { getExitRateDirectFee } from "@enzymefinance/sdk";
+import type { Address } from "viem";
 
 export const ExitRateDirectFee = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     fee,
     feeManager,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
     feeManager: Address;
   }) => {
-    const result = await getExitRateDirectFee({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getExitRateDirectFee(client, {
       comptrollerProxy,
       address: fee,
     });

@@ -1,16 +1,18 @@
 import { VaultTile } from "@/components/VaultTile";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type Deployment, getContract, getNetworkByDeployment } from "@/lib/consts";
+import { type Deployment, getContract } from "@/lib/consts";
+import { formatNumber } from "@/lib/format";
 import { asSyncComponent } from "@/lib/next";
 import { assertParams } from "@/lib/params";
-import { getAssetSymbol } from "@/lib/rpc/getAssetSymbol";
-import { getAssetTotalSupply } from "@/lib/rpc/getAssetTotalSupply";
-import { getDenominationAsset } from "@/lib/rpc/getDenominationAsset";
-import { getVaultComptroller } from "@/lib/rpc/getVaultComptroller";
-import { getVaultGavInAsset } from "@/lib/rpc/getVaultGavInAsset";
-import { getVaultOwner } from "@/lib/rpc/getVaultOwner";
-import { getVaultSharePriceInAsset } from "@/lib/rpc/getVaultSharePriceInAsset";
+import { getPublicClientForDeployment } from "@/lib/rpc";
 import { z } from "@/lib/zod";
+import { getAssetSymbol } from "@enzymefinance/sdk";
+import { getAssetTotalSupply } from "@enzymefinance/sdk";
+import { getDenominationAsset } from "@enzymefinance/sdk";
+import { getVaultComptroller } from "@enzymefinance/sdk";
+import { getVaultGavInAsset } from "@enzymefinance/sdk";
+import { getVaultOwner } from "@enzymefinance/sdk";
+import { getVaultSharePriceInAsset } from "@enzymefinance/sdk";
 import { Suspense } from "react";
 import { type Address, formatUnits } from "viem";
 
@@ -30,7 +32,7 @@ export default function VaultPage({ params }: { params: { deployment: string; va
         <VaultOwner vault={vault} deployment={deployment} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
-        <VaultDenominationAsset vault={vault} deployment={deployment} />
+        <VaultDenonimationAsset vault={vault} deployment={deployment} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <VaultTotalSupply vault={vault} deployment={deployment} />
@@ -46,62 +48,71 @@ export default function VaultPage({ params }: { params: { deployment: string; va
   );
 }
 
-const numberFormat = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
-
-const VaultDenominationAsset = asSyncComponent(async function ({
+const VaultDenonimationAsset = asSyncComponent(async function ({
   deployment,
   vault,
-}: { deployment: Deployment; vault: Address }) {
-  const network = getNetworkByDeployment(deployment);
-  const comptroller = await getVaultComptroller({ vault, network });
-  const asset = await getDenominationAsset({ network, comptroller });
-  const symbol = await getAssetSymbol({ network, asset });
+}: {
+  deployment: Deployment;
+  vault: Address;
+}) {
+  const client = getPublicClientForDeployment(deployment);
+  const comptroller = await getVaultComptroller(client, { vault });
+  const asset = await getDenominationAsset(client, { comptroller });
+  const symbol = await getAssetSymbol(client, { asset });
   return <VaultTile title="Denomination asset" description={symbol} />;
 });
 
-const VaultOwner = asSyncComponent(async function ({ deployment, vault }: { deployment: Deployment; vault: Address }) {
-  const network = getNetworkByDeployment(deployment);
-  const vaultOwner = await getVaultOwner({ vault, network });
+const VaultOwner = asSyncComponent(async function ({
+  deployment,
+  vault,
+}: {
+  deployment: Deployment;
+  vault: Address;
+}) {
+  const client = getPublicClientForDeployment(deployment);
+  const vaultOwner = await getVaultOwner(client, { vault });
   return <VaultTile title="Owner" description={vaultOwner} />;
 });
 
 const VaultTotalSupply = asSyncComponent(async function ({
   deployment,
   vault,
-}: { deployment: Deployment; vault: Address }) {
-  const network = getNetworkByDeployment(deployment);
-  const vaultTotalSupply = await getAssetTotalSupply({ asset: vault, network });
+}: {
+  deployment: Deployment;
+  vault: Address;
+}) {
+  const client = getPublicClientForDeployment(deployment);
+  const vaultTotalSupply = await getAssetTotalSupply(client, { asset: vault });
   return <VaultTile title="Total supply" description={formatUnits(vaultTotalSupply, 18)} />;
 });
 
 const VaultGrossShareValue = asSyncComponent(async function ({
   deployment,
   vault,
-}: { deployment: Deployment; vault: Address }) {
-  const network = getNetworkByDeployment(deployment);
-  const gav = await getVaultGavInAsset({
+}: {
+  deployment: Deployment;
+  vault: Address;
+}) {
+  const client = getPublicClientForDeployment(deployment);
+  const gav = await getVaultGavInAsset(client, {
     vault,
-    network,
     asset: getContract(deployment, "Usdc"),
     fundValueCalculatorRouter: getContract(deployment, "FundValueCalculatorRouter"),
   });
 
-  return (
-    <VaultTile title="GAV" description={gav === undefined ? "N/A" : numberFormat.format(Number(formatUnits(gav, 6)))} />
-  );
+  return <VaultTile title="GAV" description={gav === undefined ? "N/A" : formatNumber({ amount: gav, decimals: 6 })} />;
 });
 
 const VaultSharePrice = asSyncComponent(async function ({
   deployment,
   vault,
-}: { deployment: Deployment; vault: Address }) {
-  const network = getNetworkByDeployment(deployment);
-  const gav = await getVaultSharePriceInAsset({
+}: {
+  deployment: Deployment;
+  vault: Address;
+}) {
+  const client = getPublicClientForDeployment(deployment);
+  const gav = await getVaultSharePriceInAsset(client, {
     vault,
-    network,
     asset: getContract(deployment, "Usdc"),
     fundValueCalculatorRouter: getContract(deployment, "FundValueCalculatorRouter"),
   });
@@ -109,7 +120,7 @@ const VaultSharePrice = asSyncComponent(async function ({
   return (
     <VaultTile
       title="Share price"
-      description={gav === undefined ? "N/A" : numberFormat.format(Number(formatUnits(gav, 6)))}
+      description={gav === undefined ? "N/A" : formatNumber({ amount: gav, decimals: 6 })}
     />
   );
 });

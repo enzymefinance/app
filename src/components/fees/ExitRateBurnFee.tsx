@@ -1,24 +1,26 @@
 import { asSyncComponent } from "@/lib/next";
-import { type Network, ZERO_ADDRESS } from "@/lib/consts";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
 import { type Address } from "viem";
 import { getExitRateBurnFee } from "@/lib/rpc/getExitRateBurnFee";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {BigIntDisplay} from "@/components/BigIntDisplay";
+import { getPublicClientForDeployment } from "@/lib/rpc";
+
 
 export const ExitRateBurnFee = asSyncComponent(
   async ({
-    network,
+    deployment,
     comptrollerProxy,
     fee,
     feeManager,
   }: {
-    network: Network;
+    deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
     feeManager: Address;
   }) => {
-    const result = await getExitRateBurnFee({
-      network,
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getExitRateBurnFee(client, {
       comptrollerProxy,
       address: fee,
     });
