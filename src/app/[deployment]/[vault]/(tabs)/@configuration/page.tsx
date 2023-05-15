@@ -33,33 +33,76 @@ import { getPolicyManager } from "@enzymefinance/sdk";
 import { getVaultComptroller } from "@enzymefinance/sdk";
 import { Suspense } from "react";
 import type { Address } from "viem";
+import {UnknownFee} from "@/components/fees/UnknownFee";
+import {UnknownPolicy} from "@/components/policies/UnknownPolicy";
 
 function getFeeComponent({
   deployment,
   comptrollerProxy,
   fee,
+  feeManager,
 }: {
   deployment: Deployment;
   comptrollerProxy: Address;
   fee: Address;
+  feeManager: Address;
 }) {
   switch (fee) {
     case EXIT_RATE_BURN_FEE:
-      return <ExitRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ExitRateBurnFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case EXIT_RATE_DIRECT_FEE:
-      return <ExitRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ExitRateDirectFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case ENTRANCE_RATE_BURN_FEE:
-      return <EntranceRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <EntranceRateBurnFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case ENTRANCE_RATE_DIRECT_FEE:
-      return <EntranceRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <EntranceRateDirectFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case MANAGEMENT_FEE:
-      return <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case PERFORMANCE_FEE:
-      return <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case MIN_SHARES_SUPPLY_FEE:
-      return <MinSharesSupplyFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <MinSharesSupplyFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     default:
-      return <>Unknown fee</>;
+      return <UnknownFee />
   }
 }
 
@@ -88,7 +131,7 @@ function getPolicyComponent({
     case MIN_MAX_INVESTMENT_POLICY:
       return <MinMaxInvestmentPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
     default:
-      return <>Unknown Policy</>;
+      return <UnknownPolicy />
   }
 }
 
@@ -125,7 +168,11 @@ export default async function ConfigurationPage({
       </Title>
       <div className="space-y-4">
         {enabledFeesForFund.map((fee: Address) => {
-          return <Suspense fallback={<Skeleton />}>{getFeeComponent({ deployment, fee, comptrollerProxy })}</Suspense>;
+          return (
+            <Suspense fallback={<Skeleton />}>
+              {getFeeComponent({ deployment, fee, comptrollerProxy, feeManager })}
+            </Suspense>
+          );
         })}
       </div>
 

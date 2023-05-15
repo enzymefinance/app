@@ -1,14 +1,12 @@
 import { asSyncComponent } from "@/lib/next";
 import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
-import { type Address } from "viem";
-import { getPerformanceFee } from "@/lib/rpc/getPerformanceFee";
+import { type Address, parseAbi } from "viem";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {BigIntDisplay} from "@/components/BigIntDisplay";
-import {getDenominationAsset} from "@/lib/rpc/getDenominationAsset";
-import {getAssetSymbol} from "@/lib/rpc/getAssetSymbol";
-import {getAssetDecimals} from "@/lib/rpc/getAssetDecimals";
+import { BigIntDisplay } from "@/components/BigIntDisplay";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-
+import { getPerformanceFee, getDenominationAsset, getAssetSymbol, getAssetDecimals } from "@enzymefinance/sdk";
+import { readContract } from "viem/contract";
+import { IComptroller } from "@enzymefinance/abis/IComptroller";
 
 export const PerformanceFee = asSyncComponent(
   async ({
@@ -28,17 +26,21 @@ export const PerformanceFee = asSyncComponent(
       address: fee,
     });
 
-    const denominationAsset = await  getDenominationAsset({ network: deployment, comptroller: comptrollerProxy})
+    const denominationAsset = await  getDenominationAsset(client, {
+      comptroller: comptrollerProxy,
+    });
+    const symbol = await getAssetSymbol(client, {
+      asset: denominationAsset,
+    });
 
-      const symbol = await getAssetSymbol({network: deployment, asset: denominationAsset})
+    const decimals = await getAssetDecimals(client, {
+      asset: denominationAsset,
+    });
 
-      const decimals = await getAssetDecimals({network: deployment, asset: denominationAsset})
 
     const rate = result.feeInfoForFund.rate;
-    const highWatermark = result.feeInfoForFund.highWaterMark
-    const recipient =
-      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
-
+    const highWatermark = result.feeInfoForFund.highWaterMark;
+    const recipient = result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
     return (
       <Card>
@@ -46,9 +48,12 @@ export const PerformanceFee = asSyncComponent(
           <CardTitle>Performance Fee</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
-          {/*  TODO: fix rate */}
-          <p className="text-sm font-medium leading-none">Rate: <BigIntDisplay amount={rate} />%</p>
-          <p className="text-sm font-medium leading-none">High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}</p>
+          <p className="text-sm font-medium leading-none">
+            Rate: <BigIntDisplay amount={rate} />%
+          </p>
+          <p className="text-sm font-medium leading-none">
+            High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}
+          </p>
           <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>
       </Card>
