@@ -26,7 +26,8 @@ export const ExitRateBurnFee = asSyncComponent(
 
     const rateInKind = result.inKindRateForFund;
     const rateSpecificAsset = result.specificAssetsRateForFund;
-    const recipient = result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
     return (
       <Card>
@@ -35,13 +36,13 @@ export const ExitRateBurnFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">
-            Rate (in kind): <BigIntDisplay amount={rateInKind} />%
+            Rate (in kind): <BigIntDisplay amount={rateInKind} decimals={2} />%
           </p>
           <p className="text-sm font-medium leading-none">
-            Rate (specific asset): <BigIntDisplay amount={rateSpecificAsset} />%
+            Rate (specific asset): <BigIntDisplay amount={rateSpecificAsset} decimals={2} />%
           </p>
 
-          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
         </CardContent>
       </Card>
     );

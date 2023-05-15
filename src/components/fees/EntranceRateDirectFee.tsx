@@ -18,11 +18,13 @@ export const EntranceRateDirectFee = asSyncComponent(
     fee: Address;
     feeManager: Address;
   }) => {
-      const client = getPublicClientForDeployment(deployment);
-      const result = await getEntranceRateDirectFee(client, {
-          comptrollerProxy,
-          address: fee,
-      });
+    const client = getPublicClientForDeployment(deployment);
+    const result = await getEntranceRateDirectFee(client, {
+      comptrollerProxy,
+      address: fee,
+    });
+
+
 
     return (
       <Card>

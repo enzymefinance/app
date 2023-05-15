@@ -33,8 +33,8 @@ import { getPolicyManager } from "@enzymefinance/sdk";
 import { getVaultComptroller } from "@enzymefinance/sdk";
 import { Suspense } from "react";
 import type { Address } from "viem";
-import {UnknownFee} from "@/components/fees/UnknownFee";
-import {UnknownPolicy} from "@/components/policies/UnknownPolicy";
+import { UnknownFee } from "@/components/fees/UnknownFee";
+import { UnknownPolicy } from "@/components/policies/UnknownPolicy";
 
 function getFeeComponent({
   deployment,
@@ -102,7 +102,7 @@ function getFeeComponent({
         />
       );
     default:
-      return <UnknownFee />
+      return <UnknownFee />;
   }
 }
 
@@ -131,7 +131,7 @@ function getPolicyComponent({
     case MIN_MAX_INVESTMENT_POLICY:
       return <MinMaxInvestmentPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
     default:
-      return <UnknownPolicy />
+      return <UnknownPolicy />;
   }
 }
 
@@ -160,6 +160,8 @@ export default async function ConfigurationPage({
     comptroller: comptrollerProxy,
     policyManager,
   });
+
+  console.log(enabledFeesForFund)
 
   return (
     <>

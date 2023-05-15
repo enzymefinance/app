@@ -33,7 +33,7 @@ export const EntranceRateBurnFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">
-            Rate: <BigIntDisplay amount={rate} />%
+            Rate: <BigIntDisplay amount={rate} decimals={2} />%
           </p>
         </CardContent>
       </Card>

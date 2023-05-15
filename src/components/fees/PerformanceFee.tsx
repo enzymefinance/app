@@ -26,7 +26,7 @@ export const PerformanceFee = asSyncComponent(
       address: fee,
     });
 
-    const denominationAsset = await  getDenominationAsset(client, {
+    const denominationAsset = await getDenominationAsset(client, {
       comptroller: comptrollerProxy,
     });
     const symbol = await getAssetSymbol(client, {
@@ -37,10 +37,10 @@ export const PerformanceFee = asSyncComponent(
       asset: denominationAsset,
     });
 
-
     const rate = result.feeInfoForFund.rate;
     const highWatermark = result.feeInfoForFund.highWaterMark;
-    const recipient = result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
     return (
       <Card>
@@ -49,12 +49,12 @@ export const PerformanceFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">
-            Rate: <BigIntDisplay amount={rate} />%
+            Rate: <BigIntDisplay amount={rate} decimals={2}  />%
           </p>
           <p className="text-sm font-medium leading-none">
             High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}
           </p>
-          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
         </CardContent>
       </Card>
     );

@@ -7,7 +7,6 @@ import { BigIntDisplay } from "@/components/BigIntDisplay";
 import type { Address } from "viem";
 import { getManagementFee } from "@enzymefinance/sdk";
 
-
 export const ManagementFee = asSyncComponent(
   async ({
     deployment,
@@ -31,7 +30,8 @@ export const ManagementFee = asSyncComponent(
       adjustInflation: true,
     });
 
-    const recipient = result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
 
     return (
       <Card>
@@ -42,7 +42,7 @@ export const ManagementFee = asSyncComponent(
           <p className="text-sm font-medium leading-none">
             Rate: <BigIntDisplay amount={convertedScaledPerSecondRate} decimals={16} />%
           </p>
-          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
         </CardContent>
       </Card>
     );
