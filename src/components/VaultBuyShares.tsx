@@ -1,6 +1,7 @@
 "use client";
 
 import { Title } from "./Title";
+import { Button } from "./ui/button";
 import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { useBalanceOf } from "@/lib/hooks/useBalanceOf";
@@ -12,7 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type Address, zeroAddress } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
-import { Button } from "./ui/button";
 
 interface VaultBuySharesProps {
   deployment: Deployment;

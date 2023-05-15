@@ -1,6 +1,7 @@
 "use client";
 
 import { Title } from "./Title";
+import { Button } from "./ui/button";
 import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { z } from "@/lib/zod";
@@ -10,7 +11,6 @@ import { useForm } from "react-hook-form";
 import { type Address, parseAbi, zeroAddress } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import { z as zz } from "zod";
-import { Button } from "./ui/button";
 
 interface VaultApproveProps {
   deployment: Deployment;
