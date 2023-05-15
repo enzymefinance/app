@@ -1,6 +1,7 @@
 "use client";
 
 import { Title } from "./Title";
+import { Button } from "./ui/button";
 import { type Deployment, getNetworkByDeployment } from "@/lib/consts";
 import { useAllowance } from "@/lib/hooks/useAllowance";
 import { z } from "@/lib/zod";
@@ -56,13 +57,13 @@ export function VaultApprove({ deployment, comptroller, denominationAsset }: Vau
   };
 
   return (
-    <form name="approve" onSubmit={handleSubmit(onSubmit)}>
+    <form name="approve" onSubmit={handleSubmit(onSubmit)} className="flex-col space-y-4 my-8">
       <Title appearance="primary">Step 1: Approve </Title>
       Currently approved amount: {approvedAmount.toString()}
       <br />
-      <input {...register("amount")} />
+      <input {...register("amount")} className="h-10 rounded p-2" />
       <br />
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 }
