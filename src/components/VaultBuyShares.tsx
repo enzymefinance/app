@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type Address, zeroAddress } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
+import { Button } from "./ui/button";
 
 interface VaultBuySharesProps {
   deployment: Deployment;
@@ -82,14 +83,14 @@ export function VaultBuyShares({ deployment, comptroller, denominationAsset }: V
   };
 
   return accountBalance === undefined ? null : (
-    <form name="buyShares" onSubmit={handleSubmit(onSubmit)}>
+    <form name="buyShares" onSubmit={handleSubmit(onSubmit)} className="flex-col space-y-4 my-8">
       <Title appearance="primary">Step 2: Deposit</Title>
       Denomination asset balance: {accountBalance?.toString()}
       Currently approved amount: {approvedAmount?.toString()}
       <br />
-      <input {...register("amount")} />
+      <input {...register("amount")} className="h-10 rounded p-2" />
       <br />
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 }
