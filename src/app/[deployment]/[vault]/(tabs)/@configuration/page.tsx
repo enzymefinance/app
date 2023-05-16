@@ -140,43 +140,19 @@ function getPolicyComponent({
     case getContract(deployment, "AllowedAdaptersPolicy"):
       return <AllowedAdaptersPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
 
-    // TODO - which user to use?
     case getContract(deployment, "AllowedAdaptersPerManager"):
-      return (
-        <AllowedAdaptersPerManager
-          policy={policy}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          user="0x"
-        />
-      );
+      return <AllowedAdaptersPerManager />;
 
     case getContract(deployment, "AllowedAssetsForRedemptionPolicy"):
       return (
         <AllowedAssetsForRedemptionPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />
       );
 
-    // TODO - for which user?
     case getContract(deployment, "AllowedExternalPositionTypesPerManagerPolicy"):
-      return (
-        <AllowedExternalPositionTypesPerManagerPolicy
-          policy={policy}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          user="0x"
-        />
-      );
+      return <AllowedExternalPositionTypesPerManagerPolicy />;
 
-    // TODO - which externalPositionTypeId to use?
     case getContract(deployment, "AllowedExternalPositionTypesPolicy"):
-      return (
-        <AllowedExternalPositionTypesPolicy
-          policy={policy}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          externalPositionTypeId={1n}
-        />
-      );
+      return <AllowedExternalPositionTypesPolicy />;
 
     case getContract(deployment, "CumulativeSlippageTolerancePolicy"):
       return (
