@@ -10,19 +10,8 @@ import { AllowedDepositRecipintsPolicy } from "@/components/policies/AllowedDepo
 import { AllowedSharesTransferRecipientsPolicy } from "@/components/policies/AllowedSharesTransferRecipientsPolicy";
 import { MinMaxInvestmentPolicy } from "@/components/policies/MinMaxInvestmentPolicy";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  ALLOWED_DEPOSIT_RECIPIENTS_POLICY,
-  ALLOWED_SHARES_TRANSFER_RECIPIENTS_POLICY,
-  type Deployment,
-  ENTRANCE_RATE_BURN_FEE,
-  ENTRANCE_RATE_DIRECT_FEE,
-  EXIT_RATE_BURN_FEE,
-  EXIT_RATE_DIRECT_FEE,
-  MANAGEMENT_FEE,
-  MIN_MAX_INVESTMENT_POLICY,
-  MIN_SHARES_SUPPLY_FEE,
-  PERFORMANCE_FEE,
-} from "@/lib/consts";
+import type { Deployment } from "@/lib/consts";
+import { getContract } from "@/lib/consts";
 import { assertParams } from "@/lib/params";
 import { getPublicClientForDeployment } from "@/lib/rpc";
 import { z } from "@/lib/zod";
@@ -48,59 +37,20 @@ function getFeeComponent({
   feeManager: Address;
 }) {
   switch (fee) {
-    case EXIT_RATE_BURN_FEE:
-      return (
-        <ExitRateBurnFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
-    case EXIT_RATE_DIRECT_FEE:
-      return (
-        <ExitRateDirectFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
-    case ENTRANCE_RATE_BURN_FEE:
-      return (
-        <EntranceRateBurnFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
-    case ENTRANCE_RATE_DIRECT_FEE:
-      return (
-        <EntranceRateDirectFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
-    case MANAGEMENT_FEE:
-      return (
-        <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
-      );
-    case PERFORMANCE_FEE:
-      return (
-        <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
-      );
-    case MIN_SHARES_SUPPLY_FEE:
-      return (
-        <MinSharesSupplyFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+    case getContract(deployment, "ExitRateBurnFee"):
+      return <ExitRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "ExitRateDirectFee"):
+      return <ExitRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "EntranceRateBurnFee"):
+      return <EntranceRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "EntranceRateDirectFee"):
+      return <EntranceRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "ManagementFee"):
+      return <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "PerformanceFee"):
+      return <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "MinSharesSupplyFee"):
+      return <MinSharesSupplyFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
     default:
       return <UnknownFee />;
   }
@@ -116,11 +66,11 @@ function getPolicyComponent({
   policy: Address;
 }) {
   switch (policy) {
-    case ALLOWED_DEPOSIT_RECIPIENTS_POLICY:
+    case getContract(deployment, "AllowedDepositRecipientsPolicy"):
       return (
         <AllowedDepositRecipintsPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />
       );
-    case ALLOWED_SHARES_TRANSFER_RECIPIENTS_POLICY:
+    case getContract(deployment, "AllowedSharesTransferRecipientsPolicy"):
       return (
         <AllowedSharesTransferRecipientsPolicy
           policy={policy}
@@ -128,7 +78,7 @@ function getPolicyComponent({
           comptrollerProxy={comptrollerProxy}
         />
       );
-    case MIN_MAX_INVESTMENT_POLICY:
+    case getContract(deployment, "MinMaxInvestmentPolicy"):
       return <MinMaxInvestmentPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
     default:
       return <UnknownPolicy />;
@@ -160,8 +110,6 @@ export default async function ConfigurationPage({
     comptroller: comptrollerProxy,
     policyManager,
   });
-
-  console.log(enabledFeesForFund)
 
   return (
     <>

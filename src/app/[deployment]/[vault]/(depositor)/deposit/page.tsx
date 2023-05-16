@@ -23,6 +23,7 @@ export default async function DepositPage({ params }: { params: { deployment: st
   return (
     <PageLayout>
       <VaultApprove deployment={deployment} comptroller={comptroller} denominationAsset={denominationAsset} />
+      <div className="border-solid border-t" />
       <VaultBuyShares deployment={deployment} comptroller={comptroller} denominationAsset={denominationAsset} />
     </PageLayout>
   );
