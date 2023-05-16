@@ -24,9 +24,9 @@ export const AllowedAdapterIncomingAssetsPolicy = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>AllowedAdapterIncomingAssetsPolicy</CardTitle>
+          <CardTitle>Limit Allowed Incoming Assets</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

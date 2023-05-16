@@ -5,9 +5,14 @@ export const OnlyUntrackDustOrPricelessAssets = asSyncComponent(async () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Only Untrack Dust Or Priceless Assets</CardTitle>
+        <CardTitle>Restrict Asset Position Removal</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent>
+        <p className="text-sm font-medium leading-none">
+          This policy eliminates the potential for a vault manager to manipulate their vault’s share price by
+          undercounting the assets it holds.
+        </p>
+      </CardContent>
     </Card>
   );
 });

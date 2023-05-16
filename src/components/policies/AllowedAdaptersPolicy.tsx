@@ -24,9 +24,9 @@ export const AllowedAdaptersPolicy = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>AllowedAdaptersPolicy</CardTitle>
+          <CardTitle>Limit Adapters To A Specified List</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

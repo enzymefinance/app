@@ -26,7 +26,7 @@ export const AllowedAssetsForRedemptionPolicy = asSyncComponent(
         <CardHeader>
           <CardTitle>Allowed Assets For Redemption Policy</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

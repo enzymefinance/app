@@ -5,7 +5,7 @@ import { getPublicClientForDeployment } from "@/lib/rpc";
 import { getIAllowedAdaptersPerManagerPolicy } from "@/lib/rpc/getAllowedAdaptersPerManager";
 import type { Address } from "viem";
 
-export const AllowedAdaptersPerManager = asSyncComponent(
+export const AllowedAdaptersPerManagerPolicy = asSyncComponent(
   async ({
     deployment,
     comptrollerProxy,
@@ -27,9 +27,9 @@ export const AllowedAdaptersPerManager = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>AllowedAdaptersPerManager</CardTitle>
+          <CardTitle>Limit Allowed Adapters For Manager To A Specified List</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

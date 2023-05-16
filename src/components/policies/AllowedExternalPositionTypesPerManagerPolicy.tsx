@@ -27,9 +27,9 @@ export const AllowedExternalPositionTypesPerManagerPolicy = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>AllowedExternalPositionTypesPerManagerPolicy</CardTitle>
+          <CardTitle>Limit Allowed External Position Types For Manager To A Specified List</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

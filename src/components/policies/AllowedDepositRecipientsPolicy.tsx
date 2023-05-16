@@ -5,7 +5,7 @@ import { getPublicClientForDeployment } from "@/lib/rpc";
 import { getAllowedDepositRecipientsLists } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
-export const AllowedDepositRecipintsPolicy = asSyncComponent(
+export const AllowedDepositRecipientsPolicy = asSyncComponent(
   async ({
     deployment,
     comptrollerProxy,
@@ -26,7 +26,7 @@ export const AllowedDepositRecipintsPolicy = asSyncComponent(
         <CardHeader>
           <CardTitle>Allowed Deposit Recipients Policy</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

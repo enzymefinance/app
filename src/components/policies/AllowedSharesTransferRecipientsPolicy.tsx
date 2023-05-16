@@ -24,9 +24,9 @@ export const AllowedSharesTransferRecipientsPolicy = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Allowed Shares Transfer Recipients Policy</CardTitle>
+          <CardTitle>Restrict Wallets Permitted To Receive A Share Transfer</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent>TODO</CardContent>
       </Card>
     );
   },

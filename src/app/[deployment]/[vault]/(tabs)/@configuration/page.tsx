@@ -8,10 +8,10 @@ import { MinSharesSupplyFee } from "@/components/fees/MinSharesSupplyFee";
 import { PerformanceFee } from "@/components/fees/PerformanceFee";
 import { UnknownFee } from "@/components/fees/UnknownFee";
 import { AllowedAdapterIncomingAssetsPolicy } from "@/components/policies/AllowedAdapterIncomingAssetsPolicy";
-import { AllowedAdaptersPerManager } from "@/components/policies/AllowedAdaptersPerManager";
+import { AllowedAdaptersPerManagerPolicy } from "@/components/policies/AllowedAdaptersPerManagerPolicy";
 import { AllowedAdaptersPolicy } from "@/components/policies/AllowedAdaptersPolicy";
 import { AllowedAssetsForRedemptionPolicy } from "@/components/policies/AllowedAssetsForRedemptionPolicy";
-import { AllowedDepositRecipintsPolicy } from "@/components/policies/AllowedDepositRecipientsPolicy";
+import { AllowedDepositRecipientsPolicy } from "@/components/policies/AllowedDepositRecipientsPolicy";
 import { AllowedExternalPositionTypesPerManagerPolicy } from "@/components/policies/AllowedExternalPositionTypesPerManagerPolicy";
 import { AllowedExternalPositionTypesPolicy } from "@/components/policies/AllowedExternalPositionTypesPolicy";
 import { AllowedSharesTransferRecipientsPolicy } from "@/components/policies/AllowedSharesTransferRecipientsPolicy";
@@ -117,7 +117,7 @@ function getPolicyComponent({
   switch (policy) {
     case getContract(deployment, "AllowedDepositRecipientsPolicy"):
       return (
-        <AllowedDepositRecipintsPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />
+        <AllowedDepositRecipientsPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />
       );
     case getContract(deployment, "AllowedSharesTransferRecipientsPolicy"):
       return (
@@ -143,7 +143,7 @@ function getPolicyComponent({
     // TODO - which user to use?
     case getContract(deployment, "AllowedAdaptersPerManager"):
       return (
-        <AllowedAdaptersPerManager
+        <AllowedAdaptersPerManagerPolicy
           policy={policy}
           deployment={deployment}
           comptrollerProxy={comptrollerProxy}
