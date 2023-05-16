@@ -6,6 +6,7 @@ import { ExitRateDirectFee } from "@/components/fees/ExitRateDirectFee";
 import { ManagementFee } from "@/components/fees/ManagementFee";
 import { MinSharesSupplyFee } from "@/components/fees/MinSharesSupplyFee";
 import { PerformanceFee } from "@/components/fees/PerformanceFee";
+import { UnknownFee } from "@/components/fees/UnknownFee";
 import { AllowedAdapterIncomingAssetsPolicy } from "@/components/policies/AllowedAdapterIncomingAssetsPolicy";
 import { AllowedAdaptersPerManager } from "@/components/policies/AllowedAdaptersPerManager";
 import { AllowedAdaptersPolicy } from "@/components/policies/AllowedAdaptersPolicy";
@@ -19,6 +20,7 @@ import { MinAssetBalancesPostRedemptionPolicy } from "@/components/policies/MinA
 import { MinMaxInvestmentPolicy } from "@/components/policies/MinMaxInvestmentPolicy";
 import { OnlyRemoveDustExternalPositionPolicy } from "@/components/policies/OnlyRemoveDustExternalPositionPolicy";
 import { OnlyUntrackDustOrPricelessAssets } from "@/components/policies/OnlyUntrackDustOrPricelessAssets";
+import { UnknownPolicy } from "@/components/policies/UnknownPolicy";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Deployment } from "@/lib/consts";
 import { getContract } from "@/lib/consts";
@@ -32,8 +34,6 @@ import { getPolicyManager } from "@enzymefinance/sdk";
 import { getVaultComptroller } from "@enzymefinance/sdk";
 import { Suspense } from "react";
 import type { Address } from "viem";
-import { UnknownFee } from "@/components/fees/UnknownFee";
-import { UnknownPolicy } from "@/components/policies/UnknownPolicy";
 
 function getFeeComponent({
   deployment,

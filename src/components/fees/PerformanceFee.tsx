@@ -1,10 +1,10 @@
-import { asSyncComponent } from "@/lib/next";
-import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
-import { type Address } from "viem";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BigIntDisplay } from "@/components/BigIntDisplay";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
+import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getPerformanceFee, getDenominationAsset, getAssetSymbol, getAssetDecimals } from "@enzymefinance/sdk";
+import { getAssetDecimals, getAssetSymbol, getDenominationAsset, getPerformanceFee } from "@enzymefinance/sdk";
+import type { Address } from "viem";
 
 export const PerformanceFee = asSyncComponent(
   async ({

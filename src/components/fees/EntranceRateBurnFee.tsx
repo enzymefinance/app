@@ -1,10 +1,10 @@
+import { BigIntDisplay } from "@/components/BigIntDisplay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
 import { getEntranceRateBurnFee } from "@enzymefinance/sdk";
 import type { Address } from "viem";
-import { BigIntDisplay } from "@/components/BigIntDisplay";
 
 export const EntranceRateBurnFee = asSyncComponent(
   async ({

@@ -1,10 +1,10 @@
-import { asSyncComponent } from "@/lib/next";
-import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BigIntDisplay } from "@/components/BigIntDisplay";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
+import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import type { Address } from "viem";
 import { getExitRateBurnFee } from "@enzymefinance/sdk";
+import type { Address } from "viem";
 
 export const ExitRateBurnFee = asSyncComponent(
   async ({
