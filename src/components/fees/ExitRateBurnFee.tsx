@@ -1,5 +1,6 @@
+import { BigIntDisplay } from "@/components/BigIntDisplay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Deployment } from "@/lib/consts";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
 import { getExitRateBurnFee } from "@enzymefinance/sdk";
@@ -10,10 +11,12 @@ export const ExitRateBurnFee = asSyncComponent(
     deployment,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
     const result = await getExitRateBurnFee(client, {
@@ -21,12 +24,26 @@ export const ExitRateBurnFee = asSyncComponent(
       address: fee,
     });
 
+    const rateInKind = result.inKindRateForFund;
+    const rateSpecificAsset = result.specificAssetsRateForFund;
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+
     return (
       <Card>
         <CardHeader>
           <CardTitle>Exit Rate Burn Fee</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent className="space-y-1">
+          <p className="text-sm font-medium leading-none">
+            Rate (in kind): <BigIntDisplay amount={rateInKind} decimals={2} />%
+          </p>
+          <p className="text-sm font-medium leading-none">
+            Rate (specific asset): <BigIntDisplay amount={rateSpecificAsset} decimals={2} />%
+          </p>
+
+          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
+        </CardContent>
       </Card>
     );
   },

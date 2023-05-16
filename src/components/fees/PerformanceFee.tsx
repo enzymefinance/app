@@ -1,8 +1,9 @@
+import { BigIntDisplay } from "@/components/BigIntDisplay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Deployment } from "@/lib/consts";
+import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getPerformanceFee } from "@enzymefinance/sdk";
+import { getAssetDecimals, getAssetSymbol, getDenominationAsset, getPerformanceFee } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const PerformanceFee = asSyncComponent(
@@ -10,10 +11,12 @@ export const PerformanceFee = asSyncComponent(
     deployment,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
     const result = await getPerformanceFee(client, {
@@ -21,12 +24,36 @@ export const PerformanceFee = asSyncComponent(
       address: fee,
     });
 
+    const denominationAsset = await getDenominationAsset(client, {
+      comptroller: comptrollerProxy,
+    });
+    const symbol = await getAssetSymbol(client, {
+      asset: denominationAsset,
+    });
+
+    const decimals = await getAssetDecimals(client, {
+      asset: denominationAsset,
+    });
+
+    const rate = result.feeInfoForFund.rate;
+    const highWatermark = result.feeInfoForFund.highWaterMark;
+    const recipient =
+      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+
     return (
       <Card>
         <CardHeader>
           <CardTitle>Performance Fee</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent className="space-y-1">
+          <p className="text-sm font-medium leading-none">
+            Rate: <BigIntDisplay amount={rate} decimals={2} />%
+          </p>
+          <p className="text-sm font-medium leading-none">
+            High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}
+          </p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
+        </CardContent>
       </Card>
     );
   },

@@ -6,6 +6,7 @@ import { ExitRateDirectFee } from "@/components/fees/ExitRateDirectFee";
 import { ManagementFee } from "@/components/fees/ManagementFee";
 import { MinSharesSupplyFee } from "@/components/fees/MinSharesSupplyFee";
 import { PerformanceFee } from "@/components/fees/PerformanceFee";
+import { UnknownFee } from "@/components/fees/UnknownFee";
 import { AllowedAdapterIncomingAssetsPolicy } from "@/components/policies/AllowedAdapterIncomingAssetsPolicy";
 import { AllowedAdaptersPerManager } from "@/components/policies/AllowedAdaptersPerManager";
 import { AllowedAdaptersPolicy } from "@/components/policies/AllowedAdaptersPolicy";
@@ -19,6 +20,7 @@ import { MinAssetBalancesPostRedemptionPolicy } from "@/components/policies/MinA
 import { MinMaxInvestmentPolicy } from "@/components/policies/MinMaxInvestmentPolicy";
 import { OnlyRemoveDustExternalPositionPolicy } from "@/components/policies/OnlyRemoveDustExternalPositionPolicy";
 import { OnlyUntrackDustOrPricelessAssets } from "@/components/policies/OnlyUntrackDustOrPricelessAssets";
+import { UnknownPolicy } from "@/components/policies/UnknownPolicy";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Deployment } from "@/lib/consts";
 import { getContract } from "@/lib/consts";
@@ -37,33 +39,69 @@ function getFeeComponent({
   deployment,
   comptrollerProxy,
   fee,
+  feeManager,
 }: {
   deployment: Deployment;
   comptrollerProxy: Address;
   fee: Address;
+  feeManager: Address;
 }) {
   switch (fee) {
     case getContract(deployment, "ExitRateBurnFee"):
-      return <ExitRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    case getContract(deployment, "ExitRateDirectFee"):
-      return <ExitRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    case getContract(deployment, "EntranceRateBurnFee"):
-      return <EntranceRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    case getContract(deployment, "EntranceRateDirectFee"):
-      return <EntranceRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    case getContract(deployment, "ManagementFee"):
-      return <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    case getContract(deployment, "PerformanceFee"):
-      return <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    case getContract(deployment, "MinSharesSupplyFee"):
-      return <MinSharesSupplyFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
-    default:
       return (
-        <div>
-          <p>Unknown Fee</p>
-          <p>{fee}</p>
-        </div>
+        <ExitRateBurnFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
       );
+    case getContract(deployment, "ExitRateDirectFee"):
+      return (
+        <ExitRateDirectFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
+    case getContract(deployment, "EntranceRateBurnFee"):
+      return (
+        <EntranceRateBurnFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
+    case getContract(deployment, "EntranceRateDirectFee"):
+      return (
+        <EntranceRateDirectFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
+    case getContract(deployment, "ManagementFee"):
+      return (
+        <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
+    case getContract(deployment, "PerformanceFee"):
+      return (
+        <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
+    case getContract(deployment, "MinSharesSupplyFee"):
+      return (
+        <MinSharesSupplyFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
+    default:
+      return <UnknownFee />;
   }
 }
 
@@ -158,12 +196,7 @@ function getPolicyComponent({
     case getContract(deployment, "OnlyUntrackDustOrPricelessAssets"):
       return <OnlyUntrackDustOrPricelessAssets />;
     default:
-      return (
-        <div>
-          <p>Unknown Policy</p>
-          <p>{policy}</p>
-        </div>
-      );
+      return <UnknownPolicy />;
   }
 }
 
@@ -195,12 +228,18 @@ export default async function ConfigurationPage({
 
   return (
     <>
-      <Title size="xl" appearance="primary">
-        Fees
-      </Title>
+      {enabledFeesForFund.length > 0 ? (
+        <Title size="xl" appearance="primary">
+          Fees
+        </Title>
+      ) : null}
       <div className="space-y-4">
         {enabledFeesForFund.map((fee: Address) => {
-          return <Suspense fallback={<Skeleton />}>{getFeeComponent({ deployment, fee, comptrollerProxy })}</Suspense>;
+          return (
+            <Suspense fallback={<Skeleton />}>
+              {getFeeComponent({ deployment, fee, comptrollerProxy, feeManager })}
+            </Suspense>
+          );
         })}
       </div>
 

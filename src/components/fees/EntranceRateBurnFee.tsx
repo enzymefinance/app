@@ -1,3 +1,4 @@
+import { BigIntDisplay } from "@/components/BigIntDisplay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
@@ -10,10 +11,12 @@ export const EntranceRateBurnFee = asSyncComponent(
     deployment,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
     const result = await getEntranceRateBurnFee(client, {
@@ -21,12 +24,18 @@ export const EntranceRateBurnFee = asSyncComponent(
       address: fee,
     });
 
+    const rate = result.rateForFund;
+
     return (
       <Card>
         <CardHeader>
           <CardTitle>Entrance Rate Burn Fee</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent className="space-y-1">
+          <p className="text-sm font-medium leading-none">
+            Rate: <BigIntDisplay amount={rate} decimals={2} />%
+          </p>
+        </CardContent>
       </Card>
     );
   },

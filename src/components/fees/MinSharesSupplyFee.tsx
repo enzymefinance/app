@@ -10,10 +10,12 @@ export const MinSharesSupplyFee = asSyncComponent(
     deployment,
     comptrollerProxy,
     fee,
+    feeManager,
   }: {
     deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
+    feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
     const result = await getMinSharesSupplyFee(client, {
