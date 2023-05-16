@@ -6,9 +6,19 @@ import { ExitRateDirectFee } from "@/components/fees/ExitRateDirectFee";
 import { ManagementFee } from "@/components/fees/ManagementFee";
 import { MinSharesSupplyFee } from "@/components/fees/MinSharesSupplyFee";
 import { PerformanceFee } from "@/components/fees/PerformanceFee";
+import { AllowedAdapterIncomingAssetsPolicy } from "@/components/policies/AllowedAdapterIncomingAssetsPolicy";
+import { AllowedAdaptersPerManager } from "@/components/policies/AllowedAdaptersPerManager";
+import { AllowedAdaptersPolicy } from "@/components/policies/AllowedAdaptersPolicy";
+import { AllowedAssetsForRedemptionPolicy } from "@/components/policies/AllowedAssetsForRedemptionPolicy";
 import { AllowedDepositRecipintsPolicy } from "@/components/policies/AllowedDepositRecipientsPolicy";
+import { AllowedExternalPositionTypesPerManagerPolicy } from "@/components/policies/AllowedExternalPositionTypesPerManagerPolicy";
+import { AllowedExternalPositionTypesPolicy } from "@/components/policies/AllowedExternalPositionTypesPolicy";
 import { AllowedSharesTransferRecipientsPolicy } from "@/components/policies/AllowedSharesTransferRecipientsPolicy";
+import { CumulativeSlippageTolerancePolicy } from "@/components/policies/CumulativeSlippageTolerancePolicy";
+import { MinAssetBalancesPostRedemptionPolicy } from "@/components/policies/MinAssetBalancesPostRedemptionPolicy";
 import { MinMaxInvestmentPolicy } from "@/components/policies/MinMaxInvestmentPolicy";
+import { OnlyRemoveDustExternalPositionPolicy } from "@/components/policies/OnlyRemoveDustExternalPositionPolicy";
+import { OnlyUntrackDustOrPricelessAssets } from "@/components/policies/OnlyUntrackDustOrPricelessAssets";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Deployment } from "@/lib/consts";
 import { getContract } from "@/lib/consts";
@@ -38,58 +48,19 @@ function getFeeComponent({
 }) {
   switch (fee) {
     case getContract(deployment, "ExitRateBurnFee"):
-      return (
-        <ExitRateBurnFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <ExitRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case getContract(deployment, "ExitRateDirectFee"):
-      return (
-        <ExitRateDirectFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <ExitRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case getContract(deployment, "EntranceRateBurnFee"):
-      return (
-        <EntranceRateBurnFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <EntranceRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case getContract(deployment, "EntranceRateDirectFee"):
-      return (
-        <EntranceRateDirectFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <EntranceRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager}/>;
     case getContract(deployment, "ManagementFee"):
-      return (
-        <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
-      );
+      return <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case getContract(deployment, "PerformanceFee"):
-      return (
-        <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
-      );
+      return <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     case getContract(deployment, "MinSharesSupplyFee"):
-      return (
-        <MinSharesSupplyFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <MinSharesSupplyFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />;
     default:
       return <UnknownFee />;
   }
@@ -119,6 +90,72 @@ function getPolicyComponent({
       );
     case getContract(deployment, "MinMaxInvestmentPolicy"):
       return <MinMaxInvestmentPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+    case getContract(deployment, "AllowedAdapterIncomingAssetsPolicy"):
+      return (
+        <AllowedAdapterIncomingAssetsPolicy
+          policy={policy}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+        />
+      );
+    case getContract(deployment, "AllowedAdaptersPolicy"):
+      return <AllowedAdaptersPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+
+    // TODO - which user to use?
+    case getContract(deployment, "AllowedAdaptersPerManager"):
+      return (
+        <AllowedAdaptersPerManager
+          policy={policy}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          user="0x"
+        />
+      );
+
+    case getContract(deployment, "AllowedAssetsForRedemptionPolicy"):
+      return (
+        <AllowedAssetsForRedemptionPolicy policy={policy} deployment={deployment} comptrollerProxy={comptrollerProxy} />
+      );
+
+    // TODO - for which user?
+    case getContract(deployment, "AllowedExternalPositionTypesPerManagerPolicy"):
+      return (
+        <AllowedExternalPositionTypesPerManagerPolicy
+          policy={policy}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          user="0x"
+        />
+      );
+
+    // TODO - which externalPositionTypeId to use?
+    case getContract(deployment, "AllowedExternalPositionTypesPolicy"):
+      return (
+        <AllowedExternalPositionTypesPolicy
+          policy={policy}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          externalPositionTypeId={1n}
+        />
+      );
+
+    case getContract(deployment, "CumulativeSlippageTolerancePolicy"):
+      return (
+        <CumulativeSlippageTolerancePolicy
+          policy={policy}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+        />
+      );
+
+    case getContract(deployment, "MinAssetBalancesPostRedemptionPolicy"):
+      return <MinAssetBalancesPostRedemptionPolicy />;
+
+    case getContract(deployment, "OnlyRemoveDustExternalPositionPolicy"):
+      return <OnlyRemoveDustExternalPositionPolicy />;
+
+    case getContract(deployment, "OnlyUntrackDustOrPricelessAssets"):
+      return <OnlyUntrackDustOrPricelessAssets />;
     default:
       return <UnknownPolicy />;
   }
