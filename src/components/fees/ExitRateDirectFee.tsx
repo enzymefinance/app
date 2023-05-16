@@ -36,7 +36,7 @@ export const ExitRateDirectFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">
-            Rate (in kind): <BigIntDisplay amount={rateInKind} decimals={2}/>%
+            Rate (in kind): <BigIntDisplay amount={rateInKind} decimals={2} />%
           </p>
           <p className="text-sm font-medium leading-none">
             Rate (specific asset): <BigIntDisplay amount={rateSpecificAsset} decimals={2} />%

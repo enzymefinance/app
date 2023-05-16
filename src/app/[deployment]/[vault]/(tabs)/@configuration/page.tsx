@@ -38,19 +38,58 @@ function getFeeComponent({
 }) {
   switch (fee) {
     case getContract(deployment, "ExitRateBurnFee"):
-      return <ExitRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ExitRateBurnFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case getContract(deployment, "ExitRateDirectFee"):
-      return <ExitRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ExitRateDirectFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case getContract(deployment, "EntranceRateBurnFee"):
-      return <EntranceRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <EntranceRateBurnFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case getContract(deployment, "EntranceRateDirectFee"):
-      return <EntranceRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <EntranceRateDirectFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     case getContract(deployment, "ManagementFee"):
-      return <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case getContract(deployment, "PerformanceFee"):
-      return <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
+      );
     case getContract(deployment, "MinSharesSupplyFee"):
-      return <MinSharesSupplyFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
+      return (
+        <MinSharesSupplyFee
+          fee={fee}
+          deployment={deployment}
+          comptrollerProxy={comptrollerProxy}
+          feeManager={feeManager}
+        />
+      );
     default:
       return <UnknownFee />;
   }
@@ -113,9 +152,11 @@ export default async function ConfigurationPage({
 
   return (
     <>
-      <Title size="xl" appearance="primary">
-        Fees
-      </Title>
+      {enabledFeesForFund.length > 0 ? (
+        <Title size="xl" appearance="primary">
+          Fees
+        </Title>
+      ) : null}
       <div className="space-y-4">
         {enabledFeesForFund.map((fee: Address) => {
           return (

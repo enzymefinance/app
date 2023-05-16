@@ -49,7 +49,7 @@ export const PerformanceFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">
-            Rate: <BigIntDisplay amount={rate} decimals={2}  />%
+            Rate: <BigIntDisplay amount={rate} decimals={2} />%
           </p>
           <p className="text-sm font-medium leading-none">
             High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}

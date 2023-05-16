@@ -24,8 +24,6 @@ export const EntranceRateDirectFee = asSyncComponent(
       address: fee,
     });
 
-
-
     return (
       <Card>
         <CardHeader>
