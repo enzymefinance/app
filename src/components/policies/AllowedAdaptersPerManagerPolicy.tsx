@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
 import { getIAllowedAdaptersPerManagerPolicy } from "@/lib/rpc/getAllowedAdaptersPerManager";
