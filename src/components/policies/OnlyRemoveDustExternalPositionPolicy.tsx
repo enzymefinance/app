@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { asSyncComponent } from "@/lib/next";
-import { BigIntDisplay } from "@/components/BigIntDisplay";
 
 export const OnlyRemoveDustExternalPositionPolicy = asSyncComponent(async () => {
   return (
