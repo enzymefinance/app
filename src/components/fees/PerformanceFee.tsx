@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getAssetDecimals, getAssetSymbol, getDenominationAsset, getPerformanceFee } from "@enzymefinance/sdk";
+import { getAssetDecimals, getAssetSymbol, getDenominationAsset, getPerformanceFeeSettings } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const PerformanceFee = asSyncComponent(
@@ -19,26 +19,29 @@ export const PerformanceFee = asSyncComponent(
     feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getPerformanceFee(client, {
-      comptrollerProxy,
-      address: fee,
-    });
 
-    const denominationAsset = await getDenominationAsset(client, {
-      comptroller: comptrollerProxy,
-    });
-    const symbol = await getAssetSymbol(client, {
-      asset: denominationAsset,
-    });
+    const [
+      {
+        feeInfoForFund: { rate, highWaterMark },
+        recipientForFund,
+      },
+      denominationAsset,
+    ] = await Promise.all([
+      getPerformanceFeeSettings(client, {
+        comptrollerProxy,
+        address: fee,
+      }),
+      getDenominationAsset(client, {
+        comptroller: comptrollerProxy,
+      }),
+    ]);
 
-    const decimals = await getAssetDecimals(client, {
-      asset: denominationAsset,
-    });
+    const [symbol, decimals] = await Promise.all([
+      getAssetSymbol(client, { asset: denominationAsset }),
+      getAssetDecimals(client, { asset: denominationAsset }),
+    ]);
 
-    const rate = result.feeInfoForFund.rate;
-    const highWatermark = result.feeInfoForFund.highWaterMark;
-    const recipient =
-      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+    const recipient = recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : recipientForFund;
 
     return (
       <Card>
@@ -50,9 +53,9 @@ export const PerformanceFee = asSyncComponent(
             Rate: <BigIntDisplay amount={rate} decimals={2} />%
           </p>
           <p className="text-sm font-medium leading-none">
-            High watermark: <BigIntDisplay amount={highWatermark} decimals={decimals} /> {symbol}
+            High watermark: <BigIntDisplay amount={highWaterMark} decimals={decimals} /> {symbol}
           </p>
-          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>
       </Card>
     );

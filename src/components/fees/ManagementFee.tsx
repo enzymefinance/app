@@ -20,18 +20,20 @@ export const ManagementFee = asSyncComponent(
     feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getManagementFee(client, {
+    const {
+      feeInfoForFund: { scaledPerSecondRate },
+      recipientForFund,
+    } = await getManagementFee(client, {
       comptrollerProxy,
       address: fee,
     });
 
     const convertedScaledPerSecondRate = convertScaledPerSecondRateToRate({
-      scaledPerSecondRate: result.feeInfoForFund.scaledPerSecondRate,
+      scaledPerSecondRate,
       adjustInflation: true,
     });
 
-    const recipient =
-      result.recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : result.recipientForFund;
+    const recipient = recipientForFund === ZERO_ADDRESS ? `${feeManager} (Vault Owner)` : recipientForFund;
 
     return (
       <Card>
@@ -42,7 +44,7 @@ export const ManagementFee = asSyncComponent(
           <p className="text-sm font-medium leading-none">
             Rate: <BigIntDisplay amount={convertedScaledPerSecondRate} decimals={16} />%
           </p>
-          <p className="text-sm font-medium leading-none">Recipient: {recipient.toLowerCase()}</p>
+          <p className="text-sm font-medium leading-none">Recipient: {recipient}</p>
         </CardContent>
       </Card>
     );

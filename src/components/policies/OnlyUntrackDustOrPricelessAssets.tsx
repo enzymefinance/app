@@ -7,7 +7,7 @@ export const OnlyUntrackDustOrPricelessAssets = asSyncComponent(async () => {
       <CardHeader>
         <CardTitle>Only Untrack Dust Or Priceless Assets</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent />
     </Card>
   );
 });

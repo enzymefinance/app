@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getAllowedAdaptersPolicy } from "@/lib/rpc/getAllowedAdaptersPolicy";
+import { getAllowedAdaptersPolicySettings } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const AllowedAdaptersPolicy = asSyncComponent(
@@ -16,7 +16,7 @@ export const AllowedAdaptersPolicy = asSyncComponent(
     policy: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getAllowedAdaptersPolicy(client, {
+    const result = await getAllowedAdaptersPolicySettings(client, {
       comptrollerProxy,
       address: policy,
     });
@@ -24,9 +24,9 @@ export const AllowedAdaptersPolicy = asSyncComponent(
     return (
       <Card>
         <CardHeader>
-          <CardTitle>AllowedAdaptersPolicy</CardTitle>
+          <CardTitle>Allowed Adapters Policy</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent />
       </Card>
     );
   },

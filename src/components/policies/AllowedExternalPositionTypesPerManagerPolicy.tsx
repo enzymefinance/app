@@ -7,7 +7,7 @@ export const AllowedExternalPositionTypesPerManagerPolicy = asSyncComponent(asyn
       <CardHeader>
         <CardTitle>Allowed External Position Types Per Manager Policy</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent />
     </Card>
   );
 });

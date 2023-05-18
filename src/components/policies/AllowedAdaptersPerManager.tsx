@@ -7,7 +7,7 @@ export const AllowedAdaptersPerManager = asSyncComponent(async () => {
       <CardHeader>
         <CardTitle>Allowed Adapters Per Manager</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent />
     </Card>
   );
 });

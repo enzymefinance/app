@@ -66,23 +66,9 @@ function getFeeComponent({
         />
       );
     case getContract(deployment, "EntranceRateBurnFee"):
-      return (
-        <EntranceRateBurnFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <EntranceRateBurnFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
     case getContract(deployment, "EntranceRateDirectFee"):
-      return (
-        <EntranceRateDirectFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <EntranceRateDirectFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} />;
     case getContract(deployment, "ManagementFee"):
       return (
         <ManagementFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
@@ -92,14 +78,7 @@ function getFeeComponent({
         <PerformanceFee fee={fee} deployment={deployment} comptrollerProxy={comptrollerProxy} feeManager={feeManager} />
       );
     case getContract(deployment, "MinSharesSupplyFee"):
-      return (
-        <MinSharesSupplyFee
-          fee={fee}
-          deployment={deployment}
-          comptrollerProxy={comptrollerProxy}
-          feeManager={feeManager}
-        />
-      );
+      return <MinSharesSupplyFee />;
     default:
       return <UnknownFee />;
   }

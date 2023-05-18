@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getAllowedSharesTransferRecipientsList } from "@enzymefinance/sdk";
+import { getAllowedSharesTransferRecipientsSettings } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const AllowedSharesTransferRecipientsPolicy = asSyncComponent(
@@ -16,7 +16,7 @@ export const AllowedSharesTransferRecipientsPolicy = asSyncComponent(
     policy: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getAllowedSharesTransferRecipientsList(client, {
+    const result = await getAllowedSharesTransferRecipientsSettings(client, {
       comptrollerProxy,
       address: policy,
     });
@@ -26,7 +26,7 @@ export const AllowedSharesTransferRecipientsPolicy = asSyncComponent(
         <CardHeader>
           <CardTitle>Allowed Shares Transfer Recipients Policy</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent />
       </Card>
     );
   },

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Deployment, ZERO_ADDRESS } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getExitRateDirectFee } from "@enzymefinance/sdk";
+import { getExitRateDirectFeeSettings } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const ExitRateDirectFee = asSyncComponent(
@@ -19,7 +19,7 @@ export const ExitRateDirectFee = asSyncComponent(
     feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getExitRateDirectFee(client, {
+    const result = await getExitRateDirectFeeSettings(client, {
       comptrollerProxy,
       address: fee,
     });
