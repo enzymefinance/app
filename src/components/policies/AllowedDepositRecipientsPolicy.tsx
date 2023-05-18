@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getAllowedDepositRecipientsLists } from "@enzymefinance/sdk";
+import { getAllowedDepositRecipientsSettings } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const AllowedDepositRecipintsPolicy = asSyncComponent(
@@ -16,7 +16,7 @@ export const AllowedDepositRecipintsPolicy = asSyncComponent(
     policy: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getAllowedDepositRecipientsLists(client, {
+    const result = await getAllowedDepositRecipientsSettings(client, {
       comptrollerProxy,
       address: policy,
     });
@@ -26,7 +26,7 @@ export const AllowedDepositRecipintsPolicy = asSyncComponent(
         <CardHeader>
           <CardTitle>Allowed Deposit Recipients Policy</CardTitle>
         </CardHeader>
-        <CardContent>...</CardContent>
+        <CardContent />
       </Card>
     );
   },

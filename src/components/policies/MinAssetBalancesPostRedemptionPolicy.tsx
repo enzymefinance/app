@@ -7,7 +7,7 @@ export const MinAssetBalancesPostRedemptionPolicy = asSyncComponent(async () => 
       <CardHeader>
         <CardTitle>Min Asset Balances Post Redemption Policy</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent />
     </Card>
   );
 });

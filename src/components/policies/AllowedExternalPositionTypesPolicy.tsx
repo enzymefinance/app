@@ -7,7 +7,7 @@ export const AllowedExternalPositionTypesPolicy = asSyncComponent(async () => {
       <CardHeader>
         <CardTitle>Allowed External Position Types Policy</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent />
     </Card>
   );
 });

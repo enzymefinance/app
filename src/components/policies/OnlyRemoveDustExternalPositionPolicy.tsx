@@ -7,7 +7,7 @@ export const OnlyRemoveDustExternalPositionPolicy = asSyncComponent(async () => 
       <CardHeader>
         <CardTitle>Only Remove Dust External Position Policy</CardTitle>
       </CardHeader>
-      <CardContent>...</CardContent>
+      <CardContent />
     </Card>
   );
 });

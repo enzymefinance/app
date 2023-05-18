@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Deployment } from "@/lib/consts";
 import { asSyncComponent } from "@/lib/next";
 import { getPublicClientForDeployment } from "@/lib/rpc";
-import { getEntranceRateDirectFee } from "@enzymefinance/sdk";
+import { getEntranceRateDirectFeeSettings } from "@enzymefinance/sdk";
 import type { Address } from "viem";
 
 export const EntranceRateDirectFee = asSyncComponent(
@@ -11,15 +11,13 @@ export const EntranceRateDirectFee = asSyncComponent(
     deployment,
     comptrollerProxy,
     fee,
-    feeManager,
   }: {
     deployment: Deployment;
     comptrollerProxy: Address;
     fee: Address;
-    feeManager: Address;
   }) => {
     const client = getPublicClientForDeployment(deployment);
-    const result = await getEntranceRateDirectFee(client, {
+    const { rateForFund } = await getEntranceRateDirectFeeSettings(client, {
       comptrollerProxy,
       address: fee,
     });
@@ -31,7 +29,7 @@ export const EntranceRateDirectFee = asSyncComponent(
         </CardHeader>
         <CardContent className="space-y-1">
           <p className="text-sm font-medium leading-none">
-            Rate: <BigIntDisplay amount={result.rateForFund} />%
+            Rate: <BigIntDisplay amount={rateForFund} />%
           </p>
         </CardContent>
       </Card>
